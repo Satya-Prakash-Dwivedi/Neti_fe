@@ -217,7 +217,7 @@ const CurrentAffairDetail = () => {
   const [digest, setDigest] = useState<DailyDigest | null | undefined>(undefined);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/current-affairs/${id}/`)
+    axios.get(`${import.meta.env.VITE_API_URL}/current-affairs/${id}/`)
       .then(res => {
         setDigest(res.data);
       })

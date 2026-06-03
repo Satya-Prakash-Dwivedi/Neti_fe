@@ -19,7 +19,7 @@ const CurrentAffairs = () => {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/current-affairs/")
+    axios.get(`${import.meta.env.VITE_API_URL}/current-affairs/`)
       .then(res => {
         setDailyDigests(res.data);
         setLoading(false);

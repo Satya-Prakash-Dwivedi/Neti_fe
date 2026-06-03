@@ -8,7 +8,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/products/${id}/`)
+    axios.get(`${import.meta.env.VITE_API_URL}/products/${id}/`)
       .then(res => {
         setProduct(res.data);
         setLoading(false);
@@ -22,7 +22,7 @@ const ProductDetail = () => {
   const handleBuyNow = async () => {
     try {
       // 1. Create order on the backend
-      const { data: order } = await axios.post("http://localhost:8000/api/orders/create/", {
+      const { data: order } = await axios.post(`${import.meta.env.VITE_API_URL}/orders/create/`, {
         amount: product.price,
         currency: "INR",
         product_id: product.id
@@ -38,7 +38,7 @@ const ProductDetail = () => {
         order_id: order.id,
         handler: async (response: any) => {
           // 3. Verify payment on the backend
-          const result = await axios.post("http://localhost:8000/api/orders/verify/", response);
+          const result = await axios.post(`${import.meta.env.VITE_API_URL}/orders/verify/`, response);
           if (result.data.status === "success") {
             alert("Payment Successful! Your PDF will download shortly.");
             if (result.data.pdf_file) {

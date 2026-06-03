@@ -65,7 +65,7 @@ const AdminCurrentAffairs = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("access_token");
-      const res = await axios.get("http://localhost:8000/api/current-affairs/", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/current-affairs/`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {}
       });
       setDigests(res.data);
@@ -121,7 +121,7 @@ const AdminCurrentAffairs = () => {
     if (!window.confirm("Are you sure you want to delete this Daily Digest? This action is permanent!")) return;
     try {
       const token = localStorage.getItem("access_token");
-      await axios.delete(`http://localhost:8000/api/current-affairs/${dateId}/`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/current-affairs/${dateId}/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccessMsg("Digest deleted successfully.");
@@ -152,10 +152,10 @@ const AdminCurrentAffairs = () => {
 
     try {
       if (editingId) {
-        await axios.put(`http://localhost:8000/api/current-affairs/${editingId}/`, payload, { headers });
+        await axios.put(`${import.meta.env.VITE_API_URL}/current-affairs/${editingId}/`, payload, { headers });
         setSuccessMsg("Digest updated successfully.");
       } else {
-        await axios.post("http://localhost:8000/api/current-affairs/", payload, { headers });
+        await axios.post(`${import.meta.env.VITE_API_URL}/current-affairs/`, payload, { headers });
         setSuccessMsg("New Daily Digest published successfully.");
       }
       setView("list");

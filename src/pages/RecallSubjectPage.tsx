@@ -15,7 +15,7 @@ const RecallSubjectPage = () => {
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/quizzes/categories/${bookName}/subjects/`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/categories/${bookName}/subjects/`);
         setSubjects(response.data);
       } catch (err) {
         console.error("Failed to fetch subjects:", err);

@@ -32,7 +32,7 @@ const AdminBooks = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/quizzes/admin/books/");
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/admin/books/`);
       setBooks(response.data);
     } catch (err) {
       console.error("Failed to fetch books:", err);
@@ -96,10 +96,10 @@ const AdminBooks = () => {
       };
       
       if (isEditing && editId) {
-        await axios.put(`http://localhost:8000/api/quizzes/admin/books/${editId}/`, formData, config);
+        await axios.put(`${import.meta.env.VITE_API_URL}/quizzes/admin/books/${editId}/`, formData, config);
         setStatusMsg({ text: "Book updated successfully.", type: "success" });
       } else {
-        await axios.post("http://localhost:8000/api/quizzes/admin/books/", formData, config);
+        await axios.post(`${import.meta.env.VITE_API_URL}/quizzes/admin/books/`, formData, config);
         setStatusMsg({ text: "Book created successfully.", type: "success" });
       }
       resetForm();
@@ -117,7 +117,7 @@ const AdminBooks = () => {
     try {
       const token = localStorage.getItem("token");
       const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
-      await axios.delete(`http://localhost:8000/api/quizzes/admin/books/${bookId}/`, config);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/quizzes/admin/books/${bookId}/`, config);
       fetchBooks();
     } catch (err) {
       console.error("Failed to delete book:", err);
@@ -182,7 +182,7 @@ const AdminBooks = () => {
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Cover Image</label>
                 {existingCoverUrl && !coverImage && (
                   <div className="mb-2 relative w-16 h-20 rounded-md overflow-hidden border border-slate-200 shadow-sm">
-                    <img src={existingCoverUrl.startsWith('http') ? existingCoverUrl : `http://localhost:8000${existingCoverUrl}`} alt="cover" className="w-full h-full object-cover" />
+                    <img src={existingCoverUrl.startsWith('http') ? existingCoverUrl : `${import.meta.env.VITE_API_URL.replace('/api', '')}${existingCoverUrl}`} alt="cover" className="w-full h-full object-cover" />
                   </div>
                 )}
                 <div className="relative">
@@ -258,7 +258,7 @@ const AdminBooks = () => {
                   <div key={book.id} className="py-4 first:pt-0 last:pb-0 flex justify-between items-center gap-4">
                     <div className="flex-1 flex items-center gap-4">
                       {book.cover_image ? (
-                         <img src={book.cover_image.startsWith('http') ? book.cover_image : `http://localhost:8000${book.cover_image}`} alt="cover" className="w-12 h-16 object-cover rounded-md border border-slate-200" />
+                         <img src={book.cover_image.startsWith('http') ? book.cover_image : `${import.meta.env.VITE_API_URL.replace('/api', '')}${book.cover_image}`} alt="cover" className="w-12 h-16 object-cover rounded-md border border-slate-200" />
                       ) : (
                          <div className="w-12 h-16 bg-slate-100 rounded-md border border-slate-200 flex items-center justify-center">
                             <BookOpen className="w-5 h-5 text-slate-300" />

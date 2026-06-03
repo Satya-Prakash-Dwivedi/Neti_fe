@@ -25,7 +25,7 @@ const RecallHistory = () => {
     const fetchHistory = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:8000/api/quizzes/student/attempts/", {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/attempts/`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setAttempts(response.data);

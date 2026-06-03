@@ -48,8 +48,8 @@ const AdminQuizAttempts = () => {
     setLoading(true);
     try {
       const [quizRes, attemptsRes] = await Promise.all([
-        axios.get(`http://localhost:8000/api/quizzes/admin/detail/${quizId}/`),
-        axios.get(`http://localhost:8000/api/quizzes/admin/attempts/${quizId}/`)
+        axios.get(`${import.meta.env.VITE_API_URL}/quizzes/admin/detail/${quizId}/`),
+        axios.get(`${import.meta.env.VITE_API_URL}/quizzes/admin/attempts/${quizId}/`)
       ]);
       setQuiz(quizRes.data);
       setAttempts(attemptsRes.data);

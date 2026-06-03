@@ -23,7 +23,7 @@ const RecallClassPage = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/quizzes/categories/${bookName}/${subject}/classes/`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/categories/${bookName}/${subject}/classes/`);
         setBooks(response.data);
       } catch (err) {
         console.error("Failed to fetch classes:", err);

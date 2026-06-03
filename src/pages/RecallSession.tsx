@@ -56,7 +56,7 @@ const RecallSession = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/quizzes/${id}/`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/${id}/`);
         setQuiz(response.data);
       } catch (err) {
         console.error("Failed to load quiz details:", err);
@@ -113,7 +113,7 @@ const RecallSession = () => {
     setShowSubmitModal(false);
     setSubmitting(true);
     try {
-      const response = await axios.post(`http://localhost:8000/api/quizzes/${id}/submit/`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/quizzes/${id}/submit/`, {
         answers
       });
       setResults(response.data);

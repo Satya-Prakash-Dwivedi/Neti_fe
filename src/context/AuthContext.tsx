@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchProfile = async (authToken: string) => {
     try {
-      const response = await axios.get('http://localhost:8000/api/auth/profile/', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/profile/`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       setUser(response.data);
@@ -61,7 +61,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/api/auth/login/', {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login/`, {
         email,
         password,
       });
@@ -82,7 +82,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (email: string, name: string, password: string) => {
     setLoading(true);
     try {
-      await axios.post('http://localhost:8000/api/auth/register/', {
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/register/`, {
         email,
         name,
         password,

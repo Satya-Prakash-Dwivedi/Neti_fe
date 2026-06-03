@@ -16,7 +16,7 @@ const RecallSubjects = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/quizzes/categories/");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/categories/`);
         setCategories(response.data);
       } catch (err) {
         console.error("Failed to fetch subjects:", err);
@@ -65,7 +65,7 @@ const RecallSubjects = () => {
                   className="bg-white rounded-3xl border border-slate-200 p-8 flex flex-col items-center justify-center gap-4 hover:shadow-lg hover:-translate-y-1 transition-all group"
                 >
                   {category.cover_image ? (
-                    <img src={category.cover_image.startsWith('http') ? category.cover_image : `http://localhost:8000${category.cover_image}`} alt={category.book_name} className="h-40 object-contain rounded-md shadow-sm group-hover:scale-105 transition-transform" />
+                    <img src={category.cover_image.startsWith('http') ? category.cover_image : `${import.meta.env.VITE_API_URL.replace('/api', '')}${category.cover_image}`} alt={category.book_name} className="h-40 object-contain rounded-md shadow-sm group-hover:scale-105 transition-transform" />
                   ) : (
                     <div className="w-16 h-16 bg-blue-50 text-blue-900 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                       <BookOpen className="w-8 h-8" />

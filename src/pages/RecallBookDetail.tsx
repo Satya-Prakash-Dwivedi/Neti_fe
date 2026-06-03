@@ -41,9 +41,9 @@ const RecallBookDetail = () => {
     try {
       const token = localStorage.getItem('token');
       const [bookRes, quizzesRes, ordersRes] = await Promise.all([
-        axios.get(`http://localhost:8000/api/quizzes/books/${bookId}/`),
-        axios.get("http://localhost:8000/api/quizzes/student/list/"),
-        axios.get("http://localhost:8000/api/orders/user/", {
+        axios.get(`${import.meta.env.VITE_API_URL}/quizzes/books/${bookId}/`),
+        axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/list/`),
+        axios.get(`${import.meta.env.VITE_API_URL}/orders/user/`, {
           headers: { Authorization: `Bearer ${token}` }
         })
       ]);
@@ -79,7 +79,7 @@ const RecallBookDetail = () => {
       const token = localStorage.getItem('token');
       const payload = { book_id: id };
       
-      const res = await axios.post("http://localhost:8000/api/orders/create/", payload, {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/orders/create/`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = res.data;
@@ -93,7 +93,7 @@ const RecallBookDetail = () => {
         order_id: data.razorpay_order_id,
         handler: async function (response: any) {
           try {
-            await axios.post("http://localhost:8000/api/orders/verify/", {
+            await axios.post(`${import.meta.env.VITE_API_URL}/orders/verify/`, {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
@@ -133,7 +133,7 @@ const RecallBookDetail = () => {
   const handleDownloadInvoice = async (orderId: number) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:8000/api/orders/${orderId}/invoice/`, {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/orders/${orderId}/invoice/`, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob',
       });

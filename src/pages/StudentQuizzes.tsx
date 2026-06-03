@@ -29,8 +29,8 @@ const StudentQuizzes = () => {
     const fetchData = async () => {
       try {
         const [quizzesRes, attemptsRes] = await Promise.all([
-          axios.get("http://localhost:8000/api/quizzes/student/list/"),
-          axios.get("http://localhost:8000/api/quizzes/student/attempts/")
+          axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/list/`),
+          axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/attempts/`)
         ]);
         setQuizzes(quizzesRes.data);
         setAttempts(attemptsRes.data);

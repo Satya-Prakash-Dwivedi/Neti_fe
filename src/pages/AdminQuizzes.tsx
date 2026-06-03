@@ -46,7 +46,7 @@ const AdminQuizzes = () => {
   // Fetch published quizzes
   const fetchQuizzes = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/quizzes/admin/list/");
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/admin/list/`);
       setPublishedQuizzes(response.data);
     } catch (err) {
       console.error("Failed to fetch quizzes list:", err);
@@ -55,7 +55,7 @@ const AdminQuizzes = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/quizzes/admin/books/");
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/admin/books/`);
       setBooks(response.data);
     } catch (err) {
       console.error("Failed to fetch books:", err);
@@ -89,7 +89,7 @@ const AdminQuizzes = () => {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/quizzes/admin/upload/", formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/quizzes/admin/upload/`, formData, {
         headers: { "Content-Type": "multipart/form-data" }
       });
       setTitle(response.data.title);
@@ -120,7 +120,7 @@ const AdminQuizzes = () => {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:8000/api/quizzes/admin/create/", {
+      await axios.post(`${import.meta.env.VITE_API_URL}/quizzes/admin/create/`, {
         title,
         book_id: bookId,
         questions
@@ -144,7 +144,7 @@ const AdminQuizzes = () => {
   const handleDelete = async (quizId: number) => {
     if (!window.confirm("Are you sure you want to delete this chapter? This action is permanent and will delete all student attempts.")) return;
     try {
-      await axios.delete(`http://localhost:8000/api/quizzes/admin/delete/${quizId}/`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/quizzes/admin/delete/${quizId}/`);
       fetchQuizzes();
     } catch (err) {
       console.error("Failed to delete quiz:", err);
