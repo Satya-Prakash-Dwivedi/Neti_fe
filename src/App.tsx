@@ -44,6 +44,9 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
 import TermsConditions from './pages/TermsConditions';
 
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+
 // ScrollToTop component to reset scroll on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -126,6 +129,8 @@ function App() {
             {/* Authentication and Quizzes Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             {/* Recall Hub Routes */}
             <Route 
               path="/recall" 

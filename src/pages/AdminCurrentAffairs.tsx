@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Plus, Trash, Edit, Save, ArrowLeft, AlertCircle } from "lucide-react";
+import { Plus, Trash, Edit, Save, ArrowLeft, AlertCircle, Upload } from "lucide-react";
 import SEO from "../components/SEO";
+import { parseMarkdownDigest } from "../utils/markdownParser";
 
 interface TopicInput {
   title: string;
@@ -60,11 +61,32 @@ const AdminCurrentAffairs = () => {
   const [form, setForm] = useState<DigestFormState>(emptyFormState());
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result as string;
+      if (text) {
+        const parsedData = parseMarkdownDigest(text);
+        setForm(parsedData);
+        setView("form");
+        setEditingId(null);
+        setSuccessMsg("Form auto-filled from Markdown! Please review and click Save.");
+      }
+    };
+    reader.readAsText(file);
+    // reset input so the same file can be uploaded again if needed
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
 
   const fetchDigests = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("access_token");
+      const token = localStorage.getItem("token");
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/current-affairs/`, {
         headers: token ? { Authorization: `Bearer ${token}` } : {}
       });
@@ -120,7 +142,7 @@ const AdminCurrentAffairs = () => {
   const handleDelete = async (dateId: string) => {
     if (!window.confirm("Are you sure you want to delete this Daily Digest? This action is permanent!")) return;
     try {
-      const token = localStorage.getItem("access_token");
+      const token = localStorage.getItem("token");
       await axios.delete(`${import.meta.env.VITE_API_URL}/current-affairs/${dateId}/`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -137,7 +159,7 @@ const AdminCurrentAffairs = () => {
     setErrorMsg("");
     setSuccessMsg("");
 
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("token");
     const headers = { Authorization: `Bearer ${token}` };
 
     const payload = {
@@ -178,16 +200,31 @@ const AdminCurrentAffairs = () => {
             <p className="text-sm text-slate-500">Publish, modify, and delete daily Prelims & Mains resources.</p>
           </div>
           {view === "list" ? (
-            <button
-              onClick={() => {
-                setForm(emptyFormState());
-                setEditingId(null);
-                setView("form");
-              }}
-              className="flex items-center gap-2 px-5 py-2.5 bg-blue-900 text-white rounded-xl hover:bg-blue-800 transition-all font-semibold text-sm"
-            >
-              <Plus className="w-4 h-4" /> Add Daily Digest
-            </button>
+            <div className="flex gap-3">
+              <input
+                type="file"
+                accept=".md"
+                ref={fileInputRef}
+                className="hidden"
+                onChange={handleFileUpload}
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all font-semibold text-sm"
+              >
+                <Upload className="w-4 h-4" /> Auto-Fill from Markdown
+              </button>
+              <button
+                onClick={() => {
+                  setForm(emptyFormState());
+                  setEditingId(null);
+                  setView("form");
+                }}
+                className="flex items-center gap-2 px-5 py-2.5 bg-blue-900 text-white rounded-xl hover:bg-blue-800 transition-all font-semibold text-sm"
+              >
+                <Plus className="w-4 h-4" /> Add Daily Digest
+              </button>
+            </div>
           ) : (
             <button
               onClick={() => setView("list")}

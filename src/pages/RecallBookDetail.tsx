@@ -238,15 +238,17 @@ const RecallBookDetail = () => {
             </div>
           ) : (
             quizzes.map((quiz, idx) => {
-              const isUnlocked = isBookUnlocked;
+              const isFirstChapter = idx === 0;
+              const isUnlocked = isBookUnlocked || isFirstChapter;
+              const isFreeTrial = isUnlocked && !isBookUnlocked;
 
               return (
                 <div
                   key={quiz.id}
-                  className={`bg-white rounded-3xl border ${isUnlocked ? 'border-green-200 shadow-sm' : 'border-slate-200'} p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden`}
+                  className={`bg-white rounded-3xl border ${isUnlocked ? (isFreeTrial ? 'border-blue-200' : 'border-green-200') + ' shadow-sm' : 'border-slate-200'} p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden`}
                 >
                   {isUnlocked && (
-                    <div className="absolute top-0 left-0 w-1.5 h-full bg-green-500" />
+                    <div className={`absolute top-0 left-0 w-1.5 h-full ${isFreeTrial ? 'bg-blue-500' : 'bg-green-500'}`} />
                   )}
 
                   <div className="flex-1 flex gap-4 items-center">
@@ -259,8 +261,8 @@ const RecallBookDetail = () => {
                           {quiz.title}
                         </h4>
                         {isUnlocked && (
-                          <span className="flex items-center gap-1 text-[10px] font-bold text-green-700 bg-green-50 px-2 py-1 rounded-full uppercase tracking-wider">
-                            <CheckCircle className="w-3 h-3" /> Unlocked
+                          <span className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider ${isFreeTrial ? 'text-blue-700 bg-blue-50' : 'text-green-700 bg-green-50'}`}>
+                            <CheckCircle className="w-3 h-3" /> {isFreeTrial ? 'Free Trial' : 'Unlocked'}
                           </span>
                         )}
                       </div>
@@ -277,7 +279,7 @@ const RecallBookDetail = () => {
                     {isUnlocked ? (
                       <Link
                         to={`/recall/session/${quiz.id}`}
-                        className="flex-1 md:flex-none px-6 py-3 bg-green-700 text-white text-xs font-bold rounded-xl hover:bg-green-800 transition-all flex items-center justify-center gap-2 shadow-sm"
+                        className={`flex-1 md:flex-none px-6 py-3 text-white text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm ${isFreeTrial ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-700 hover:bg-green-800'}`}
                       >
                         Start Session
                         <PlayCircle className="w-4 h-4" />
