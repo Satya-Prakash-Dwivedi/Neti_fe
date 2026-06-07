@@ -13,6 +13,7 @@ interface AuthContextType {
   token: string | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  googleLogin: (token: string) => Promise<void>;
   register: (email: string, name: string, password: string) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
@@ -79,6 +80,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const googleLogin = async (googleToken: string) => {
+    setLoading(true);
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/google/`, {
+        token: googleToken,
+      });
+      const newToken = response.data.access;
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+      sessionStorage.removeItem("notification_dismissed");
+      await fetchProfile(newToken);
+    } catch (error: any) {
+      console.error('Google login error:', error);
+      throw new Error(error.response?.data?.error || 'Google login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const register = async (email: string, name: string, password: string) => {
     setLoading(true);
     try {
@@ -116,7 +137,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const isAdmin = isAuthenticated && (user?.role === 'ADMIN' || user?.role === 'EDUCATOR');
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout, isAuthenticated, isAdmin }}>
+    <AuthContext.Provider value={{ user, token, loading, login, googleLogin, register, logout, isAuthenticated, isAdmin }}>
       {children}
     </AuthContext.Provider>
   );

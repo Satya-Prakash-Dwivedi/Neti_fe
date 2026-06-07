@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { GoogleLogin } from '@react-oauth/google';
 import SEO from "../components/SEO";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useAuth();
+  const { login, googleLogin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,6 +22,18 @@ const Login = () => {
       navigate(redirectPath, { replace: true });
     } catch (err: any) {
       setError(err.message || "Failed to log in. Please try again.");
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    setError("");
+    try {
+      if (credentialResponse.credential) {
+        await googleLogin(credentialResponse.credential);
+        navigate(redirectPath, { replace: true });
+      }
+    } catch (err: any) {
+      setError(err.message || "Google login failed.");
     }
   };
 
@@ -82,6 +95,20 @@ const Login = () => {
             Log In
           </button>
         </form>
+
+        <div className="mt-6 flex items-center justify-between">
+          <span className="w-1/5 border-b lg:w-1/4"></span>
+          <span className="text-xs text-center text-slate-500 uppercase tracking-wider font-bold">or continue with</span>
+          <span className="w-1/5 border-b lg:w-1/4"></span>
+        </div>
+
+        <div className="mt-6 flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError("Google login was unsuccessful.")}
+            useOneTap
+          />
+        </div>
 
         <p className="mt-8 text-center text-xs font-medium text-slate-500">
           New to Neti Academy?{" "}

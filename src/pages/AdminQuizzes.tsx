@@ -26,6 +26,7 @@ interface QuizSummary {
     class_name: string;
   };
   is_live: boolean;
+  is_free_test: boolean;
   question_count: number;
   created_at: string;
   questions?: Question[];
@@ -42,6 +43,21 @@ const AdminQuizzes = () => {
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ text: "", type: "" });
   const [activeTab, setActiveTab] = useState<"upload" | "list">("upload");
+
+  const [listFilterSubject, setListFilterSubject] = useState("");
+  const [listFilterBookName, setListFilterBookName] = useState("");
+  const [listFilterClassName, setListFilterClassName] = useState("");
+
+  const uniqueListSubjects = Array.from(new Set(publishedQuizzes.map(q => q.book?.subject).filter(Boolean))) as string[];
+  const uniqueListBookNames = Array.from(new Set(publishedQuizzes.map(q => q.book?.book_name).filter(Boolean))) as string[];
+  const uniqueListClassNames = Array.from(new Set(publishedQuizzes.map(q => q.book?.class_name).filter(Boolean))) as string[];
+
+  const filteredQuizzesToDisplay = publishedQuizzes.filter(quiz => {
+    if (listFilterSubject && quiz.book?.subject !== listFilterSubject) return false;
+    if (listFilterBookName && quiz.book?.book_name !== listFilterBookName) return false;
+    if (listFilterClassName && quiz.book?.class_name !== listFilterClassName) return false;
+    return true;
+  });
 
   // Fetch published quizzes
   const fetchQuizzes = async () => {
@@ -148,6 +164,23 @@ const AdminQuizzes = () => {
       fetchQuizzes();
     } catch (err) {
       console.error("Failed to delete quiz:", err);
+    }
+  };
+
+  const handleToggleFreeTest = async (quizId: number, currentStatus: boolean) => {
+    if (currentStatus) return; // Already free, no need to toggle
+    
+    if (!window.confirm("Set this chapter as the free test for its book? Other chapters in the same book will become paid.")) return;
+    
+    try {
+      await axios.post(`${import.meta.env.VITE_API_URL}/quizzes/admin/toggle-free/${quizId}/`, {
+        is_free_test: true
+      });
+      fetchQuizzes();
+      setStatusMsg({ text: "Free test chapter updated successfully.", type: "success" });
+    } catch (err) {
+      console.error("Failed to toggle free test:", err);
+      setStatusMsg({ text: "Failed to update free test chapter.", type: "error" });
     }
   };
 
@@ -416,14 +449,59 @@ const AdminQuizzes = () => {
 
         {activeTab === "list" && (
           <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden p-6 md:p-8">
-            <h3 className="text-xl font-playfair font-bold text-slate-900 mb-6">Published Tests</h3>
-            {publishedQuizzes.length === 0 ? (
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+              <h3 className="text-xl font-playfair font-bold text-slate-900">Published Tests</h3>
+              
+              <div className="flex flex-wrap gap-2">
+                <select
+                  value={listFilterSubject}
+                  onChange={e => setListFilterSubject(e.target.value)}
+                  className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-bold text-slate-600 focus:outline-none focus:border-blue-900 bg-slate-50"
+                >
+                  <option value="">All Subjects</option>
+                  {uniqueListSubjects.map(sub => <option key={sub} value={sub}>{sub}</option>)}
+                </select>
+
+                <select
+                  value={listFilterBookName}
+                  onChange={e => setListFilterBookName(e.target.value)}
+                  className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-bold text-slate-600 focus:outline-none focus:border-blue-900 bg-slate-50"
+                >
+                  <option value="">All Books</option>
+                  {uniqueListBookNames.map(name => <option key={name} value={name}>{name}</option>)}
+                </select>
+
+                <select
+                  value={listFilterClassName}
+                  onChange={e => setListFilterClassName(e.target.value)}
+                  className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-bold text-slate-600 focus:outline-none focus:border-blue-900 bg-slate-50"
+                >
+                  <option value="">All Classes</option>
+                  {uniqueListClassNames.map(cls => <option key={cls} value={cls}>{cls}</option>)}
+                </select>
+
+                {(listFilterSubject || listFilterBookName || listFilterClassName) && (
+                  <button
+                    onClick={() => {
+                      setListFilterSubject("");
+                      setListFilterBookName("");
+                      setListFilterClassName("");
+                    }}
+                    className="px-3 py-1.5 text-xs font-bold text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {filteredQuizzesToDisplay.length === 0 ? (
               <div className="text-center py-12 text-slate-400 italic text-sm">
-                No online tests published yet. Upload a CSV to get started.
+                No online tests found matching criteria.
               </div>
             ) : (
               <div className="divide-y divide-slate-100">
-                {publishedQuizzes.map((quiz) => (
+                {filteredQuizzesToDisplay.map((quiz) => (
                   <div key={quiz.id} className="py-6 first:pt-0 last:pb-0 flex justify-between items-center gap-4">
                     <div 
                       className="flex-1 cursor-pointer group"
@@ -442,15 +520,32 @@ const AdminQuizzes = () => {
                         <span className="text-blue-900 bg-blue-50 px-2 py-0.5 rounded-full text-[10px] font-bold">
                           Click to view Student Attempts
                         </span>
+                        {quiz.is_free_test && (
+                          <span className="text-emerald-700 bg-emerald-100 ring-1 ring-emerald-300 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
+                            <CheckCircle className="w-3 h-3" /> Free Test
+                          </span>
+                        )}
                       </div>
                     </div>
-                    <button
-                      onClick={() => handleDelete(quiz.id)}
-                      className="p-3 text-red-500 hover:bg-red-50 rounded-xl transition-all active:scale-95"
-                      aria-label="Delete test"
-                    >
-                      <Trash className="w-5 h-5" />
-                    </button>
+                    
+                    <div className="flex items-center gap-2">
+                      {!quiz.is_free_test && (
+                        <button
+                          onClick={() => handleToggleFreeTest(quiz.id, quiz.is_free_test)}
+                          className="px-4 py-2 text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-all active:scale-95 border border-emerald-200"
+                          title="Set as Free Test for this Book"
+                        >
+                          Set Free
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleDelete(quiz.id)}
+                        className="p-3 text-red-500 hover:bg-red-50 rounded-xl transition-all active:scale-95"
+                        aria-label="Delete test"
+                      >
+                        <Trash className="w-5 h-5" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>

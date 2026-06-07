@@ -312,27 +312,33 @@ const CurrentAffairDetail = () => {
                     {renderTextInChunks(topic.content)}
                   </div>
 
-                  <div className="flex flex-col gap-6 mt-10 md:mt-14">
-                    <div className="bg-slate-50 p-6 md:p-10 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden group/matter">
-                      <div className="absolute top-0 left-0 w-1.5 h-full bg-slate-800 transition-colors group-hover/matter:bg-blue-900"></div>
-                      <h4 className="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">
-                        Why it matters for UPSC
-                      </h4>
-                      <div className="text-sm md:text-base text-slate-700 leading-relaxed font-inter space-y-4">
-                        {renderTextInChunks(topic.whyItMatters)}
-                      </div>
-                    </div>
+                  {(topic.whyItMatters || topic.revise) && (
+                    <div className="flex flex-col gap-6 mt-10 md:mt-14">
+                      {topic.whyItMatters && (
+                        <div className="bg-slate-50 p-6 md:p-10 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden group/matter">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-slate-800 transition-colors group-hover/matter:bg-blue-900"></div>
+                          <h4 className="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">
+                            Why it matters for UPSC
+                          </h4>
+                          <div className="text-sm md:text-base text-slate-700 leading-relaxed font-inter space-y-4">
+                            {renderTextInChunks(topic.whyItMatters)}
+                          </div>
+                        </div>
+                      )}
 
-                    <div className="bg-blue-50/50 p-6 md:p-10 rounded-2xl border border-blue-100 shadow-sm relative overflow-hidden group/revise">
-                      <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-600 transition-colors group-hover/revise:bg-blue-800"></div>
-                      <h4 className="text-xs md:text-sm font-bold text-blue-900 uppercase tracking-widest mb-4">
-                        REVISE
-                      </h4>
-                      <div className="text-sm md:text-base text-slate-800 leading-relaxed font-inter space-y-4">
-                        {renderTextInChunks(topic.revise)}
-                      </div>
+                      {topic.revise && (
+                        <div className="bg-blue-50/50 p-6 md:p-10 rounded-2xl border border-blue-100 shadow-sm relative overflow-hidden group/revise">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-600 transition-colors group-hover/revise:bg-blue-800"></div>
+                          <h4 className="text-xs md:text-sm font-bold text-blue-900 uppercase tracking-widest mb-4">
+                            REVISE
+                          </h4>
+                          <div className="text-sm md:text-base text-slate-800 leading-relaxed font-inter space-y-4">
+                            {renderTextInChunks(topic.revise)}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
+                  )}
 
                   {topic.pyqConnect && (
                     <div className="mt-6 md:mt-8 p-4 md:p-5 bg-blue-50/50 rounded-xl border border-blue-100/50 flex items-start gap-3">

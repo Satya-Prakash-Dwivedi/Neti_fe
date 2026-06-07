@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ChevronLeft, ChevronRight, CheckCircle2, XCircle, ArrowLeft, RefreshCw } from "lucide-react";
+import { ChevronLeft, ChevronRight, CheckCircle2, XCircle, ArrowLeft, RefreshCw, Trophy, Target } from "lucide-react";
 import SEO from "../components/SEO";
 
 interface Question {
@@ -129,18 +129,18 @@ const RecallSession = () => {
 
   if (loading) {
     return (
-      <div className="bg-slate-50 min-h-screen flex items-center justify-center">
-        <div className="animate-spin text-blue-900"><RefreshCw className="w-8 h-8" /></div>
+      <div className="bg-white min-h-screen flex items-center justify-center">
+        <div className="animate-spin text-emerald-600"><RefreshCw className="w-8 h-8" /></div>
       </div>
     );
   }
 
   if (!quiz) {
     return (
-      <div className="bg-slate-50 min-h-screen flex items-center justify-center p-6 text-center">
+      <div className="bg-white min-h-screen flex items-center justify-center p-6 text-center">
         <div>
           <h3 className="text-xl font-bold text-slate-800 mb-4">Quiz not found or not active.</h3>
-          <Link to="/recall" className="text-blue-900 font-bold underline">Back to Recall Hub</Link>
+          <Link to="/recall" className="text-emerald-600 font-bold underline">Back to Recall Hub</Link>
         </div>
       </div>
     );
@@ -157,36 +157,55 @@ const RecallSession = () => {
   };
 
   return (
-    <div className="bg-slate-50 min-h-screen py-12 px-6">
+    <div className="bg-white min-h-screen py-12 px-6">
       <SEO title={`${quiz.title} - Online Practice`} description={`Online test session for ${quiz.title}`} />
       
       <div className="max-w-4xl mx-auto">
-        <Link to={`/recall/book/${(quiz as any).book?.id}`} className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-900 font-bold text-xs uppercase tracking-widest mb-8">
+        <Link to={`/recall/book/${(quiz as any).book?.id}`} className="inline-flex items-center gap-2 text-emerald-900/80 hover:text-emerald-600 font-bold text-xs uppercase tracking-widest mb-8">
           <ArrowLeft className="w-4 h-4" />
           Back to Book
         </Link>
 
         {/* Quiz Completed Results Header */}
         {results ? (
-          <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-lg mb-8 text-center space-y-6">
-            <h2 className="text-3xl font-playfair font-bold text-slate-900">Quiz Completed!</h2>
-            <div className="inline-flex flex-col items-center justify-center p-6 bg-slate-50 rounded-2xl border border-slate-200">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Your Final Score</span>
-              <span className="text-5xl font-playfair font-black text-blue-900">{results.score} / {results.total_questions}</span>
-              <span className="text-xs font-bold text-slate-500 mt-2">({Math.round((results.score / results.total_questions) * 100)}% accuracy)</span>
+          <div className="bg-white border border-emerald-100 rounded-3xl p-8 md:p-10 shadow-lg mb-8 text-center space-y-6">
+            <div className="flex justify-center mb-2">
+               {results.score / results.total_questions >= 0.8 ? (
+                 <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center animate-bounce shadow-md">
+                   <Trophy className="w-10 h-10" />
+                 </div>
+               ) : (
+                 <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center animate-pulse shadow-sm">
+                   <Target className="w-10 h-10" />
+                 </div>
+               )}
             </div>
-            <p className="text-sm text-slate-500 font-medium max-w-md mx-auto">
+            <h2 className="text-3xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight">Quiz Completed!</h2>
+            <div className={`inline-flex flex-col items-center justify-center p-6 rounded-2xl border ${results.score / results.total_questions >= 0.8 ? 'bg-green-50 border-green-200 shadow-sm' : 'bg-emerald-50 border-emerald-200'}`}>
+              <span className="text-[10px] font-bold text-emerald-900/60 uppercase tracking-widest mb-2">Your Final Score</span>
+              <span className={`text-5xl font-playfair font-black ${results.score / results.total_questions >= 0.8 ? 'text-green-600' : 'text-emerald-600'}`}>{results.score} / {results.total_questions}</span>
+              <span className="text-xs font-bold text-emerald-900/80 mt-2">({Math.round((results.score / results.total_questions) * 100)}% accuracy)</span>
+            </div>
+            <p className="text-sm text-emerald-900/80 font-medium max-w-md mx-auto">
               Review your question breakdown below with option elimination logic, UPSC alignment, and the solutions database.
             </p>
           </div>
         ) : (
-          <div className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm mb-8 flex items-center justify-between gap-6">
+          <div className="bg-white border border-emerald-100 rounded-3xl p-6 md:p-8 shadow-sm mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
-              <span className="text-[10px] font-bold text-blue-900 uppercase tracking-widest block mb-1">Live Examination</span>
-              <h2 className="text-xl md:text-2xl font-playfair font-bold text-slate-900">{quiz.title}</h2>
+              <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-1">Live Examination</span>
+              <h2 className="text-xl md:text-2xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight">{quiz.title}</h2>
             </div>
-            <div className="text-xs font-bold text-slate-400">
-              Question {activeIdx + 1} of {questionCount}
+            <div className="flex flex-col items-start md:items-end w-full md:w-1/3">
+              <div className="text-xs font-bold text-emerald-900/60 mb-2">
+                Question {activeIdx + 1} of {questionCount}
+              </div>
+              <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden shadow-inner">
+                <div 
+                  className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2.5 rounded-full transition-all duration-500 ease-out shadow-sm" 
+                  style={{ width: `${((activeIdx + 1) / questionCount) * 100}%` }}
+                ></div>
+              </div>
             </div>
           </div>
         )}
@@ -194,13 +213,13 @@ const RecallSession = () => {
         {/* Solving Interface */}
         {!results ? (
           <div className="space-y-8">
-            <div className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-8">
+            <div className="bg-white border border-emerald-100 rounded-3xl p-8 md:p-10 shadow-sm space-y-8">
               {/* Question Text */}
               <div className="space-y-4">
-                <span className="px-3 py-1 bg-blue-50 text-blue-800 text-[10px] font-bold uppercase tracking-wider rounded-full">
+                <span className="px-3 py-1 bg-emerald-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider rounded-full">
                   Difficulty: {currentQuestion.difficulty}
                 </span>
-                <h3 className="text-lg md:text-xl font-bold text-slate-900 leading-relaxed">
+                <h3 className="text-lg md:text-xl font-bold text-emerald-950 leading-relaxed">
                   {currentQuestion.question_text}
                 </h3>
               </div>
@@ -218,9 +237,9 @@ const RecallSession = () => {
                     <button
                       key={opt.key}
                       onClick={() => selectOption(currentQuestion.id, opt.key)}
-                      className={`w-full text-left p-5 rounded-2xl border transition-all flex items-start gap-4 ${isSelected ? "border-blue-900 bg-blue-50/50 shadow-sm" : "border-slate-200 hover:border-slate-400 bg-slate-50/20"}`}
+                      className={`w-full text-left p-5 rounded-2xl border transition-all duration-200 ease-out flex items-start gap-4 active:scale-95 ${isSelected ? "border-emerald-500 bg-emerald-50/80 shadow-md ring-2 ring-emerald-500/20" : "border-emerald-100 hover:border-emerald-400 hover:shadow-sm bg-emerald-50/20 hover:-translate-y-0.5"}`}
                     >
-                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${isSelected ? "bg-blue-900 text-white" : "bg-slate-100 text-slate-600"}`}>
+                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors duration-200 ${isSelected ? "bg-emerald-600 text-white shadow-sm" : "bg-slate-100 text-slate-700 font-medium"}`}>
                         {opt.key}
                       </span>
                       <span className="text-sm font-semibold text-slate-800 leading-snug">{opt.val}</span>
@@ -235,7 +254,7 @@ const RecallSession = () => {
               <button
                 onClick={handlePrev}
                 disabled={activeIdx === 0}
-                className="px-6 py-3 border border-slate-200 rounded-xl hover:border-slate-400 text-slate-600 hover:text-slate-800 font-bold text-xs disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-all flex items-center gap-2"
+                className="px-6 py-3 border border-emerald-100 rounded-xl hover:border-slate-400 text-slate-700 font-medium hover:text-slate-800 font-bold text-xs disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-all flex items-center gap-2"
               >
                 <ChevronLeft className="w-4 h-4" />
                 Previous Question
@@ -253,7 +272,7 @@ const RecallSession = () => {
                 <button
                   onClick={() => setShowSubmitModal(true)}
                   disabled={submitting}
-                  className="px-8 py-3 bg-blue-900 text-white rounded-xl hover:bg-blue-850 font-bold text-xs shadow-md active:scale-95 transition-all"
+                  className="px-8 py-3 bg-emerald-600 text-white rounded-xl hover:bg-blue-850 font-bold text-xs shadow-md active:scale-95 transition-all"
                 >
                   {submitting ? "Submitting..." : "Submit All Answers"}
                 </button>
@@ -263,9 +282,9 @@ const RecallSession = () => {
         ) : (
           // Solutions & Review view
           <div className="space-y-8">
-            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Detailed Explanation & Solution Key</h3>
+            <h3 className="text-xs font-bold text-emerald-900/60 uppercase tracking-widest px-1">Detailed Explanation & Solution Key</h3>
             {results.feedback.map((item, idx) => (
-              <div key={item.id} className="bg-white border border-slate-200 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
+              <div key={item.id} className="bg-white border border-emerald-100 rounded-3xl p-8 md:p-10 shadow-sm space-y-6">
                 <div className="flex items-center justify-between border-b border-slate-50 pb-4">
                   <span className="font-bold text-slate-800 text-sm">Question {idx + 1}</span>
                   <div className="flex items-center gap-2">
@@ -283,27 +302,27 @@ const RecallSession = () => {
                   </div>
                 </div>
 
-                <h4 className="text-base md:text-lg font-bold text-slate-900 leading-relaxed">
+                <h4 className="text-base md:text-lg font-bold text-emerald-950 leading-relaxed">
                   {item.question_text}
                 </h4>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-semibold text-slate-500">
-                  <div className={`p-4 rounded-xl border ${item.student_choice === 'A' ? (item.is_correct ? 'border-green-500 bg-green-50/20 text-green-800' : 'border-red-500 bg-red-50/20 text-red-800') : (item.correct_option === 'A' ? 'border-green-500 bg-green-50/10 text-green-850' : 'border-slate-100 bg-slate-50/20')}`}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-semibold text-emerald-900/80">
+                  <div className={`p-4 rounded-xl border ${item.student_choice === 'A' ? (item.is_correct ? 'border-green-500 bg-green-50/20 text-green-800' : 'border-red-500 bg-red-50/20 text-red-800') : (item.correct_option === 'A' ? 'border-green-500 bg-green-50/10 text-green-850' : 'border-slate-100 bg-emerald-50/20')}`}>
                     Option A: {quiz.questions[idx].option_a}
                   </div>
-                  <div className={`p-4 rounded-xl border ${item.student_choice === 'B' ? (item.is_correct ? 'border-green-500 bg-green-50/20 text-green-800' : 'border-red-500 bg-red-50/20 text-red-800') : (item.correct_option === 'B' ? 'border-green-500 bg-green-50/10 text-green-850' : 'border-slate-100 bg-slate-50/20')}`}>
+                  <div className={`p-4 rounded-xl border ${item.student_choice === 'B' ? (item.is_correct ? 'border-green-500 bg-green-50/20 text-green-800' : 'border-red-500 bg-red-50/20 text-red-800') : (item.correct_option === 'B' ? 'border-green-500 bg-green-50/10 text-green-850' : 'border-slate-100 bg-emerald-50/20')}`}>
                     Option B: {quiz.questions[idx].option_b}
                   </div>
-                  <div className={`p-4 rounded-xl border ${item.student_choice === 'C' ? (item.is_correct ? 'border-green-500 bg-green-50/20 text-green-800' : 'border-red-500 bg-red-50/20 text-red-800') : (item.correct_option === 'C' ? 'border-green-500 bg-green-50/10 text-green-850' : 'border-slate-100 bg-slate-50/20')}`}>
+                  <div className={`p-4 rounded-xl border ${item.student_choice === 'C' ? (item.is_correct ? 'border-green-500 bg-green-50/20 text-green-800' : 'border-red-500 bg-red-50/20 text-red-800') : (item.correct_option === 'C' ? 'border-green-500 bg-green-50/10 text-green-850' : 'border-slate-100 bg-emerald-50/20')}`}>
                     Option C: {quiz.questions[idx].option_c}
                   </div>
-                  <div className={`p-4 rounded-xl border ${item.student_choice === 'D' ? (item.is_correct ? 'border-green-500 bg-green-50/20 text-green-800' : 'border-red-500 bg-red-50/20 text-red-800') : (item.correct_option === 'D' ? 'border-green-500 bg-green-50/10 text-green-850' : 'border-slate-100 bg-slate-50/20')}`}>
+                  <div className={`p-4 rounded-xl border ${item.student_choice === 'D' ? (item.is_correct ? 'border-green-500 bg-green-50/20 text-green-800' : 'border-red-500 bg-red-50/20 text-red-800') : (item.correct_option === 'D' ? 'border-green-500 bg-green-50/10 text-green-850' : 'border-slate-100 bg-emerald-50/20')}`}>
                     Option D: {quiz.questions[idx].option_d}
                   </div>
                 </div>
 
-                <div className="bg-slate-50 p-6 md:p-8 rounded-2xl border-l-4 border-blue-900 space-y-4">
-                  <div className="flex gap-4 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                <div className="bg-emerald-50 p-6 md:p-8 rounded-2xl border-l-4 border-blue-900 space-y-4">
+                  <div className="flex gap-4 text-xs font-bold text-emerald-900/60 uppercase tracking-wider">
                     <span>Your Answer: <strong className={item.is_correct ? "text-green-700" : "text-red-700"}>{item.student_choice || "Skipped"}</strong></span>
                     <span>•</span>
                     <span>Correct Answer: <strong className="text-green-700">{item.correct_option}</strong></span>
@@ -316,10 +335,10 @@ const RecallSession = () => {
             ))}
 
             <div className="flex justify-center gap-4 py-6">
-              <button onClick={handleReattempt} className="px-8 py-4 border border-blue-900 text-blue-900 rounded-xl hover:bg-blue-50 font-bold text-sm shadow-sm active:scale-95 transition-all">
+              <button onClick={handleReattempt} className="px-8 py-4 border border-blue-900 text-emerald-600 rounded-xl hover:bg-emerald-100 font-bold text-sm shadow-sm active:scale-95 transition-all">
                 Reattempt Test
               </button>
-              <Link to={`/recall/book/${(quiz as any).book?.id}`} className="px-8 py-4 bg-blue-900 text-white rounded-xl hover:bg-blue-850 font-bold text-sm shadow-md active:scale-95 transition-all">
+              <Link to={`/recall/book/${(quiz as any).book?.id}`} className="px-8 py-4 bg-emerald-600 text-white rounded-xl hover:bg-blue-850 font-bold text-sm shadow-md active:scale-95 transition-all">
                 Return to Book
               </Link>
             </div>
@@ -339,16 +358,16 @@ const RecallSession = () => {
           {/* Modal Container */}
           <div className="relative bg-white rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl border border-slate-100 transform scale-100 transition-all duration-300 ease-out animate-in fade-in zoom-in-95">
             <div className="flex flex-col items-center text-center">
-              <div className="w-14 h-14 bg-blue-50 text-blue-900 rounded-full flex items-center justify-center mb-4 ring-8 ring-blue-50/50">
+              <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4 ring-8 ring-blue-50/50">
                 <CheckCircle2 className="w-7 h-7" />
               </div>
-              <h3 className="font-playfair text-xl md:text-2xl text-blue-900 font-bold tracking-tight">
+              <h3 className="font-playfair text-xl md:text-2xl text-emerald-600 font-bold tracking-tight">
                 Submit Your Answers?
               </h3>
-              <p className="text-slate-500 text-sm mt-3 leading-relaxed">
-                You have answered <strong className="text-blue-900">{Object.keys(answers).length}</strong> out of <strong className="text-blue-900">{questionCount}</strong> questions.
+              <p className="text-emerald-900/80 text-sm mt-3 leading-relaxed">
+                You have answered <strong className="text-emerald-600">{Object.keys(answers).length}</strong> out of <strong className="text-emerald-600">{questionCount}</strong> questions.
               </p>
-              <p className="text-slate-400 text-xs mt-2 leading-relaxed">
+              <p className="text-emerald-900/60 text-xs mt-2 leading-relaxed">
                 Once submitted, you cannot modify your answers. Your final grade and solutions key will be available immediately.
               </p>
             </div>
@@ -356,13 +375,13 @@ const RecallSession = () => {
             <div className="flex gap-3 mt-8">
               <button
                 onClick={() => setShowSubmitModal(false)}
-                className="flex-1 py-3 px-4 border border-slate-200 text-slate-600 rounded-xl text-sm font-bold hover:bg-slate-50 active:scale-[0.98] transition-all"
+                className="flex-1 py-3 px-4 border border-emerald-100 text-slate-700 font-medium rounded-xl text-sm font-bold hover:bg-emerald-50 active:scale-[0.98] transition-all"
               >
                 Go Back
               </button>
               <button
                 onClick={executeSubmit}
-                className="flex-1 py-3 px-4 bg-blue-900 hover:bg-blue-850 text-white rounded-xl text-sm font-bold active:scale-[0.98] transition-all shadow-md shadow-blue-900/10"
+                className="flex-1 py-3 px-4 bg-emerald-600 hover:bg-blue-850 text-white rounded-xl text-sm font-bold active:scale-[0.98] transition-all shadow-md shadow-blue-900/10"
               >
                 Submit Test
               </button>

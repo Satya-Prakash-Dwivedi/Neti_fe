@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { GoogleLogin } from '@react-oauth/google';
 import SEO from "../components/SEO";
 
 const Register = () => {
@@ -8,7 +9,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { register } = useAuth();
+  const { register, googleLogin } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -19,6 +20,18 @@ const Register = () => {
       navigate("/", { replace: true });
     } catch (err: any) {
       setError(err.message || "Registration failed. Please check your entries.");
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    setError("");
+    try {
+      if (credentialResponse.credential) {
+        await googleLogin(credentialResponse.credential);
+        navigate("/", { replace: true });
+      }
+    } catch (err: any) {
+      setError(err.message || "Google signup failed.");
     }
   };
 
@@ -87,6 +100,20 @@ const Register = () => {
             Sign Up
           </button>
         </form>
+
+        <div className="mt-6 flex items-center justify-between">
+          <span className="w-1/5 border-b lg:w-1/4"></span>
+          <span className="text-xs text-center text-slate-500 uppercase tracking-wider font-bold">or continue with</span>
+          <span className="w-1/5 border-b lg:w-1/4"></span>
+        </div>
+
+        <div className="mt-6 flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => setError("Google signup was unsuccessful.")}
+            useOneTap
+          />
+        </div>
 
         <p className="mt-8 text-center text-xs font-medium text-slate-500">
           Already have an account?{" "}
