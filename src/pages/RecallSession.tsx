@@ -43,7 +43,7 @@ const RecallSession = () => {
     return {};
   });
   const [showSubmitModal, setShowSubmitModal] = useState(false);
-  
+
   // Submission feedback
   const [submitting, setSubmitting] = useState(false);
   const [results, setResults] = useState<{
@@ -148,7 +148,7 @@ const RecallSession = () => {
 
   const currentQuestion = quiz.questions[activeIdx];
   const questionCount = quiz.questions.length;
-  
+
   const handleReattempt = () => {
     setResults(null);
     setAnswers({});
@@ -159,7 +159,7 @@ const RecallSession = () => {
   return (
     <div className="bg-white min-h-screen py-12 px-6">
       <SEO title={`${quiz.title} - Online Practice`} description={`Online test session for ${quiz.title}`} />
-      
+
       <div className="max-w-4xl mx-auto">
         <Link to={`/recall/book/${(quiz as any).book?.id}`} className="inline-flex items-center gap-2 text-emerald-900/80 hover:text-emerald-600 font-bold text-xs uppercase tracking-widest mb-8">
           <ArrowLeft className="w-4 h-4" />
@@ -170,15 +170,15 @@ const RecallSession = () => {
         {results ? (
           <div className="bg-white border border-emerald-100 rounded-3xl p-8 md:p-10 shadow-lg mb-8 text-center space-y-6">
             <div className="flex justify-center mb-2">
-               {results.score / results.total_questions >= 0.8 ? (
-                 <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center animate-bounce shadow-md">
-                   <Trophy className="w-10 h-10" />
-                 </div>
-               ) : (
-                 <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center animate-pulse shadow-sm">
-                   <Target className="w-10 h-10" />
-                 </div>
-               )}
+              {results.score / results.total_questions >= 0.8 ? (
+                <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center animate-bounce shadow-md">
+                  <Trophy className="w-10 h-10" />
+                </div>
+              ) : (
+                <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center animate-pulse shadow-sm">
+                  <Target className="w-10 h-10" />
+                </div>
+              )}
             </div>
             <h2 className="text-3xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight">Quiz Completed!</h2>
             <div className={`inline-flex flex-col items-center justify-center p-6 rounded-2xl border ${results.score / results.total_questions >= 0.8 ? 'bg-green-50 border-green-200 shadow-sm' : 'bg-emerald-50 border-emerald-200'}`}>
@@ -187,7 +187,7 @@ const RecallSession = () => {
               <span className="text-xs font-bold text-emerald-900/80 mt-2">({Math.round((results.score / results.total_questions) * 100)}% accuracy)</span>
             </div>
             <p className="text-sm text-emerald-900/80 font-medium max-w-md mx-auto">
-              Review your question breakdown below with option elimination logic, UPSC alignment, and the solutions database.
+              Review your question breakdown below with option elimination logic, and the solutions database.
             </p>
           </div>
         ) : (
@@ -201,8 +201,8 @@ const RecallSession = () => {
                 Question {activeIdx + 1} of {questionCount}
               </div>
               <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden shadow-inner">
-                <div 
-                  className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2.5 rounded-full transition-all duration-500 ease-out shadow-sm" 
+                <div
+                  className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2.5 rounded-full transition-all duration-500 ease-out shadow-sm"
                   style={{ width: `${((activeIdx + 1) / questionCount) * 100}%` }}
                 ></div>
               </div>
@@ -350,11 +350,11 @@ const RecallSession = () => {
       {showSubmitModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           {/* Backdrop with blur */}
-          <div 
+          <div
             className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setShowSubmitModal(false)}
           />
-          
+
           {/* Modal Container */}
           <div className="relative bg-white rounded-3xl max-w-md w-full p-6 md:p-8 shadow-2xl border border-slate-100 transform scale-100 transition-all duration-300 ease-out animate-in fade-in zoom-in-95">
             <div className="flex flex-col items-center text-center">
@@ -371,7 +371,7 @@ const RecallSession = () => {
                 Once submitted, you cannot modify your answers. Your final grade and solutions key will be available immediately.
               </p>
             </div>
-            
+
             <div className="flex gap-3 mt-8">
               <button
                 onClick={() => setShowSubmitModal(false)}
