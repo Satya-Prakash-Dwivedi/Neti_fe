@@ -14,7 +14,8 @@ interface Quiz {
 
 interface Book {
   id: number;
-  title: string;
+  book_name: string;
+  class_name?: string;
   subject: string;
   cover_image: string;
   full_price: string;
@@ -44,7 +45,7 @@ const RecallBookDetail = () => {
       const token = localStorage.getItem('token');
       const fetchBook = axios.get(`${import.meta.env.VITE_API_URL}/quizzes/books/${bookId}/`);
       const fetchQuizzes = axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/list/`);
-      
+
       const promises: any[] = [fetchBook, fetchQuizzes];
       if (token) {
         promises.push(axios.get(`${import.meta.env.VITE_API_URL}/orders/user/`, {
@@ -89,11 +90,11 @@ const RecallBookDetail = () => {
       navigate('/login', { state: { from: location.pathname } });
       return;
     }
-    
+
     setPurchasingId(id);
     try {
       const payload = { book_id: id };
-      
+
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/orders/create/`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -185,10 +186,11 @@ const RecallBookDetail = () => {
   const fullBookOrder = orders.find(o => o.book_id === book.id);
   const isBookFree = parseFloat(book.full_price) === 0;
   const isBookUnlocked = isFullBookPurchased || isBookFree;
+  const displayTitle = `${book.book_name} - ${book.subject}${book.class_name ? ` - ${book.class_name}` : ''}`;
 
   return (
     <div className="bg-white min-h-screen py-12 px-6">
-      <SEO title={`${book.title} - Question Bank`} description={`Practice tests for ${book.title}.`} />
+      <SEO title={`${displayTitle} - Question Bank`} description={`Practice tests for ${displayTitle}.`} />
 
       <div className="max-w-4xl mx-auto">
         <button
@@ -211,16 +213,16 @@ const RecallBookDetail = () => {
             <div className="flex items-center gap-3 text-xs font-bold text-emerald-900/60 uppercase tracking-widest mb-3">
               <span>{book.subject}</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight mb-4">{book.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight mb-4">{displayTitle}</h1>
             <p className="text-base text-slate-700 font-medium leading-relaxed mb-6">
-              Complete question bank for {book.title}. Unlock individual chapters or purchase the entire book at a discount.
+              Complete question bank for {displayTitle}. Unlock individual chapters or purchase the entire book at a discount.
             </p>
-            
+
             <div className="flex items-center gap-4 flex-wrap">
               <span className="text-sm font-bold text-emerald-900/80 bg-slate-100 px-4 py-2 rounded-xl">
                 {quizzes.length} Chapters Available
               </span>
-              
+
               {isBookUnlocked ? (
                 <div className="flex items-center gap-2 text-green-700 bg-green-50 px-4 py-2 rounded-xl font-bold text-sm">
                   <CheckCircle className="w-4 h-4" />

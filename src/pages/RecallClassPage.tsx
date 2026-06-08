@@ -75,8 +75,8 @@ const RecallClassPage = () => {
                   className="bg-white rounded-2xl border border-emerald-100 p-4 flex flex-col items-center gap-4 hover:border-emerald-400 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 ease-out group overflow-hidden"
                 >
                   {book.cover_image ? (
-                     <div className="w-full h-48 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center">
-                       <img src={book.cover_image} alt={book.book_name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                     <div className="w-full h-48 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center p-2">
+                       <img src={book.cover_image} alt={book.book_name} className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" />
                      </div>
                   ) : (
                      <div className="w-full h-48 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center">
