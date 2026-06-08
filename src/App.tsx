@@ -134,11 +134,7 @@ function App() {
             {/* Recall Hub Routes */}
             <Route 
               path="/recall" 
-              element={
-                <StudentRoute>
-                  <RecallSubjects />
-                </StudentRoute>
-              } 
+              element={<RecallSubjects />} 
             />
             <Route 
               path="/recall/history" 
@@ -150,27 +146,15 @@ function App() {
             />
             <Route 
               path="/recall/:bookName" 
-              element={
-                <StudentRoute>
-                  <RecallSubjectPage />
-                </StudentRoute>
-              } 
+              element={<RecallSubjectPage />} 
             />
             <Route 
               path="/recall/:bookName/:subject" 
-              element={
-                <StudentRoute>
-                  <RecallClassPage />
-                </StudentRoute>
-              } 
+              element={<RecallClassPage />} 
             />
             <Route 
               path="/recall/book/:bookId" 
-              element={
-                <StudentRoute>
-                  <RecallBookDetail />
-                </StudentRoute>
-              } 
+              element={<RecallBookDetail />} 
             />
             <Route 
               path="/recall/session/:id" 

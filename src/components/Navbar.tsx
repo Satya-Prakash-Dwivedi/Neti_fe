@@ -184,6 +184,25 @@ const Navbar = () => {
                     </NavLink>
                   </li>
 
+                  <li>
+                    <NavLink
+                      to="/recall"
+                      className={({ isActive }) =>
+                        `text-sm font-bold transition-all duration-200 relative group/item ${isActive
+                          ? "text-blue-900"
+                          : "text-slate-600 hover:text-blue-900"
+                        }`
+                      }
+                    >
+                      {({ isActive }) => (
+                        <>
+                          Recall Hub
+                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                        </>
+                      )}
+                    </NavLink>
+                  </li>
+
                   {/* Current Affairs Dropdown */}
                   <li className="relative" ref={caDropdownRef}>
                     <button 
@@ -235,27 +254,6 @@ const Navbar = () => {
                     </li>
                   ))}
 
-                  {/* Practice Tests for Students */}
-                  {isAuthenticated && (
-                    <li>
-                      <NavLink
-                        to="/recall"
-                        className={({ isActive }) =>
-                          `text-sm font-bold transition-all duration-200 relative group/item ${isActive
-                            ? "text-blue-900"
-                            : "text-slate-600 hover:text-blue-900"
-                          }`
-                        }
-                      >
-                        {({ isActive }) => (
-                          <>
-                            Recall Hub
-                            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
-                          </>
-                        )}
-                      </NavLink>
-                    </li>
-                  )}
 
                   {/* Insights Dropdown */}
                   <li className="relative" ref={dropdownRef}>
@@ -423,6 +421,20 @@ const Navbar = () => {
                     {mainNavItems[0].name}
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink
+                    to="/recall"
+                    onClick={() => setIsMenuOpen(false)}
+                    className={({ isActive }) =>
+                      `text-lg font-bold px-6 py-3 block transition-colors ${isActive
+                        ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
+                        : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                      }`
+                    }
+                  >
+                    Recall Hub
+                  </NavLink>
+                </li>
 
                 {/* Mobile Current Affairs Section */}
                 <li className="px-6 py-3">
@@ -462,24 +474,7 @@ const Navbar = () => {
                   </li>
                 ))}
 
-                {/* Mobile Practice Tests */}
-                {isAuthenticated && (
-                  <li>
-                    <NavLink
-                      to="/recall"
-                      onClick={() => setIsMenuOpen(false)}
-                      className={({ isActive }) =>
-                        `text-lg font-bold px-6 py-3 block transition-colors ${isActive
-                          ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
-                          : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
-                        }`
-                      }
-                    >
-                      Recall Hub
-                    </NavLink>
-                  </li>
-                )}
-                
+
                 {/* Mobile Dropdown Section */}
                 <li className="px-6 py-3">
                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Insights & Updates</p>

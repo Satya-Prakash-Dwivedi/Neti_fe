@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft, PlayCircle, Lock, Download, CheckCircle, ChevronRight, BookOpen } from "lucide-react";
 import { useToast } from "../context/ToastContext";
@@ -37,17 +37,26 @@ const RecallBookDetail = () => {
   const [loading, setLoading] = useState(true);
   const [purchasingId, setPurchasingId] = useState<number | null>(null);
   const { showToast } = useToast();
+  const location = useLocation();
 
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const [bookRes, quizzesRes, ordersRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL}/quizzes/books/${bookId}/`),
-        axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/list/`),
-        axios.get(`${import.meta.env.VITE_API_URL}/orders/user/`, {
+      const fetchBook = axios.get(`${import.meta.env.VITE_API_URL}/quizzes/books/${bookId}/`);
+      const fetchQuizzes = axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/list/`);
+      
+      const promises: any[] = [fetchBook, fetchQuizzes];
+      if (token) {
+        promises.push(axios.get(`${import.meta.env.VITE_API_URL}/orders/user/`, {
           headers: { Authorization: `Bearer ${token}` }
-        })
-      ]);
+        }));
+      }
+
+      const results = await Promise.all(promises);
+      const bookRes = results[0];
+      const quizzesRes = results[1];
+      const ordersRes = token ? results[2] : { data: [] };
+
       setBook(bookRes.data);
       const filteredQuizzes = quizzesRes.data.filter((q: any) => q.book && q.book.id === Number(bookId));
       setQuizzes(filteredQuizzes);
@@ -75,9 +84,14 @@ const RecallBookDetail = () => {
   }, []);
 
   const handlePurchase = async (id: number) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login', { state: { from: location.pathname } });
+      return;
+    }
+    
     setPurchasingId(id);
     try {
-      const token = localStorage.getItem('token');
       const payload = { book_id: id };
       
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/orders/create/`, payload, {
