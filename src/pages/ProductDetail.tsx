@@ -6,6 +6,35 @@ const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [referralCode, setReferralCode] = useState(() => localStorage.getItem('referralCode') || "");
+  const [referralConfig, setReferralConfig] = useState<{ discount_percentage: number } | null>(null);
+  const [isValidReferral, setIsValidReferral] = useState(false);
+
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_API_URL}/orders/referral-config/`)
+      .then(res => setReferralConfig(res.data))
+      .catch(err => console.error("Failed to fetch referral config", err));
+  }, []);
+
+  useEffect(() => {
+    if (referralCode.length > 2) {
+      const delayFn = setTimeout(() => {
+        axios.get(`${import.meta.env.VITE_API_URL}/orders/validate-referral/?code=${referralCode}`, {
+          headers: localStorage.getItem('token') ? { Authorization: `Bearer ${localStorage.getItem('token')}` } : {}
+        })
+          .then(res => {
+            setIsValidReferral(res.data.valid);
+          })
+          .catch(err => {
+            console.error("Failed to validate referral code", err);
+            setIsValidReferral(false);
+          });
+      }, 500);
+      return () => clearTimeout(delayFn);
+    } else {
+      setIsValidReferral(false);
+    }
+  }, [referralCode]);
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL}/products/${id}/`)
@@ -21,11 +50,18 @@ const ProductDetail = () => {
 
   const handleBuyNow = async () => {
     try {
-      // 1. Create order on the backend
-      const { data: order } = await axios.post(`${import.meta.env.VITE_API_URL}/orders/create/`, {
+      const payload: any = {
         amount: product.price,
         currency: "INR",
         product_id: product.id
+      };
+      if (referralCode) {
+        payload.referral_code = referralCode;
+      }
+
+      // 1. Create order on the backend
+      const { data: order } = await axios.post(`${import.meta.env.VITE_API_URL}/orders/create/`, payload, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } // ensure auth
       });
 
       // 2. Initialize Razorpay Checkout
@@ -73,6 +109,14 @@ const ProductDetail = () => {
     return <div className="p-20 text-center">Product Not Found</div>;
   }
 
+  const getDisplayPrice = () => {
+    let price = parseFloat(product.price);
+    if (referralConfig && isValidReferral) {
+      price = price - (price * referralConfig.discount_percentage / 100);
+    }
+    return Math.max(price, 0).toFixed(2);
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-6 py-16">
       <div className="flex flex-col md:flex-row gap-12 items-start">
@@ -100,11 +144,29 @@ const ProductDetail = () => {
            </div>
 
            <div className="space-y-4">
+              <div className="flex items-center">
+                <input 
+                  type="text" 
+                  placeholder="Referral Code (Optional)" 
+                  value={referralCode}
+                  onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
+                  className="px-4 py-3 border border-slate-200 rounded-l-xl text-sm w-full font-mono focus:outline-none focus:ring-2 focus:ring-blue-500 uppercase"
+                />
+                <div className="bg-slate-50 border-y border-r border-slate-200 rounded-r-xl px-4 py-3 min-w-[80px] flex items-center justify-center">
+                  {referralConfig && isValidReferral ? (
+                    <span className="text-xs text-blue-600 font-bold whitespace-nowrap">
+                      -{referralConfig.discount_percentage}% Off
+                    </span>
+                  ) : (
+                    <span className="text-xs text-slate-400 font-medium">—</span>
+                  )}
+                </div>
+              </div>
               <button 
                 onClick={handleBuyNow}
                 className="w-full py-5 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
               >
-                Buy Now & Download PDF
+                Buy Now & Download PDF (₹{getDisplayPrice()})
               </button>
               <p className="text-center text-xs text-slate-400">
                 Secure transaction powered by Razorpay.

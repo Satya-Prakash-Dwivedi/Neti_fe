@@ -29,9 +29,11 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCADropdownOpen, setIsCADropdownOpen] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const dropdownRef = useRef<HTMLLIElement>(null);
   const caDropdownRef = useRef<HTMLLIElement>(null);
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
   const { isAuthenticated, isAdmin, user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -53,16 +55,19 @@ const Navbar = () => {
       if (caDropdownRef.current && !caDropdownRef.current.contains(event.target as Node)) {
         setIsCADropdownOpen(false);
       }
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target as Node)) {
+        setIsProfileDropdownOpen(false);
+      }
     };
 
-    if (isDropdownOpen || isCADropdownOpen) {
+    if (isDropdownOpen || isCADropdownOpen || isProfileDropdownOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
     
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isDropdownOpen, isCADropdownOpen]);
+  }, [isDropdownOpen, isCADropdownOpen, isProfileDropdownOpen]);
 
   // Handle ESC key to close modal
   useEffect(() => {
@@ -309,18 +314,70 @@ const Navbar = () => {
             </ul>
 
             {/* Desktop Authentication Buttons */}
-            <div className="border-l border-slate-200 pl-8 flex items-center gap-4">
+            <div className="border-l border-slate-200 pl-8 flex items-center gap-4 relative" ref={profileDropdownRef}>
               {isAuthenticated ? (
                 <div className="flex items-center gap-4">
-                  <span className="text-xs font-bold text-slate-700 bg-slate-100 px-3.5 py-1.5 rounded-full">
-                    {user?.name}
-                  </span>
-                  <button
-                    onClick={() => setShowLogoutModal(true)}
-                    className="text-xs font-bold text-slate-500 hover:text-red-650 transition-colors uppercase tracking-wider"
+                  <button 
+                    onClick={() => setIsProfileDropdownOpen(!isProfileDropdownOpen)}
+                    className="flex items-center gap-2 px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors cursor-pointer"
                   >
-                    Log Out
+                    <span className="text-xs font-bold text-slate-700">
+                      {user?.name}
+                    </span>
+                    <svg className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${isProfileDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                    </svg>
                   </button>
+
+                  {/* Profile Dropdown */}
+                  <div className={`absolute top-full right-0 mt-4 w-72 bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden transition-all duration-200 origin-top-right ${isProfileDropdownOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
+                    <div className="p-5 border-b border-slate-50">
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Refer & Earn</p>
+                      <p className="text-sm text-slate-600 mb-4 leading-snug">Give friends a discount and earn points when they purchase!</p>
+                      
+                      <div className="bg-slate-50 rounded-xl p-3 mb-4 border border-slate-100">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase">Your Code</span>
+                          <span className="text-xs font-black text-emerald-600">{user?.referral_points || 0} pts</span>
+                        </div>
+                        <div className="font-mono text-xl font-bold text-slate-800 tracking-widest">
+                          {user?.referral_code || "---"}
+                        </div>
+                      </div>
+                      
+                      <button 
+                        onClick={() => {
+                          const link = `${window.location.origin}/recall?ref=${user?.referral_code}`;
+                          navigator.clipboard.writeText(link);
+                          alert("Referral link copied to clipboard!");
+                        }}
+                        className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2 active:scale-95"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                        Copy Referral Link
+                      </button>
+                    </div>
+                    
+                    <div className="p-2 bg-slate-50">
+                      {!isAdmin && (
+                        <Link 
+                          to="/recall/history"
+                          onClick={() => setIsProfileDropdownOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:text-blue-900 hover:bg-white rounded-xl transition-all w-full text-left"
+                        >
+                          <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                          Test History
+                        </Link>
+                      )}
+                      <button
+                        onClick={() => { setIsProfileDropdownOpen(false); setShowLogoutModal(true); }}
+                        className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50 rounded-xl transition-all w-full text-left"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                        Log Out
+                      </button>
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="flex items-center gap-3">
@@ -517,9 +574,32 @@ const Navbar = () => {
             <li className="border-t border-slate-100 pt-6 px-6 flex flex-col gap-4">
               {isAuthenticated ? (
                 <div className="flex flex-col gap-3">
-                  <span className="text-xs font-bold text-slate-700 bg-slate-100 px-4 py-2.5 rounded-xl text-center">
-                    Logged in as {user?.name}
-                  </span>
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Refer & Earn</p>
+                    <div className="flex justify-between items-center mt-2">
+                      <span className="font-mono font-bold text-slate-800 tracking-widest">{user?.referral_code}</span>
+                      <span className="text-xs font-black text-emerald-600">{user?.referral_points || 0} pts</span>
+                    </div>
+                    <button 
+                      onClick={() => {
+                        const link = `${window.location.origin}/recall?ref=${user?.referral_code}`;
+                        navigator.clipboard.writeText(link);
+                        alert("Referral link copied to clipboard!");
+                      }}
+                      className="w-full mt-3 py-2 bg-emerald-600 text-white text-xs font-bold rounded-lg"
+                    >
+                      Copy Shareable Link
+                    </button>
+                  </div>
+                  {!isAdmin && (
+                    <Link
+                      to="/recall/history"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="py-3 bg-white border border-slate-200 text-slate-700 hover:text-blue-900 rounded-xl text-sm font-bold active:scale-95 transition-all text-center"
+                    >
+                      Test History
+                    </Link>
+                  )}
                   <button
                     onClick={() => setShowLogoutModal(true)}
                     className="py-3 bg-red-50 text-red-650 hover:bg-red-100 rounded-xl text-sm font-bold active:scale-95 transition-all text-center"

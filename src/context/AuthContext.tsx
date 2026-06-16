@@ -6,6 +6,8 @@ interface User {
   email: string;
   name: string;
   role: 'STUDENT' | 'ADMIN' | 'EDUCATOR';
+  referral_code?: string;
+  referral_points?: number;
 }
 
 interface AuthContextType {

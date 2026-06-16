@@ -23,6 +23,9 @@ interface Order {
   status: "Paid" | "Pending" | "Failed";
   razorpay_payment_id: string | null;
   created_at: string;
+  referral_code_used?: string | null;
+  referrer_name?: string | null;
+  points_awarded?: number;
 }
 
 const AdminOrders = () => {
@@ -197,6 +200,9 @@ const AdminOrders = () => {
                     Amount
                   </th>
                   <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Referral
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">
                     Status
                   </th>
                 </tr>
@@ -239,6 +245,25 @@ const AdminOrders = () => {
                           {parseFloat(order.amount).toLocaleString('en-IN')}
                         </div>
                       </td>
+                      <td className="px-6 py-4">
+                        {order.referral_code_used ? (
+                          <div className="flex flex-col">
+                            <span className="text-xs font-bold text-blue-900 bg-blue-50 px-2 py-1 rounded w-fit mb-1 font-mono">
+                              {order.referral_code_used}
+                            </span>
+                            <span className="text-xs text-slate-500">
+                              By: <span className="font-medium text-slate-700">{order.referrer_name || "Unknown"}</span>
+                            </span>
+                            {order.status === 'Paid' && (
+                              <span className="text-[10px] text-emerald-600 font-bold mt-0.5">
+                                +{order.points_awarded} pts awarded
+                              </span>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-xs text-slate-400">—</span>
+                        )}
+                      </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         {getStatusBadge(order.status)}
                       </td>
@@ -246,7 +271,7 @@ const AdminOrders = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={5} className="px-6 py-12 text-center text-slate-500">
+                    <td colSpan={6} className="px-6 py-12 text-center text-slate-500">
                       <div className="flex flex-col items-center justify-center">
                         <Search className="w-8 h-8 text-slate-300 mb-3" />
                         <p className="text-base font-medium text-slate-600">No orders found</p>

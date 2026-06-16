@@ -49,14 +49,21 @@ import ResetPassword from './pages/ResetPassword';
 
 // ScrollToTop component to reset scroll on route change
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     captureEvent('$pageview', {
       $current_url: window.location.href,
     });
-  }, [pathname]);
+    
+    // Capture referral code if present
+    const params = new URLSearchParams(search);
+    const refCode = params.get('ref');
+    if (refCode) {
+      localStorage.setItem('referralCode', refCode.toUpperCase());
+    }
+  }, [pathname, search]);
 
   return null;
 }

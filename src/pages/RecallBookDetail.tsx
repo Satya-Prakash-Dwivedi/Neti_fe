@@ -37,8 +37,37 @@ const RecallBookDetail = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [purchasingId, setPurchasingId] = useState<number | null>(null);
+  const [referralCode, setReferralCode] = useState(() => localStorage.getItem('referralCode') || "");
+  const [referralConfig, setReferralConfig] = useState<{ discount_percentage: number } | null>(null);
+  const [isValidReferral, setIsValidReferral] = useState(false);
   const { showToast } = useToast();
   const location = useLocation();
+
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_API_URL}/orders/referral-config/`)
+      .then(res => setReferralConfig(res.data))
+      .catch(err => console.error("Failed to fetch referral config", err));
+  }, []);
+
+  useEffect(() => {
+    if (referralCode.length > 2) {
+      const delayFn = setTimeout(() => {
+        axios.get(`${import.meta.env.VITE_API_URL}/orders/validate-referral/?code=${referralCode}`, {
+          headers: localStorage.getItem('token') ? { Authorization: `Bearer ${localStorage.getItem('token')}` } : {}
+        })
+          .then(res => {
+            setIsValidReferral(res.data.valid);
+          })
+          .catch(err => {
+            console.error("Failed to validate referral code", err);
+            setIsValidReferral(false);
+          });
+      }, 500);
+      return () => clearTimeout(delayFn);
+    } else {
+      setIsValidReferral(false);
+    }
+  }, [referralCode]);
 
   const fetchData = async () => {
     try {
@@ -93,7 +122,10 @@ const RecallBookDetail = () => {
 
     setPurchasingId(id);
     try {
-      const payload = { book_id: id };
+      const payload: any = { book_id: id };
+      if (referralCode) {
+        payload.referral_code = referralCode;
+      }
 
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/orders/create/`, payload, {
         headers: { Authorization: `Bearer ${token}` }
@@ -188,6 +220,14 @@ const RecallBookDetail = () => {
   const isBookUnlocked = isFullBookPurchased || isBookFree;
   const displayTitle = `${book.book_name} - ${book.subject}${book.class_name ? ` - ${book.class_name}` : ''}`;
 
+  const getDisplayPrice = () => {
+    let price = parseFloat(book.full_price);
+    if (referralConfig && isValidReferral) {
+      price = price - (price * referralConfig.discount_percentage / 100);
+    }
+    return Math.max(price, 0).toFixed(2);
+  };
+
   return (
     <div className="bg-white min-h-screen py-12 px-6">
       <SEO title={`${displayTitle} - Question Bank`} description={`Practice tests for ${displayTitle}.`} />
@@ -234,14 +274,34 @@ const RecallBookDetail = () => {
                   )}
                 </div>
               ) : (
-                <button
-                  onClick={() => handlePurchase(book.id)}
-                  disabled={purchasingId === book.id}
-                  className="px-6 py-2.5 bg-emerald-600 text-white text-sm font-bold rounded-xl hover:bg-emerald-700 transition-all flex items-center gap-2 shadow-sm disabled:opacity-50"
-                >
-                  <Lock className="w-4 h-4" />
-                  {purchasingId === book.id ? "Processing..." : `Unlock Full Book (₹${book.full_price})`}
-                </button>
+                <div className="flex flex-col gap-3 w-full mt-4 sm:mt-0">
+                  <div className="flex items-center">
+                    <input 
+                      type="text" 
+                      placeholder="Referral Code (Optional)" 
+                      value={referralCode}
+                      onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
+                      className="px-4 py-2 border border-slate-200 rounded-l-xl text-sm w-full font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500 uppercase"
+                    />
+                    <div className="bg-slate-50 border-y border-r border-slate-200 rounded-r-xl px-4 py-2 min-w-[80px] flex items-center justify-center">
+                      {referralConfig && isValidReferral ? (
+                        <span className="text-xs text-emerald-600 font-bold whitespace-nowrap">
+                          -{referralConfig.discount_percentage}% Off
+                        </span>
+                      ) : (
+                        <span className="text-xs text-slate-400 font-medium">—</span>
+                      )}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => handlePurchase(book.id)}
+                    disabled={purchasingId === book.id}
+                    className="w-full px-6 py-3.5 bg-emerald-600 text-white text-sm font-bold rounded-xl hover:bg-emerald-700 transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
+                  >
+                    <Lock className="w-4 h-4" />
+                    {purchasingId === book.id ? "Processing..." : `Unlock Full Book (₹${getDisplayPrice()})`}
+                  </button>
+                </div>
               )}
             </div>
           </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { CheckCircle2, ChevronRight, Award, PlayCircle, History } from "lucide-react";
+import { useAuth } from "../context/AuthContext";
 import SEO from "../components/SEO";
 
 interface Quiz {
@@ -24,6 +25,7 @@ const StudentQuizzes = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,8 +106,39 @@ const StudentQuizzes = () => {
               )}
             </div>
 
-            {/* Attempts History */}
+            {/* Attempts History and Referral Info */}
             <div className="lg:col-span-1 space-y-6">
+              
+              {/* Refer & Earn Widget */}
+              {user?.role === 'STUDENT' && (
+                <div className="mb-8">
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1 mb-4">Refer & Earn</h3>
+                  <div className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-3xl p-6 shadow-md text-white">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="p-2 bg-white/20 rounded-xl">
+                        <Award className="w-5 h-5 text-yellow-300" />
+                      </div>
+                      <h4 className="font-bold text-lg">Your Referral Info</h4>
+                    </div>
+                    <p className="text-blue-100 text-sm mb-6">
+                      Share your code to give friends a discount and earn points when they purchase!
+                    </p>
+                    <div className="space-y-4">
+                      <div>
+                        <p className="text-xs text-blue-200 uppercase tracking-wider font-semibold mb-1">Your Code</p>
+                        <div className="bg-white/10 px-4 py-2.5 rounded-xl font-mono text-lg font-bold text-center border border-white/20 tracking-widest cursor-pointer hover:bg-white/20 transition" onClick={() => {navigator.clipboard.writeText(user?.referral_code || ""); alert("Code copied!")}}>
+                          {user?.referral_code || "---"}
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center bg-white/5 px-4 py-3 rounded-xl border border-white/10">
+                        <span className="text-sm font-medium text-blue-100">Earned Points</span>
+                        <span className="font-bold text-xl text-yellow-300">{user?.referral_points || 0}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Attempt History</h3>
               
               {attempts.length === 0 ? (
