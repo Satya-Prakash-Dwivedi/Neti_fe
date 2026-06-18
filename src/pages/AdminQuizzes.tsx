@@ -43,6 +43,7 @@ const AdminQuizzes = () => {
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ text: "", type: "" });
   const [activeTab, setActiveTab] = useState<"upload" | "list">("upload");
+  const [editingQuizId, setEditingQuizId] = useState<number | null>(null);
 
   const [listFilterSubject, setListFilterSubject] = useState("");
   const [listFilterBookName, setListFilterBookName] = useState("");
@@ -136,22 +137,33 @@ const AdminQuizzes = () => {
 
     setLoading(true);
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/quizzes/admin/create/`, {
-        title,
-        book_id: bookId,
-        questions
-      });
-      setStatusMsg({ text: `Chapter "${title}" has been published and is now live!`, type: "success" });
+      if (editingQuizId) {
+        await axios.put(`${import.meta.env.VITE_API_URL}/quizzes/admin/update/${editingQuizId}/`, {
+          title,
+          book_id: bookId,
+          questions
+        });
+        setStatusMsg({ text: `Chapter "${title}" has been updated successfully!`, type: "success" });
+      } else {
+        await axios.post(`${import.meta.env.VITE_API_URL}/quizzes/admin/create/`, {
+          title,
+          book_id: bookId,
+          questions
+        });
+        setStatusMsg({ text: `Chapter "${title}" has been published and is now live!`, type: "success" });
+      }
+      
       // Reset upload state
       setFile(null);
       setTitle("");
       setBookId("");
       setSelectedSubject("");
       setQuestions([]);
+      setEditingQuizId(null);
       fetchQuizzes();
       setActiveTab("list");
     } catch (err: any) {
-      setStatusMsg({ text: err.response?.data?.error || "Failed to publish chapter.", type: "error" });
+      setStatusMsg({ text: err.response?.data?.error || "Failed to save chapter.", type: "error" });
     } finally {
       setLoading(false);
     }
@@ -198,10 +210,18 @@ const AdminQuizzes = () => {
           
           <div className="bg-white border border-slate-200 rounded-full p-1 flex">
             <button
-              onClick={() => setActiveTab("upload")}
+              onClick={() => {
+                setActiveTab("upload");
+                if (editingQuizId === null && questions.length === 0) {
+                  setFile(null);
+                  setTitle("");
+                  setBookId("");
+                  setSelectedSubject("");
+                }
+              }}
               className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider ${activeTab === "upload" ? "bg-blue-900 text-white" : "text-slate-500 hover:text-blue-900"}`}
             >
-              Upload & Generate
+              {editingQuizId ? "Edit Test" : "Upload & Generate"}
             </button>
             <button
               onClick={() => setActiveTab("list")}
@@ -227,7 +247,7 @@ const AdminQuizzes = () => {
         {activeTab === "upload" && (
           <div className="space-y-10">
             {/* Upload Area */}
-            {questions.length === 0 && (
+            {questions.length === 0 && !editingQuizId && (
               <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8 md:p-12 text-center max-w-2xl mx-auto">
                 <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-900">
                   <Upload className="w-8 h-8" />
@@ -285,7 +305,7 @@ const AdminQuizzes = () => {
                       className="w-full md:w-auto px-8 py-4 bg-green-700 hover:bg-green-850 text-white font-bold rounded-2xl text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2"
                     >
                       <CheckCircle className="w-5 h-5" />
-                      Publish Test Live
+                      {editingQuizId ? "Save Changes" : "Publish Test Live"}
                     </button>
                   </div>
                   
@@ -320,7 +340,28 @@ const AdminQuizzes = () => {
                 </div>
 
                 <div className="space-y-6">
-                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest px-1">Questions Preview & Editor ({questions.length} total)</h3>
+                  <div className="flex items-center justify-between px-1">
+                    <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest">Questions Preview & Editor ({questions.length} total)</h3>
+                    <button
+                      onClick={() => {
+                        const newQ: Question = {
+                          question_text: "",
+                          option_a: "",
+                          option_b: "",
+                          option_c: "",
+                          option_d: "",
+                          correct_option: "A",
+                          difficulty: "Medium",
+                          solution: ""
+                        };
+                        setQuestions([newQ, ...questions]);
+                        setStatusMsg({ text: "New empty question added at the top.", type: "success" });
+                      }}
+                      className="text-xs font-bold text-blue-900 bg-blue-50 hover:bg-blue-100 px-4 py-1.5 rounded-full transition-colors flex items-center gap-1"
+                    >
+                      <Plus className="w-3 h-3" /> Add Question
+                    </button>
+                  </div>
                   {questions.map((q, idx) => (
                     <div key={idx} className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden p-6 md:p-8 space-y-6">
                       <div className="flex items-center justify-between border-b border-slate-50 pb-4">
@@ -329,6 +370,19 @@ const AdminQuizzes = () => {
                         </span>
                         
                         <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => {
+                              if (window.confirm("Delete this question?")) {
+                                const newQs = [...questions];
+                                newQs.splice(idx, 1);
+                                setQuestions(newQs);
+                              }
+                            }}
+                            className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors mr-2"
+                            title="Remove Question"
+                          >
+                            <Trash className="w-4 h-4" />
+                          </button>
                           <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Difficulty:</label>
                           <select
                             value={q.difficulty}
@@ -428,18 +482,22 @@ const AdminQuizzes = () => {
                       if (window.confirm("Discard draft? All parsing edits will be lost.")) {
                         setQuestions([]);
                         setFile(null);
+                        setEditingQuizId(null);
+                        setTitle("");
+                        setBookId("");
+                        setSelectedSubject("");
                       }
                     }}
                     className="px-6 py-3 border border-slate-200 rounded-xl text-slate-500 hover:text-slate-700 font-bold text-xs"
                   >
-                    Discard Draft
+                    Discard Changes
                   </button>
                   <button
                     onClick={handlePublish}
                     disabled={loading}
                     className="px-8 py-3 bg-green-700 hover:bg-green-800 text-white font-bold rounded-xl text-xs shadow-md active:scale-95 transition-all"
                   >
-                    Publish Test Live
+                    {editingQuizId ? "Save Changes" : "Publish Test Live"}
                   </button>
                 </div>
               </div>
@@ -538,6 +596,20 @@ const AdminQuizzes = () => {
                           Set Free
                         </button>
                       )}
+                      <button
+                        onClick={() => {
+                          setEditingQuizId(quiz.id);
+                          setTitle(quiz.title);
+                          setBookId(quiz.book?.id || "");
+                          setSelectedSubject(quiz.book?.subject || "");
+                          setQuestions(quiz.questions || []);
+                          setActiveTab("upload");
+                        }}
+                        className="p-3 text-blue-500 hover:bg-blue-50 rounded-xl transition-all active:scale-95"
+                        aria-label="Edit test"
+                      >
+                        <Edit className="w-5 h-5" />
+                      </button>
                       <button
                         onClick={() => handleDelete(quiz.id)}
                         className="p-3 text-red-500 hover:bg-red-50 rounded-xl transition-all active:scale-95"

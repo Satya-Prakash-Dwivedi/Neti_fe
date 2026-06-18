@@ -28,6 +28,122 @@ interface FeedbackItem {
   is_correct: boolean;
   solution: string;
 }
+const renderSolution = (text: string) => {
+  if (!text) return "No explanation provided.";
+  if (!text.includes('|')) return <p className="whitespace-pre-line">{text}</p>;
+
+  const parts = text.split('|').map(p => p.trim()).filter(Boolean);
+  return (
+    <div className="space-y-3 mt-2">
+      {parts.map((part, index) => {
+        const colonIndex = part.indexOf(':');
+        if (colonIndex > -1 && colonIndex < 30) {
+          const label = part.substring(0, colonIndex).trim();
+          const content = part.substring(colonIndex + 1).trim();
+          return (
+            <div key={index} className="flex flex-col sm:flex-row sm:gap-2 items-start">
+              <span className="font-bold text-emerald-950 shrink-0 min-w-max sm:min-w-28">{label}:</span>
+              <span className="text-slate-700 whitespace-pre-line">{content}</span>
+            </div>
+          );
+        }
+        return <div key={index} className="text-slate-700 whitespace-pre-line">{part}</div>;
+      })}
+    </div>
+  );
+};
+
+const QuestionTextFormatter = ({ text, className }: { text: string; className?: string }) => {
+  if (!text) return null;
+  
+  let formatted = text;
+  const lowerText = text.toLowerCase();
+  const isMatch = lowerText.includes("match") || lowerText.includes("list i") || lowerText.includes("list 1");
+  const isConsider = lowerText.includes("consider the following statement") || lowerText.includes("consider the following");
+  
+  if (isMatch) {
+    formatted = formatted.replace(/\s+[l\|]\s+(?=[A-HP-S1-6][\.\-\)])/g, '\n');
+    formatted = formatted.replace(/(?:^|\s|, )([A-HP-S1-6][\.\-\)])(?=\s|\w)/g, '\n$1');
+  } else if (isConsider) {
+    formatted = formatted.replace(/(?:^|\s|, )([1-6][\.\-\)])(?=\s|\w)/g, '\n$1');
+  } else {
+    return <div className={`whitespace-pre-line ${className}`}>{text}</div>;
+  }
+
+  const lines = formatted.split('\n').map(l => l.trim()).filter(Boolean);
+  const headerLines: string[] = [];
+  const items: { marker: string; content: string }[] = [];
+  
+  lines.forEach(line => {
+    const match = line.match(/^([A-HP-S1-6])[\.\-\)]\s*(.*)/);
+    if (match) {
+      items.push({ marker: match[1], content: line });
+    } else {
+      if (items.length === 0) {
+        headerLines.push(line);
+      } else {
+        items[items.length - 1].content += " " + line;
+      }
+    }
+  });
+
+  if (items.length > 0 && isMatch) {
+    const leftCol: string[] = [];
+    const rightCol: string[] = [];
+    
+    let isAlternating = true;
+    for (let i = 0; i < items.length - 1; i++) {
+      const type1 = /[0-9]/.test(items[i].marker) ? 'num' : 'alpha';
+      const type2 = /[0-9]/.test(items[i+1].marker) ? 'num' : 'alpha';
+      if (type1 === type2) {
+        isAlternating = false;
+        break;
+      }
+    }
+    
+    if (isAlternating && items.length % 2 === 0) {
+      for (let i = 0; i < items.length; i+=2) {
+        leftCol.push(items[i].content);
+        rightCol.push(items[i+1].content);
+      }
+    } else {
+      const half = Math.ceil(items.length / 2);
+      for (let i = 0; i < half; i++) leftCol.push(items[i].content);
+      for (let i = half; i < items.length; i++) rightCol.push(items[i].content);
+    }
+    
+    if (leftCol.length > 0 && rightCol.length > 0) {
+      return (
+        <div className={className}>
+          {headerLines.length > 0 && <span className="block mb-4">{headerLines.join(" ")}</span>}
+          <div className="w-full overflow-hidden border border-emerald-100 rounded-xl shadow-sm bg-white/50 text-sm md:text-base my-2 font-medium">
+            <table className="w-full text-left border-collapse">
+              <tbody className="divide-y divide-emerald-50">
+                {Array.from({ length: Math.max(leftCol.length, rightCol.length) }).map((_, i) => (
+                  <tr key={i} className="hover:bg-emerald-50/50 transition-colors">
+                    <td className="p-3 md:p-4 border-r border-emerald-50 w-1/2 align-top text-slate-800">{leftCol[i] || ""}</td>
+                    <td className="p-3 md:p-4 align-top text-slate-800">{rightCol[i] || ""}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  return (
+    <div className={className}>
+      {headerLines.length > 0 && <span className="block mb-3">{headerLines.join(" ")}</span>}
+      <div className="space-y-2 mt-2 font-medium text-slate-800 text-sm md:text-base">
+        {items.map((item, i) => (
+          <div key={i} className="pl-3 border-l-2 border-emerald-300 py-0.5">{item.content}</div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const RecallSession = () => {
   const { id } = useParams<{ id: string }>();
@@ -219,9 +335,10 @@ const RecallSession = () => {
                 <span className="px-3 py-1 bg-emerald-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider rounded-full">
                   Difficulty: {currentQuestion.difficulty}
                 </span>
-                <h3 className="text-lg md:text-xl font-bold text-emerald-950 leading-relaxed">
-                  {currentQuestion.question_text}
-                </h3>
+                <QuestionTextFormatter 
+                  text={currentQuestion.question_text} 
+                  className="text-lg md:text-xl font-bold text-emerald-950 leading-relaxed"
+                />
               </div>
 
               {/* Options */}
@@ -302,9 +419,10 @@ const RecallSession = () => {
                   </div>
                 </div>
 
-                <h4 className="text-base md:text-lg font-bold text-emerald-950 leading-relaxed">
-                  {item.question_text}
-                </h4>
+                <QuestionTextFormatter 
+                  text={item.question_text} 
+                  className="text-base md:text-lg font-bold text-emerald-950 leading-relaxed"
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-semibold text-emerald-900/80">
                   <div className={`p-4 rounded-xl border ${item.student_choice === 'A' ? (item.is_correct ? 'border-green-500 bg-green-50/20 text-green-800' : 'border-red-500 bg-red-50/20 text-red-800') : (item.correct_option === 'A' ? 'border-green-500 bg-green-50/10 text-green-850' : 'border-slate-100 bg-emerald-50/20')}`}>
@@ -327,8 +445,8 @@ const RecallSession = () => {
                     <span>•</span>
                     <span>Correct Answer: <strong className="text-green-700">{item.correct_option}</strong></span>
                   </div>
-                  <div className="text-sm text-slate-650 leading-relaxed whitespace-pre-line font-medium">
-                    {item.solution}
+                  <div className="text-sm text-slate-650 leading-relaxed font-medium">
+                    {renderSolution(item.solution)}
                   </div>
                 </div>
               </div>
