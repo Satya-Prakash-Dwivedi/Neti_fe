@@ -38,6 +38,7 @@ import AdminBooks from './pages/AdminBooks';
 import AdminQuizAttempts from './pages/AdminQuizAttempts';
 import AdminCurrentAffairs from './pages/AdminCurrentAffairs';
 import AdminOrders from './pages/AdminOrders';
+import AdminRearrangeChapters from './pages/AdminRearrangeChapters';
 
 // Legal Pages
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -184,6 +185,14 @@ function App() {
               element={
                 <AdminRoute>
                   <AdminBooks />
+                </AdminRoute>
+              } 
+            />
+            <Route 
+              path="/admin/books/:bookId/rearrange" 
+              element={
+                <AdminRoute>
+                  <AdminRearrangeChapters />
                 </AdminRoute>
               } 
             />

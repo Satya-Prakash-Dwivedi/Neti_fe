@@ -279,6 +279,13 @@ const AdminBooks = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <button
+                        onClick={() => window.open(`/admin/books/${book.id}/rearrange`, '_blank')}
+                        className="px-3 py-1.5 bg-blue-50 text-blue-900 font-bold text-[10px] uppercase tracking-wider rounded-lg hover:bg-blue-100 transition-colors mr-2"
+                        title="Rearrange Chapters"
+                      >
+                        Rearrange Chapters
+                      </button>
+                      <button
                         onClick={() => handleEdit(book)}
                         className="p-2 text-blue-900 hover:bg-blue-50 rounded-xl transition-all"
                         title="Edit Book"

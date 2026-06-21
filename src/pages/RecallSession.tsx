@@ -225,6 +225,47 @@ const RecallSession = () => {
     }
   };
 
+  // Handle scroll to navigate questions
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    
+    const handleWheel = (e: WheelEvent) => {
+      // Don't trigger if modal is open, or showing results, or quiz not loaded
+      if (showSubmitModal || results || !quiz) return;
+      
+      // Throttle scroll events
+      if (timeout) return;
+
+      const isScrollable = document.documentElement.scrollHeight > document.documentElement.clientHeight;
+      const isAtBottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 10;
+      const isAtTop = window.scrollY === 0;
+
+      if (e.deltaY > 40) {
+        // Scrolled down -> Next Question
+        if (!isScrollable || isAtBottom) {
+          if (activeIdx < quiz.questions.length - 1) {
+            setActiveIdx(prev => prev + 1);
+            timeout = setTimeout(() => { timeout = null; }, 800);
+          }
+        }
+      } else if (e.deltaY < -40) {
+        // Scrolled up -> Previous Question
+        if (!isScrollable || isAtTop) {
+          if (activeIdx > 0) {
+            setActiveIdx(prev => prev - 1);
+            timeout = setTimeout(() => { timeout = null; }, 800);
+          }
+        }
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      if (timeout) clearTimeout(timeout);
+    };
+  }, [showSubmitModal, results, quiz, activeIdx]);
+
   const executeSubmit = async () => {
     setShowSubmitModal(false);
     setSubmitting(true);
