@@ -94,7 +94,8 @@ const StudentQuizzes = () => {
                       </div>
                       
                       <Link 
-                        to={`/practice-tests/${quiz.id}`}
+                        to={`/recall/session/${quiz.id}`}
+                        target="_blank"
                         className="px-5 py-3 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-all flex items-center gap-2 shrink-0 active:scale-95 shadow-sm shadow-slate-950/10"
                       >
                         Start Test

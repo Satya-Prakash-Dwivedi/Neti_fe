@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ChevronLeft, ChevronRight, CheckCircle2, XCircle, ArrowLeft, RefreshCw, Trophy, Target } from "lucide-react";
+import { ChevronLeft, ChevronRight, CheckCircle2, XCircle, ArrowLeft, RefreshCw, Trophy, Target, Clock } from "lucide-react";
 import SEO from "../components/SEO";
 
 interface Question {
@@ -150,7 +150,8 @@ const RecallSession = () => {
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeIdx, setActiveIdx] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const QUESTIONS_PER_PAGE = 10;
   const [answers, setAnswers] = useState<Record<string, string>>(() => {
     if (id) {
       const saved = localStorage.getItem(`quiz_answers_${id}`);
@@ -159,6 +160,10 @@ const RecallSession = () => {
     return {};
   });
   const [showSubmitModal, setShowSubmitModal] = useState(false);
+  
+  // Timer state
+  const [timeLeft, setTimeLeft] = useState(3600); // 1 hour
+  const [isTimeUp, setIsTimeUp] = useState(false);
 
   // Submission feedback
   const [submitting, setSubmitting] = useState(false);
@@ -190,6 +195,31 @@ const RecallSession = () => {
     }
   }, [answers, id]);
 
+  // Timer logic
+  useEffect(() => {
+    if (loading || results) return;
+    
+    if (timeLeft <= 0) {
+      setIsTimeUp(true);
+      return;
+    }
+
+    if (showSubmitModal || submitting) return;
+
+    const timerId = setInterval(() => {
+      setTimeLeft(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, [timeLeft, loading, results, showSubmitModal, submitting]);
+
+  // Auto-submit when time is up
+  useEffect(() => {
+    if (isTimeUp && !results && !submitting) {
+      executeSubmit();
+    }
+  }, [isTimeUp, results, submitting]);
+
   // Handle ESC key to close modal
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -214,57 +244,18 @@ const RecallSession = () => {
   };
 
   const handleNext = () => {
-    if (quiz && activeIdx < quiz.questions.length - 1) {
-      setActiveIdx(activeIdx + 1);
+    if (quiz && (currentPage + 1) * QUESTIONS_PER_PAGE < quiz.questions.length) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo(0, 0);
     }
   };
 
   const handlePrev = () => {
-    if (activeIdx > 0) {
-      setActiveIdx(activeIdx - 1);
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo(0, 0);
     }
   };
-
-  // Handle scroll to navigate questions
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout> | null = null;
-    
-    const handleWheel = (e: WheelEvent) => {
-      // Don't trigger if modal is open, or showing results, or quiz not loaded
-      if (showSubmitModal || results || !quiz) return;
-      
-      // Throttle scroll events
-      if (timeout) return;
-
-      const isScrollable = document.documentElement.scrollHeight > document.documentElement.clientHeight;
-      const isAtBottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 10;
-      const isAtTop = window.scrollY === 0;
-
-      if (e.deltaY > 40) {
-        // Scrolled down -> Next Question
-        if (!isScrollable || isAtBottom) {
-          if (activeIdx < quiz.questions.length - 1) {
-            setActiveIdx(prev => prev + 1);
-            timeout = setTimeout(() => { timeout = null; }, 800);
-          }
-        }
-      } else if (e.deltaY < -40) {
-        // Scrolled up -> Previous Question
-        if (!isScrollable || isAtTop) {
-          if (activeIdx > 0) {
-            setActiveIdx(prev => prev - 1);
-            timeout = setTimeout(() => { timeout = null; }, 800);
-          }
-        }
-      }
-    };
-
-    window.addEventListener('wheel', handleWheel, { passive: true });
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      if (timeout) clearTimeout(timeout);
-    };
-  }, [showSubmitModal, results, quiz, activeIdx]);
 
   const executeSubmit = async () => {
     setShowSubmitModal(false);
@@ -303,14 +294,27 @@ const RecallSession = () => {
     );
   }
 
-  const currentQuestion = quiz.questions[activeIdx];
   const questionCount = quiz.questions.length;
+  const totalPages = Math.ceil(questionCount / QUESTIONS_PER_PAGE);
+  const currentQuestions = quiz.questions.slice(currentPage * QUESTIONS_PER_PAGE, (currentPage + 1) * QUESTIONS_PER_PAGE);
 
   const handleReattempt = () => {
     setResults(null);
     setAnswers({});
-    setActiveIdx(0);
+    setCurrentPage(0);
+    setTimeLeft(3600);
+    setIsTimeUp(false);
     localStorage.removeItem(`quiz_answers_${id}`);
+  };
+
+  const formatTime = (seconds: number) => {
+    const h = Math.floor(seconds / 3600);
+    const m = Math.floor((seconds % 3600) / 60);
+    const s = seconds % 60;
+    if (h > 0) {
+      return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
   return (
@@ -353,14 +357,23 @@ const RecallSession = () => {
               <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-1">Live Examination</span>
               <h2 className="text-xl md:text-2xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight">{quiz.title}</h2>
             </div>
+            
+            <div className="flex flex-col items-center justify-center bg-slate-900 text-white px-6 py-3 rounded-2xl shadow-inner w-full md:w-auto">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Time Remaining</span>
+              <div className={`flex items-center gap-2 font-mono text-xl font-bold ${timeLeft < 300 ? 'text-red-400 animate-pulse' : 'text-emerald-400'}`}>
+                <Clock className="w-5 h-5" />
+                {formatTime(timeLeft)}
+              </div>
+            </div>
+
             <div className="flex flex-col items-start md:items-end w-full md:w-1/3">
               <div className="text-xs font-bold text-emerald-900/60 mb-2">
-                Question {activeIdx + 1} of {questionCount}
+                Questions {currentPage * QUESTIONS_PER_PAGE + 1} - {Math.min((currentPage + 1) * QUESTIONS_PER_PAGE, questionCount)} of {questionCount}
               </div>
               <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden shadow-inner">
                 <div
                   className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2.5 rounded-full transition-all duration-500 ease-out shadow-sm"
-                  style={{ width: `${((activeIdx + 1) / questionCount) * 100}%` }}
+                  style={{ width: `${((currentPage + 1) / totalPages) * 100}%` }}
                 ></div>
               </div>
             </div>
@@ -370,60 +383,68 @@ const RecallSession = () => {
         {/* Solving Interface */}
         {!results ? (
           <div className="space-y-8">
-            <div className="bg-white border border-emerald-100 rounded-3xl p-8 md:p-10 shadow-sm space-y-8">
-              {/* Question Text */}
-              <div className="space-y-4">
-                <span className="px-3 py-1 bg-emerald-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider rounded-full">
-                  Difficulty: {currentQuestion.difficulty}
-                </span>
-                <QuestionTextFormatter 
-                  text={currentQuestion.question_text} 
-                  className="text-lg md:text-xl font-bold text-emerald-950 leading-relaxed"
-                />
-              </div>
-
-              {/* Options */}
-              <div className="grid grid-cols-1 gap-4">
-                {([
-                  { key: "A", val: currentQuestion.option_a },
-                  { key: "B", val: currentQuestion.option_b },
-                  { key: "C", val: currentQuestion.option_c },
-                  { key: "D", val: currentQuestion.option_d }
-                ] as const).map((opt) => {
-                  const isSelected = answers[currentQuestion.id.toString()] === opt.key;
-                  return (
-                    <button
-                      key={opt.key}
-                      onClick={() => selectOption(currentQuestion.id, opt.key)}
-                      className={`w-full text-left p-5 rounded-2xl border transition-all duration-200 ease-out flex items-start gap-4 active:scale-95 ${isSelected ? "border-emerald-500 bg-emerald-50/80 shadow-md ring-2 ring-emerald-500/20" : "border-emerald-100 hover:border-emerald-400 hover:shadow-sm bg-emerald-50/20 hover:-translate-y-0.5"}`}
-                    >
-                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors duration-200 ${isSelected ? "bg-emerald-600 text-white shadow-sm" : "bg-slate-100 text-slate-700 font-medium"}`}>
-                        {opt.key}
+            {currentQuestions.map((question, index) => {
+              const actualQIdx = currentPage * QUESTIONS_PER_PAGE + index;
+              return (
+                <div key={question.id} className="bg-white border border-emerald-100 rounded-3xl p-8 md:p-10 shadow-sm space-y-8">
+                  {/* Question Text */}
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-emerald-900/60 font-bold text-sm">Question {actualQIdx + 1}</span>
+                      <span className="px-3 py-1 bg-emerald-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider rounded-full">
+                        Difficulty: {question.difficulty}
                       </span>
-                      <span className="text-sm font-semibold text-slate-800 leading-snug">{opt.val}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+                    </div>
+                    <QuestionTextFormatter 
+                      text={question.question_text} 
+                      className="text-lg md:text-xl font-bold text-emerald-950 leading-relaxed"
+                    />
+                  </div>
+
+                  {/* Options */}
+                  <div className="grid grid-cols-1 gap-4">
+                    {([
+                      { key: "A", val: question.option_a },
+                      { key: "B", val: question.option_b },
+                      { key: "C", val: question.option_c },
+                      { key: "D", val: question.option_d }
+                    ] as const).map((opt) => {
+                      const isSelected = answers[question.id.toString()] === opt.key;
+                      return (
+                        <button
+                          key={opt.key}
+                          onClick={() => selectOption(question.id, opt.key)}
+                          className={`w-full text-left p-5 rounded-2xl border transition-all duration-200 ease-out flex items-start gap-4 active:scale-95 ${isSelected ? "border-emerald-500 bg-emerald-50/80 shadow-md ring-2 ring-emerald-500/20" : "border-emerald-100 hover:border-emerald-400 hover:shadow-sm bg-emerald-50/20 hover:-translate-y-0.5"}`}
+                        >
+                          <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors duration-200 ${isSelected ? "bg-emerald-600 text-white shadow-sm" : "bg-slate-100 text-slate-700 font-medium"}`}>
+                            {opt.key}
+                          </span>
+                          <span className="text-sm font-semibold text-slate-800 leading-snug">{opt.val}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
 
             {/* Navigation controls */}
             <div className="flex justify-between items-center">
               <button
                 onClick={handlePrev}
-                disabled={activeIdx === 0}
+                disabled={currentPage === 0}
                 className="px-6 py-3 border border-emerald-100 rounded-xl hover:border-slate-400 text-slate-700 font-medium hover:text-slate-800 font-bold text-xs disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-all flex items-center gap-2"
               >
                 <ChevronLeft className="w-4 h-4" />
-                Previous Question
+                Previous Page
               </button>
 
-              {activeIdx < questionCount - 1 ? (
+              {currentPage < totalPages - 1 ? (
                 <button
                   onClick={handleNext}
                   className="px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 font-bold text-xs active:scale-95 transition-all flex items-center gap-2"
                 >
-                  Next Question
+                  Next Page
                   <ChevronRight className="w-4 h-4" />
                 </button>
               ) : (

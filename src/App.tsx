@@ -98,6 +98,9 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 function App() {
+  const location = useLocation();
+  const isTestScreen = location.pathname.includes('/recall/session/');
+
   useEffect(() => {
     initPostHog();
   }, []);
@@ -107,7 +110,7 @@ function App() {
       <ToastProvider>
         <div className="min-h-screen bg-slate-50 font-inter">
         <ScrollToTop />
-        <Navbar />
+        {!isTestScreen && <Navbar />}
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -222,7 +225,7 @@ function App() {
             />
           </Routes>
         </main>
-        <Footer />
+        {!isTestScreen && <Footer />}
         </div>
       </ToastProvider>
     </AuthProvider>

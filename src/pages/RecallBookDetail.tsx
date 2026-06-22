@@ -358,6 +358,7 @@ const RecallBookDetail = () => {
                     {isUnlocked ? (
                       <Link
                         to={`/recall/session/${quiz.id}`}
+                        target="_blank"
                         className={`flex-1 md:flex-none px-6 py-3 text-white text-xs font-bold rounded-xl transition-all duration-300 ease-out flex items-center justify-center gap-2 shadow-sm ${isFreeTrial ? 'bg-emerald-600 hover:bg-emerald-700 hover:shadow-emerald-600/30 hover:-translate-y-0.5' : 'bg-green-700 hover:bg-green-800 hover:-translate-y-0.5'}`}
                       >
                         Start Session
