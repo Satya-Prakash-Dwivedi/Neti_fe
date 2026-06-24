@@ -55,12 +55,12 @@ const renderSolution = (text: string) => {
 
 const QuestionTextFormatter = ({ text, className }: { text: string; className?: string }) => {
   if (!text) return null;
-  
+
   let formatted = text;
   const lowerText = text.toLowerCase();
   const isMatch = lowerText.includes("match") || lowerText.includes("list i") || lowerText.includes("list 1");
   const isConsider = lowerText.includes("consider the following statement") || lowerText.includes("consider the following");
-  
+
   if (isMatch) {
     formatted = formatted.replace(/\s+[l\|]\s+(?=[A-HP-S1-6][\.\-\)])/g, '\n');
     formatted = formatted.replace(/(?:^|\s|, )([A-HP-S1-6][\.\-\)])(?=\s|\w)/g, '\n$1');
@@ -73,7 +73,7 @@ const QuestionTextFormatter = ({ text, className }: { text: string; className?: 
   const lines = formatted.split('\n').map(l => l.trim()).filter(Boolean);
   const headerLines: string[] = [];
   const items: { marker: string; content: string }[] = [];
-  
+
   lines.forEach(line => {
     const match = line.match(/^([A-HP-S1-6])[\.\-\)]\s*(.*)/);
     if (match) {
@@ -90,28 +90,28 @@ const QuestionTextFormatter = ({ text, className }: { text: string; className?: 
   if (items.length > 0 && isMatch) {
     const leftCol: string[] = [];
     const rightCol: string[] = [];
-    
+
     let isAlternating = true;
     for (let i = 0; i < items.length - 1; i++) {
       const type1 = /[0-9]/.test(items[i].marker) ? 'num' : 'alpha';
-      const type2 = /[0-9]/.test(items[i+1].marker) ? 'num' : 'alpha';
+      const type2 = /[0-9]/.test(items[i + 1].marker) ? 'num' : 'alpha';
       if (type1 === type2) {
         isAlternating = false;
         break;
       }
     }
-    
+
     if (isAlternating && items.length % 2 === 0) {
-      for (let i = 0; i < items.length; i+=2) {
+      for (let i = 0; i < items.length; i += 2) {
         leftCol.push(items[i].content);
-        rightCol.push(items[i+1].content);
+        rightCol.push(items[i + 1].content);
       }
     } else {
       const half = Math.ceil(items.length / 2);
       for (let i = 0; i < half; i++) leftCol.push(items[i].content);
       for (let i = half; i < items.length; i++) rightCol.push(items[i].content);
     }
-    
+
     if (leftCol.length > 0 && rightCol.length > 0) {
       return (
         <div className={className}>
@@ -150,8 +150,7 @@ const RecallSession = () => {
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
-  const QUESTIONS_PER_PAGE = 10;
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>(() => {
     if (id) {
       const saved = localStorage.getItem(`quiz_answers_${id}`);
@@ -160,7 +159,7 @@ const RecallSession = () => {
     return {};
   });
   const [showSubmitModal, setShowSubmitModal] = useState(false);
-  
+
   // Timer state
   const [timeLeft, setTimeLeft] = useState(3600); // 1 hour
   const [isTimeUp, setIsTimeUp] = useState(false);
@@ -198,7 +197,7 @@ const RecallSession = () => {
   // Timer logic
   useEffect(() => {
     if (loading || results) return;
-    
+
     if (timeLeft <= 0) {
       setIsTimeUp(true);
       return;
@@ -244,15 +243,15 @@ const RecallSession = () => {
   };
 
   const handleNext = () => {
-    if (quiz && (currentPage + 1) * QUESTIONS_PER_PAGE < quiz.questions.length) {
-      setCurrentPage(currentPage + 1);
+    if (quiz && currentQuestionIndex < quiz.questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
       window.scrollTo(0, 0);
     }
   };
 
   const handlePrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
       window.scrollTo(0, 0);
     }
   };
@@ -295,13 +294,11 @@ const RecallSession = () => {
   }
 
   const questionCount = quiz.questions.length;
-  const totalPages = Math.ceil(questionCount / QUESTIONS_PER_PAGE);
-  const currentQuestions = quiz.questions.slice(currentPage * QUESTIONS_PER_PAGE, (currentPage + 1) * QUESTIONS_PER_PAGE);
 
   const handleReattempt = () => {
     setResults(null);
     setAnswers({});
-    setCurrentPage(0);
+    setCurrentQuestionIndex(0);
     setTimeLeft(3600);
     setIsTimeUp(false);
     localStorage.removeItem(`quiz_answers_${id}`);
@@ -321,7 +318,7 @@ const RecallSession = () => {
     <div className="bg-white min-h-screen py-12 px-6">
       <SEO title={`${quiz.title} - Online Practice`} description={`Online test session for ${quiz.title}`} />
 
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <Link to={`/recall/book/${(quiz as any).book?.id}`} className="inline-flex items-center gap-2 text-emerald-900/80 hover:text-emerald-600 font-bold text-xs uppercase tracking-widest mb-8">
           <ArrowLeft className="w-4 h-4" />
           Back to Book
@@ -357,7 +354,7 @@ const RecallSession = () => {
               <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest block mb-1">Live Examination</span>
               <h2 className="text-xl md:text-2xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight">{quiz.title}</h2>
             </div>
-            
+
             <div className="flex flex-col items-center justify-center bg-slate-900 text-white px-6 py-3 rounded-2xl shadow-inner w-full md:w-auto">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Time Remaining</span>
               <div className={`flex items-center gap-2 font-mono text-xl font-bold ${timeLeft < 300 ? 'text-red-400 animate-pulse' : 'text-emerald-400'}`}>
@@ -368,12 +365,12 @@ const RecallSession = () => {
 
             <div className="flex flex-col items-start md:items-end w-full md:w-1/3">
               <div className="text-xs font-bold text-emerald-900/60 mb-2">
-                Questions {currentPage * QUESTIONS_PER_PAGE + 1} - {Math.min((currentPage + 1) * QUESTIONS_PER_PAGE, questionCount)} of {questionCount}
+                Question {currentQuestionIndex + 1} of {questionCount}
               </div>
               <div className="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden shadow-inner">
                 <div
                   className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2.5 rounded-full transition-all duration-500 ease-out shadow-sm"
-                  style={{ width: `${((currentPage + 1) / totalPages) * 100}%` }}
+                  style={{ width: `${((currentQuestionIndex + 1) / questionCount) * 100}%` }}
                 ></div>
               </div>
             </div>
@@ -382,38 +379,89 @@ const RecallSession = () => {
 
         {/* Solving Interface */}
         {!results ? (
-          <div className="space-y-8">
-            {currentQuestions.map((question, index) => {
-              const actualQIdx = currentPage * QUESTIONS_PER_PAGE + index;
-              return (
-                <div key={question.id} className="bg-white border border-emerald-100 rounded-3xl p-8 md:p-10 shadow-sm space-y-8">
+          <div className="flex flex-col md:flex-row gap-6 lg:gap-8">
+            {/* Left Sidebar: Question Navigator */}
+            <div className="w-full md:w-1/3 lg:w-1/4 shrink-0">
+              <div className="bg-white border border-emerald-100 rounded-3xl p-6 shadow-sm sticky top-6">
+                <h3 className="font-playfair font-bold text-lg text-slate-800 mb-4 border-b border-emerald-50 pb-2">Questions</h3>
+                <div className="flex flex-wrap gap-4 md:gap-5 justify-center sm:justify-start">
+                  {quiz.questions.map((q, idx) => {
+                    const isAnswered = !!answers[q.id.toString()];
+                    const isCurrent = idx === currentQuestionIndex;
+
+                    let btnClass = "w-10 h-10 rounded-xl font-bold text-sm flex items-center justify-center transition-all ";
+
+                    if (isCurrent) {
+                      btnClass += "bg-blue-600 text-white shadow-md transform scale-105";
+                    } else if (isAnswered) {
+                      btnClass += "bg-emerald-500 text-white shadow-sm hover:bg-emerald-600";
+                    } else {
+                      btnClass += "bg-white border border-slate-200 text-slate-600 shadow-sm hover:border-slate-300 hover:bg-slate-50";
+                    }
+
+                    return (
+                      <button
+                        key={q.id}
+                        onClick={() => {
+                          setCurrentQuestionIndex(idx);
+                          window.scrollTo(0, 0);
+                        }}
+                        className={btnClass}
+                      >
+                        {idx + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-emerald-50 space-y-3">
+                  <div className="flex items-center gap-3 text-xs font-semibold text-slate-600">
+                    <div className="w-4 h-4 rounded bg-blue-600 shadow-sm" />
+                    <span>Current</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs font-semibold text-slate-600">
+                    <div className="w-4 h-4 rounded bg-emerald-500 shadow-sm" />
+                    <span>Answered</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs font-semibold text-slate-600">
+                    <div className="w-4 h-4 rounded bg-white border border-slate-200 shadow-sm" />
+                    <span>Not Answered</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Main Area */}
+            <div className="w-full md:w-2/3 lg:w-3/4 space-y-6">
+              {quiz.questions[currentQuestionIndex] && (
+                <div className="bg-white border border-emerald-100 rounded-3xl p-8 md:p-10 shadow-sm space-y-8">
                   {/* Question Text */}
                   <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-emerald-900/60 font-bold text-sm">Question {actualQIdx + 1}</span>
+                    <div className="flex justify-between items-center pb-4 border-b border-emerald-50">
+                      <span className="font-playfair font-black text-xl text-emerald-950">Question : {currentQuestionIndex + 1}</span>
                       <span className="px-3 py-1 bg-emerald-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider rounded-full">
-                        Difficulty: {question.difficulty}
+                        Difficulty: {quiz.questions[currentQuestionIndex].difficulty}
                       </span>
                     </div>
-                    <QuestionTextFormatter 
-                      text={question.question_text} 
-                      className="text-lg md:text-xl font-bold text-emerald-950 leading-relaxed"
+                    <QuestionTextFormatter
+                      text={quiz.questions[currentQuestionIndex].question_text}
+                      className="text-lg md:text-xl font-medium text-slate-800 leading-relaxed"
                     />
                   </div>
 
                   {/* Options */}
                   <div className="grid grid-cols-1 gap-4">
                     {([
-                      { key: "A", val: question.option_a },
-                      { key: "B", val: question.option_b },
-                      { key: "C", val: question.option_c },
-                      { key: "D", val: question.option_d }
+                      { key: "A", val: quiz.questions[currentQuestionIndex].option_a },
+                      { key: "B", val: quiz.questions[currentQuestionIndex].option_b },
+                      { key: "C", val: quiz.questions[currentQuestionIndex].option_c },
+                      { key: "D", val: quiz.questions[currentQuestionIndex].option_d }
                     ] as const).map((opt) => {
-                      const isSelected = answers[question.id.toString()] === opt.key;
+                      const isSelected = answers[quiz.questions[currentQuestionIndex].id.toString()] === opt.key;
                       return (
                         <button
                           key={opt.key}
-                          onClick={() => selectOption(question.id, opt.key)}
+                          onClick={() => selectOption(quiz.questions[currentQuestionIndex].id, opt.key)}
                           className={`w-full text-left p-5 rounded-2xl border transition-all duration-200 ease-out flex items-start gap-4 active:scale-95 ${isSelected ? "border-emerald-500 bg-emerald-50/80 shadow-md ring-2 ring-emerald-500/20" : "border-emerald-100 hover:border-emerald-400 hover:shadow-sm bg-emerald-50/20 hover:-translate-y-0.5"}`}
                         >
                           <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold shrink-0 transition-colors duration-200 ${isSelected ? "bg-emerald-600 text-white shadow-sm" : "bg-slate-100 text-slate-700 font-medium"}`}>
@@ -425,37 +473,39 @@ const RecallSession = () => {
                     })}
                   </div>
                 </div>
-              );
-            })}
+              )}
 
-            {/* Navigation controls */}
-            <div className="flex justify-between items-center">
-              <button
-                onClick={handlePrev}
-                disabled={currentPage === 0}
-                className="px-6 py-3 border border-emerald-100 rounded-xl hover:border-slate-400 text-slate-700 font-medium hover:text-slate-800 font-bold text-xs disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-all flex items-center gap-2"
-              >
-                <ChevronLeft className="w-4 h-4" />
-                Previous Page
-              </button>
+              {/* Navigation controls */}
+              <div className="flex justify-between items-center pt-4">
+                <button
+                  onClick={handlePrev}
+                  disabled={currentQuestionIndex === 0}
+                  className="px-6 py-3 border border-emerald-100 rounded-xl hover:border-slate-400 text-slate-700 font-medium hover:text-slate-800 font-bold text-xs disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-all flex items-center gap-2"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  Previous
+                </button>
 
-              {currentPage < totalPages - 1 ? (
                 <button
                   onClick={handleNext}
-                  className="px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 font-bold text-xs active:scale-95 transition-all flex items-center gap-2"
+                  disabled={currentQuestionIndex === quiz.questions.length - 1}
+                  className="px-6 py-3 bg-slate-900 text-white rounded-xl hover:bg-slate-800 font-bold text-xs disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-all flex items-center gap-2"
                 >
-                  Next Page
+                  Next
                   <ChevronRight className="w-4 h-4" />
                 </button>
-              ) : (
+              </div>
+
+              {/* Submit Test */}
+              <div className="flex justify-end pt-8 border-t border-emerald-50 mt-4">
                 <button
                   onClick={() => setShowSubmitModal(true)}
                   disabled={submitting}
-                  className="px-8 py-3 bg-emerald-600 text-white rounded-xl hover:bg-blue-850 font-bold text-xs shadow-md active:scale-95 transition-all"
+                  className="px-8 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 font-bold text-sm shadow-md active:scale-95 transition-all"
                 >
-                  {submitting ? "Submitting..." : "Submit All Answers"}
+                  {submitting ? "Submitting..." : "Submit Test"}
                 </button>
-              )}
+              </div>
             </div>
           </div>
         ) : (
@@ -481,8 +531,8 @@ const RecallSession = () => {
                   </div>
                 </div>
 
-                <QuestionTextFormatter 
-                  text={item.question_text} 
+                <QuestionTextFormatter
+                  text={item.question_text}
                   className="text-base md:text-lg font-bold text-emerald-950 leading-relaxed"
                 />
 
