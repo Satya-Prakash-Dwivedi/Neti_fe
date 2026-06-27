@@ -30,34 +30,79 @@ const Hero = () => {
   const recentDigests = Array.isArray(dailyDigests) ? dailyDigests.slice(0, 7) : [];
 
   return (
-    <section className="py-12 md:py-24 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-stretch gap-10 md:gap-16 px-6">
+    <section className="pt-4 md:pt-8 pb-12 md:pb-20 bg-white overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
+        <h1 className="text-3xl md:text-5xl font-playfair font-bold text-blue-900 mb-6 md:mb-8">
+          Our Philosophy
+        </h1>
 
-        {/* Left Content - Philosophy */}
-        <div className="flex-1 flex flex-col justify-center py-6 md:py-0">
-          <h1 className="text-3xl md:text-5xl font-playfair font-bold text-slate-900 mb-8 md:mb-12">
-            Our Philosophy
-          </h1>
+        <div className="text-slate-600 leading-relaxed md:leading-loose text-sm md:text-base font-inter">
+          {/* Right Floated Content - Recall Hub Feature Card (Compact & Shifted Up to Eliminate Left Gap) */}
+          <div className="w-full md:w-[380px] lg:w-[420px] md:float-right md:ml-8 md:-mt-16 lg:-mt-20 md:mb-6 mb-8">
+            <div className="bg-white text-slate-900 p-6 md:p-7 rounded-[2rem] md:rounded-[2.5rem] shadow-xl relative overflow-hidden group border-2 border-blue-900/20 hover:border-blue-900/35 transition-all flex flex-col justify-between">
+              {/* Soft subtle glow matching theme accents */}
+              <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-100/60 rounded-full blur-3xl group-hover:bg-blue-200/60 transition-all duration-700"></div>
+              <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-50/80 rounded-full blur-3xl group-hover:bg-blue-100/50 transition-all duration-700"></div>
 
-          <div className="space-y-8 md:space-y-12 text-slate-600 leading-relaxed md:leading-loose text-sm md:text-base font-inter max-w-xl mx-auto md:mx-0">
-            <p className="first-letter:text-5xl first-letter:font-playfair first-letter:font-bold first-letter:text-blue-900 first-letter:mr-3 first-letter:float-left">
-              Most aspirants don’t fail because they studied too little. They fail because they studied too much of the wrong things — too many books, too many notes, too many sources pulling them in different directions. The problem isn’t effort. It’s <span className="text-slate-900 font-bold accent-slate-900 italic">noise</span>. And noise doesn’t just waste time. It breeds anxiety. When everything feels important, nothing feels clear. You read more, retain less, and slowly lose confidence in your own preparation.
-            </p>
+              <div className="relative z-10 space-y-3.5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-900 shadow-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
+                  <span className="text-[9px] font-bold tracking-[0.2em] uppercase text-blue-900 font-inter">Active Recall Engine</span>
+                </div>
 
-            <p>
-              Neti Academy is built on a simple idea borrowed from one of the oldest philosophical traditions in the world. <span className="text-blue-900 font-bold">“नेति नेति”</span> — Brihadaranyaka Upanishad. Not this. Not this. In Advaita Vedanta, Neti Neti is a method of arriving at truth by removing what is not essential. You don’t find clarity by adding more. You find it by stripping away what doesn’t belong.
-            </p>
+                <h2 className="text-xl md:text-2xl font-playfair font-bold leading-tight tracking-tight text-slate-900">
+                  Recall Hub: Test Memory, Not Just Recognition
+                </h2>
 
-            <div className="bg-slate-50 p-6 md:p-10 rounded-3xl border-l-4 border-blue-900 italic text-slate-700 leading-relaxed">
-              We apply this directly to how you prepare. Not more PDFs. Not more optional readings. Not another YouTube playlist. Instead — fewer, better resources. Clear structure. Focused practice. A preparation path you can trust. When the clutter is gone, something else happens. The stress drops. You stop comparing your strategy with everyone else’s. You stop hoarding resources you’ll never read. Your mind gets quieter — and a quiet mind learns faster and thinks sharper. <span className="text-blue-900 font-bold not-italic font-inter block mt-4 text-base md:text-lg">Clarity, discipline, and emotional balance are not extras. They are the foundation.</span>
+                <p className="text-slate-600 text-xs md:text-sm leading-relaxed font-inter">
+                  Practice structured, chapter-wise MCQs designed specifically for competitive examinations. Get instant review analytics and comprehensive solution breakdowns before exam day.
+                </p>
+
+                {/* Feature pills */}
+                <div className="grid grid-cols-2 gap-2.5 pt-1">
+                  <div className="bg-slate-50/80 border border-blue-900/15 rounded-xl p-2.5 group-hover:border-blue-900/30 transition-colors shadow-sm">
+                    <p className="text-[9px] font-bold text-blue-900 uppercase tracking-wider">Chapter-Wise</p>
+                    <p className="text-xs font-semibold text-slate-800 mt-0.5">Structured MCQs</p>
+                  </div>
+                  <div className="bg-slate-50/80 border border-blue-900/15 rounded-xl p-2.5 group-hover:border-blue-900/30 transition-colors shadow-sm">
+                    <p className="text-[9px] font-bold text-blue-900 uppercase tracking-wider">Instant Review</p>
+                    <p className="text-xs font-semibold text-slate-800 mt-0.5">Detailed Explanations</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative z-10 pt-4 mt-4 border-t border-slate-200 flex items-center justify-between">
+                <div>
+                  <span className="text-[11px] text-slate-500 block font-inter">Ready to practice?</span>
+                  <span className="text-xs font-bold text-slate-900 font-inter">Enter practice arena</span>
+                </div>
+                <Link
+                  to="/recall"
+                  className="px-5 py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-md shadow-blue-900/15 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-1.5 shrink-0"
+                >
+                  Launch Hub <span>→</span>
+                </Link>
+              </div>
             </div>
+          </div>
+
+          <p className="first-letter:text-5xl first-letter:font-playfair first-letter:font-bold first-letter:text-blue-900 first-letter:mr-3 first-letter:float-left mb-8 md:mb-12">
+            Most aspirants don’t fail because they studied too little. They fail because they studied too much of the wrong things — too many books, too many notes, too many sources pulling them in different directions. The problem isn’t effort. It’s <span className="text-slate-900 font-bold accent-slate-900 italic">noise</span>. And noise doesn’t just waste time. It breeds anxiety. When everything feels important, nothing feels clear. You read more, retain less, and slowly lose confidence in your own preparation.
+          </p>
+
+          <p className="mb-8 md:mb-12">
+            Neti Academy is built on a simple idea borrowed from one of the oldest philosophical traditions in the world. <span className="text-blue-900 font-bold">“नेति नेति”</span> — Brihadaranyaka Upanishad. Not this. Not this. In Advaita Vedanta, Neti Neti is a method of arriving at truth by removing what is not essential. You don’t find clarity by adding more. You find it by stripping away what doesn’t belong.
+          </p>
+
+          <div className="clear-both bg-slate-50 p-6 md:p-10 rounded-3xl border-l-4 border-blue-900 italic text-slate-700 leading-relaxed mt-6">
+            We apply this directly to how you prepare. Not more PDFs. Not more optional readings. Not another YouTube playlist. Instead — fewer, better resources. Clear structure. Focused practice. A preparation path you can trust. When the clutter is gone, something else happens. The stress drops. You stop comparing your strategy with everyone else’s. You stop hoarding resources you’ll never read. Your mind gets quieter — and a quiet mind learns faster and thinks sharper. <span className="text-blue-900 font-bold not-italic font-inter block mt-4 text-base md:text-lg">Clarity, discipline, and emotional balance are not extras. They are the foundation.</span>
           </div>
         </div>
 
-        {/* Right Content - Daily Dynamic Update (7 Days) */}
+        {/* DO NOT DELETE: Temporarily commented out Current Affairs widget for future release */}
+        {/*
         <div className="flex-1 w-full max-w-2xl mx-auto md:mx-0">
           <div className="bg-slate-50 p-6 md:p-12 rounded-[2.5rem] md:rounded-[3.5rem] border border-slate-200 shadow-sm h-full flex flex-col relative overflow-hidden group">
-            {/* Soft decorative glow */}
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-100/40 rounded-full blur-3xl group-hover:bg-blue-100/60 transition-colors duration-700"></div>
 
             <div className="flex items-center justify-between mb-8 md:mb-12 border-b border-slate-200 pb-6 md:pb-8 relative z-10">
@@ -120,6 +165,7 @@ const Hero = () => {
 
           </div>
         </div>
+        */}
       </div>
     </section>
   );

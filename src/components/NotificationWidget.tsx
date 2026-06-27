@@ -60,6 +60,8 @@ const NotificationWidget = () => {
       });
     }
 
+    /* DO NOT DELETE: Temporarily commented out for future Current Affairs release */
+    /*
     if (dailyDigests.length > 0) {
       const item = dailyDigests[dailyDigests.length - 1];
       items.push({
@@ -72,6 +74,7 @@ const NotificationWidget = () => {
         priority: 1
       });
     }
+    */
 
     if (courses.length > 0) {
       const item = courses[courses.length - 1];

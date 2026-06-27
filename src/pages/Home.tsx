@@ -13,7 +13,8 @@ const Home = () => {
         title="Neti Academy | Less Noise, More Clarity"
         description="Premium UPSC study materials, daily current affairs, and comprehensive courses for civil services aspirants."
       />
-      <AnnouncementBar />
+      {/* DO NOT DELETE: Temporarily commented out scrolling marquee announcement bar for future release */}
+      {/* <AnnouncementBar /> */}
       <Hero />
       <RecentHighlights />
       <Ecosystem />

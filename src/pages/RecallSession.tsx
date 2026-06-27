@@ -439,9 +439,6 @@ const RecallSession = () => {
                   <div className="space-y-4">
                     <div className="flex justify-between items-center pb-4 border-b border-emerald-50">
                       <span className="font-playfair font-black text-xl text-emerald-950">Question : {currentQuestionIndex + 1}</span>
-                      <span className="px-3 py-1 bg-emerald-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider rounded-full">
-                        Difficulty: {quiz.questions[currentQuestionIndex].difficulty}
-                      </span>
                     </div>
                     <QuestionTextFormatter
                       text={quiz.questions[currentQuestionIndex].question_text}
@@ -517,6 +514,9 @@ const RecallSession = () => {
                 <div className="flex items-center justify-between border-b border-slate-50 pb-4">
                   <span className="font-bold text-slate-800 text-sm">Question {idx + 1}</span>
                   <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 bg-emerald-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider rounded-full">
+                      Difficulty: {quiz.questions[idx].difficulty}
+                    </span>
                     {item.is_correct ? (
                       <span className="flex items-center gap-1 text-green-700 bg-green-50 px-3 py-1 rounded-full text-xs font-bold">
                         <CheckCircle2 className="w-4 h-4" />

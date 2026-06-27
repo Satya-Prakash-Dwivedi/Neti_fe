@@ -208,7 +208,8 @@ const Navbar = () => {
                     </NavLink>
                   </li>
 
-                  {/* Current Affairs Dropdown */}
+                  {/* DO NOT DELETE: Temporarily commented out until Current Affairs launch in future */}
+                  {/*
                   <li className="relative" ref={caDropdownRef}>
                     <button 
                       onClick={() => setIsCADropdownOpen(!isCADropdownOpen)}
@@ -237,6 +238,7 @@ const Navbar = () => {
                       </div>
                     </div>
                   </li>
+                  */}
 
                   {mainNavItems.slice(1).map((item) => (
                     <li key={item.name}>
@@ -493,7 +495,8 @@ const Navbar = () => {
                   </NavLink>
                 </li>
 
-                {/* Mobile Current Affairs Section */}
+                {/* DO NOT DELETE: Temporarily commented out until Current Affairs launch in future */}
+                {/*
                 <li className="px-6 py-3">
                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Current Affairs</p>
                    <div className="grid grid-cols-2 gap-4">
@@ -513,6 +516,7 @@ const Navbar = () => {
                       ))}
                    </div>
                 </li>
+                */}
 
                 {mainNavItems.slice(1).map((item) => (
                   <li key={item.name}>

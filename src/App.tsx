@@ -116,8 +116,11 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/study-materials" element={<StudyMaterials />} />
             <Route path="/study-materials/:id" element={<ProductDetail />} />
+            {/* DO NOT DELETE: Temporarily commented out user-facing Current Affairs routes for future release */}
+            {/*
             <Route path="/current-affairs" element={<CurrentAffairs />} />
             <Route path="/current-affairs/:id" element={<CurrentAffairDetail />} />
+            */}
             <Route path="/monthly-magazines" element={<MonthlyMagazines />} />
             <Route path="/monthly-magazines/:id" element={<MonthlyMagazineDetail />} />
 
