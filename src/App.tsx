@@ -159,11 +159,11 @@ function App() {
               } 
             />
             <Route 
-              path="/recall/:bookName" 
+              path="/recall/:subject" 
               element={<RecallSubjectPage />} 
             />
             <Route 
-              path="/recall/:bookName/:subject" 
+              path="/recall/:subject/:source" 
               element={<RecallClassPage />} 
             />
             <Route 

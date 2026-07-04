@@ -9,6 +9,7 @@ interface Book {
   subject: string;
   class_name: string;
   cover_image: string;
+  source_image: string;
   full_price: string;
   is_active: boolean;
   created_at: string;
@@ -27,6 +28,8 @@ const AdminBooks = () => {
   const [className, setClassName] = useState("");
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [existingCoverUrl, setExistingCoverUrl] = useState<string>("");
+  const [sourceImage, setSourceImage] = useState<File | null>(null);
+  const [existingSourceUrl, setExistingSourceUrl] = useState<string>("");
   const [fullPrice, setFullPrice] = useState("0");
   const [isActive, setIsActive] = useState(true);
 
@@ -49,6 +52,8 @@ const AdminBooks = () => {
     setClassName("");
     setCoverImage(null);
     setExistingCoverUrl("");
+    setSourceImage(null);
+    setExistingSourceUrl("");
     setFullPrice("0");
     setIsActive(true);
     setIsEditing(false);
@@ -61,6 +66,8 @@ const AdminBooks = () => {
     setClassName(book.class_name || "");
     setCoverImage(null);
     setExistingCoverUrl(book.cover_image || "");
+    setSourceImage(null);
+    setExistingSourceUrl(book.source_image || "");
     setFullPrice(book.full_price);
     setIsActive(book.is_active);
     setIsEditing(true);
@@ -85,6 +92,10 @@ const AdminBooks = () => {
       
       if (coverImage) {
         formData.append("cover_image", coverImage);
+      }
+      
+      if (sourceImage) {
+        formData.append("source_image", sourceImage);
       }
       
       const token = localStorage.getItem("token");
@@ -179,7 +190,31 @@ const AdminBooks = () => {
                 />
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Cover Image</label>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Book / Source Image</label>
+                {existingSourceUrl && !sourceImage && (
+                  <div className="mb-2 relative w-16 h-20 rounded-md overflow-hidden border border-slate-200 shadow-sm">
+                    <img src={existingSourceUrl.startsWith('http') ? existingSourceUrl : `${import.meta.env.VITE_API_URL.replace('/api', '')}${existingSourceUrl}`} alt="source" className="w-full h-full object-cover" />
+                  </div>
+                )}
+                <div className="relative">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files.length > 0) {
+                        setSourceImage(e.target.files[0]);
+                      }
+                    }}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <div className="w-full px-4 py-2 border border-slate-200 border-dashed rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20 flex items-center justify-between text-slate-500">
+                    <span className="truncate">{sourceImage ? sourceImage.name : "Choose an image file..."}</span>
+                    <Upload className="w-4 h-4 text-blue-900" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Class Cover Image</label>
                 {existingCoverUrl && !coverImage && (
                   <div className="mb-2 relative w-16 h-20 rounded-md overflow-hidden border border-slate-200 shadow-sm">
                     <img src={existingCoverUrl.startsWith('http') ? existingCoverUrl : `${import.meta.env.VITE_API_URL.replace('/api', '')}${existingCoverUrl}`} alt="cover" className="w-full h-full object-cover" />
@@ -257,7 +292,9 @@ const AdminBooks = () => {
                 {books.map((book) => (
                   <div key={book.id} className="py-4 first:pt-0 last:pb-0 flex justify-between items-center gap-4">
                     <div className="flex-1 flex items-center gap-4">
-                      {book.cover_image ? (
+                      {book.source_image ? (
+                         <img src={book.source_image.startsWith('http') ? book.source_image : `${import.meta.env.VITE_API_URL.replace('/api', '')}${book.source_image}`} alt="source" className="w-12 h-16 object-cover rounded-md border border-slate-200" />
+                      ) : book.cover_image ? (
                          <img src={book.cover_image.startsWith('http') ? book.cover_image : `${import.meta.env.VITE_API_URL.replace('/api', '')}${book.cover_image}`} alt="cover" className="w-12 h-16 object-cover rounded-md border border-slate-200" />
                       ) : (
                          <div className="w-12 h-16 bg-slate-100 rounded-md border border-slate-200 flex items-center justify-center">

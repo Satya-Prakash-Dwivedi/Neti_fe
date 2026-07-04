@@ -15,7 +15,7 @@ interface Book {
 }
 
 const RecallClassPage = () => {
-  const { bookName, subject } = useParams<{ bookName: string, subject: string }>();
+  const { subject, source } = useParams<{ subject: string, source: string }>();
   const navigate = useNavigate();
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,7 @@ const RecallClassPage = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/categories/${bookName}/${subject}/classes/`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/categories/${subject}/${source}/classes/`);
         setBooks(response.data);
       } catch (err) {
         console.error("Failed to fetch classes:", err);
@@ -31,24 +31,24 @@ const RecallClassPage = () => {
         setLoading(false);
       }
     };
-    if (bookName && subject) fetchBooks();
-  }, [bookName, subject]);
+    if (source && subject) fetchBooks();
+  }, [source, subject]);
 
   return (
     <div className="bg-white min-h-screen py-12 px-6">
-      <SEO title={`${subject} - ${bookName} - Recall Hub`} description={`Select a class or book for ${subject} in ${bookName}.`} />
+      <SEO title={`${subject} - ${source} - Recall Hub`} description={`Select a class or book for ${subject} in ${source}.`} />
       
       <div className="max-w-5xl mx-auto">
         <button 
-          onClick={() => navigate(`/recall/${encodeURIComponent(bookName || '')}`)}
+          onClick={() => navigate(`/recall/${encodeURIComponent(subject || '')}`)}
           className="flex items-center gap-2 text-sm font-bold text-emerald-900/80 hover:text-emerald-600 transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Subjects
+          Back to Sources
         </button>
 
         <header className="mb-12 text-center md:text-left">
-          <h1 className="text-3xl md:text-5xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight mb-4">{bookName} - {subject}</h1>
+          <h1 className="text-3xl md:text-5xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight mb-4">{subject} - {source}</h1>
           <p className="text-base md:text-lg text-slate-700 font-medium max-w-2xl leading-relaxed">
             Select a specific class or book to view available chapters.
           </p>

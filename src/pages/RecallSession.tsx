@@ -158,6 +158,13 @@ const RecallSession = () => {
     }
     return {};
   });
+  const [reviewQuestions, setReviewQuestions] = useState<Record<string, boolean>>(() => {
+    if (id) {
+      const saved = localStorage.getItem(`quiz_review_${id}`);
+      return saved ? JSON.parse(saved) : {};
+    }
+    return {};
+  });
   const [showSubmitModal, setShowSubmitModal] = useState(false);
 
   // Timer state
@@ -187,12 +194,17 @@ const RecallSession = () => {
     fetchQuiz();
   }, [id]);
 
-  // Auto-save answers to localStorage
+  // Auto-save answers and review state to localStorage
   useEffect(() => {
-    if (id && Object.keys(answers).length > 0) {
-      localStorage.setItem(`quiz_answers_${id}`, JSON.stringify(answers));
+    if (id) {
+      if (Object.keys(answers).length > 0) {
+        localStorage.setItem(`quiz_answers_${id}`, JSON.stringify(answers));
+      }
+      if (Object.keys(reviewQuestions).length > 0) {
+        localStorage.setItem(`quiz_review_${id}`, JSON.stringify(reviewQuestions));
+      }
     }
-  }, [answers, id]);
+  }, [answers, reviewQuestions, id]);
 
   // Timer logic
   useEffect(() => {
@@ -298,10 +310,12 @@ const RecallSession = () => {
   const handleReattempt = () => {
     setResults(null);
     setAnswers({});
+    setReviewQuestions({});
     setCurrentQuestionIndex(0);
     setTimeLeft(3600);
     setIsTimeUp(false);
     localStorage.removeItem(`quiz_answers_${id}`);
+    localStorage.removeItem(`quiz_review_${id}`);
   };
 
   const formatTime = (seconds: number) => {
@@ -392,7 +406,9 @@ const RecallSession = () => {
                     let btnClass = "w-10 h-10 rounded-xl font-bold text-sm flex items-center justify-center transition-all ";
 
                     if (isCurrent) {
-                      btnClass += "bg-blue-600 text-white shadow-md transform scale-105";
+                      btnClass += "bg-sky-500 text-white shadow-md transform scale-105";
+                    } else if (reviewQuestions[q.id.toString()]) {
+                      btnClass += "bg-orange-500 text-white shadow-sm hover:bg-orange-600";
                     } else if (isAnswered) {
                       btnClass += "bg-emerald-500 text-white shadow-sm hover:bg-emerald-600";
                     } else {
@@ -415,17 +431,37 @@ const RecallSession = () => {
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-emerald-50 space-y-3">
-                  <div className="flex items-center gap-3 text-xs font-semibold text-slate-600">
-                    <div className="w-4 h-4 rounded bg-blue-600 shadow-sm" />
-                    <span>Current</span>
+                  <div className="flex justify-between items-center mb-4 bg-emerald-50 rounded-lg p-3">
+                    <span className="text-sm font-bold text-slate-700">Attempted:</span>
+                    <span className="text-sm font-black text-emerald-700">{Object.keys(answers).length} / {questionCount}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs font-semibold text-slate-600">
-                    <div className="w-4 h-4 rounded bg-emerald-500 shadow-sm" />
-                    <span>Answered</span>
+                  <div className="flex justify-between items-center text-xs font-semibold text-slate-600">
+                    <div className="flex items-center gap-3">
+                      <div className="w-4 h-4 rounded bg-sky-500 shadow-sm" />
+                      <span>Current</span>
+                    </div>
+                    <span>1</span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs font-semibold text-slate-600">
-                    <div className="w-4 h-4 rounded bg-white border border-slate-200 shadow-sm" />
-                    <span>Not Answered</span>
+                  <div className="flex justify-between items-center text-xs font-semibold text-slate-600">
+                    <div className="flex items-center gap-3">
+                      <div className="w-4 h-4 rounded bg-emerald-500 shadow-sm" />
+                      <span>Answered</span>
+                    </div>
+                    <span>{quiz.questions.filter((q, idx) => idx !== currentQuestionIndex && !reviewQuestions[q.id.toString()] && !!answers[q.id.toString()]).length}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-xs font-semibold text-slate-600">
+                    <div className="flex items-center gap-3">
+                      <div className="w-4 h-4 rounded bg-orange-500 shadow-sm" />
+                      <span>Marked for Review</span>
+                    </div>
+                    <span>{quiz.questions.filter((q, idx) => idx !== currentQuestionIndex && reviewQuestions[q.id.toString()]).length}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-xs font-semibold text-slate-600">
+                    <div className="flex items-center gap-3">
+                      <div className="w-4 h-4 rounded bg-white border border-slate-200 shadow-sm" />
+                      <span>Not Answered</span>
+                    </div>
+                    <span>{quiz.questions.filter((q, idx) => idx !== currentQuestionIndex && !reviewQuestions[q.id.toString()] && !answers[q.id.toString()]).length}</span>
                   </div>
                 </div>
               </div>
@@ -468,6 +504,34 @@ const RecallSession = () => {
                         </button>
                       );
                     })}
+                  </div>
+
+                  {/* Actions (Clear, Mark Review) */}
+                  <div className="flex flex-wrap items-center gap-4 pt-2">
+                    <button
+                      onClick={() => {
+                        const newAnswers = { ...answers };
+                        delete newAnswers[quiz.questions[currentQuestionIndex].id.toString()];
+                        setAnswers(newAnswers);
+                      }}
+                      className="text-sm font-semibold text-slate-500 hover:text-slate-800 transition-colors underline decoration-slate-300 underline-offset-4"
+                    >
+                      Clear Answer
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        const qId = quiz.questions[currentQuestionIndex].id.toString();
+                        setReviewQuestions(prev => ({
+                          ...prev,
+                          [qId]: !prev[qId]
+                        }));
+                      }}
+                      className={`text-xs font-bold px-4 py-2 rounded-xl border transition-colors flex items-center gap-2 ${reviewQuestions[quiz.questions[currentQuestionIndex].id.toString()] ? 'bg-orange-100 text-orange-700 border-orange-200' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+                    >
+                      <div className={`w-2 h-2 rounded-full ${reviewQuestions[quiz.questions[currentQuestionIndex].id.toString()] ? 'bg-orange-500' : 'bg-slate-300'}`} />
+                      {reviewQuestions[quiz.questions[currentQuestionIndex].id.toString()] ? 'Marked for Review' : 'Mark for Review'}
+                    </button>
                   </div>
                 </div>
               )}

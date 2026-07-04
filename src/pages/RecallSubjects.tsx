@@ -5,7 +5,7 @@ import { BookOpen, ChevronRight } from "lucide-react";
 import SEO from "../components/SEO";
 
 interface Category {
-  book_name: string;
+  subject: string;
   cover_image: string | null;
 }
 
@@ -61,19 +61,19 @@ const RecallSubjects = () => {
               categories.map((category, idx) => (
                 <Link 
                   key={idx}
-                  to={`/recall/${encodeURIComponent(category.book_name)}`}
+                  to={`/recall/${encodeURIComponent(category.subject)}`}
                   className="bg-white rounded-3xl border border-emerald-100 p-8 flex flex-col items-center justify-center gap-4 hover:shadow-xl hover:-translate-y-2 hover:border-emerald-300 transition-all duration-300 ease-out group"
                 >
                   {category.cover_image ? (
-                    <img src={category.cover_image.startsWith('http') ? category.cover_image : `${import.meta.env.VITE_API_URL.replace('/api', '')}${category.cover_image}`} alt={category.book_name} className="h-40 object-contain rounded-md shadow-sm group-hover:scale-105 transition-transform" />
+                    <img src={category.cover_image.startsWith('http') ? category.cover_image : `${import.meta.env.VITE_API_URL.replace('/api', '')}${category.cover_image}`} alt={category.subject} className="h-40 object-contain rounded-md shadow-sm group-hover:scale-105 transition-transform" />
                   ) : (
                     <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                       <BookOpen className="w-8 h-8" />
                     </div>
                   )}
-                  <h3 className="text-xl font-bold text-slate-800 text-center">{category.book_name}</h3>
+                  <h3 className="text-xl font-bold text-slate-800 text-center">{category.subject}</h3>
                   <div className="mt-2 text-xs font-bold text-emerald-900/60 flex items-center gap-1 group-hover:text-emerald-600 transition-colors">
-                    View Subjects <ChevronRight className="w-3 h-3" />
+                    View Sources <ChevronRight className="w-3 h-3" />
                   </div>
                 </Link>
               ))
