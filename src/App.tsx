@@ -12,6 +12,7 @@ import Blogs from './pages/Blogs';
 import Contact from './pages/Contact';
 import ProductDetail from './pages/ProductDetail';
 import CurrentAffairDetail from './pages/CurrentAffairDetail';
+import DailyCAQuizPage from './pages/DailyCAQuizPage';
 import BlogDetail from './pages/BlogDetail';
 import PlanB from './pages/PlanB';
 import Mind from './pages/Mind';
@@ -23,6 +24,8 @@ import RevisionSeries from './pages/RevisionSeries';
 import PolityCourseDetail from './pages/PolityCourseDetail';
 import MonthlyMagazines from './pages/MonthlyMagazines';
 import MonthlyMagazineDetail from './pages/MonthlyMagazineDetail';
+import { CAMagazine } from './pages/CAMagazine';
+import CAQuizzes from './pages/CAQuizzes';
 
 // Auth and Quiz pages
 import Login from './pages/Login';
@@ -39,6 +42,7 @@ import AdminQuizAttempts from './pages/AdminQuizAttempts';
 import AdminCurrentAffairs from './pages/AdminCurrentAffairs';
 import AdminOrders from './pages/AdminOrders';
 import AdminRearrangeChapters from './pages/AdminRearrangeChapters';
+import AdminCAQuizzes from './pages/AdminCAQuizzes';
 
 // Legal Pages
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -145,13 +149,19 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            
+            {/* Daily CA Quiz Route */}
+            <Route path="/daily-ca-quiz/:date" element={<DailyCAQuizPage />} />
+            <Route path="/ca-magazine" element={<CAMagazine />} />
+            <Route path="/ca-quiz" element={<CAQuizzes />} />
+            
             {/* Recall Hub Routes */}
             <Route 
               path="/recall" 
               element={<RecallSubjects />} 
             />
             <Route 
-              path="/recall/history" 
+              path="/recall/test/history" 
               element={
                 <StudentRoute>
                   <RecallHistory />
@@ -223,6 +233,14 @@ function App() {
               element={
                 <AdminRoute>
                   <AdminOrders />
+                </AdminRoute>
+              } 
+            />
+            <Route 
+              path="/admin/ca-quizzes" 
+              element={
+                <AdminRoute>
+                  <AdminCAQuizzes />
                 </AdminRoute>
               } 
             />

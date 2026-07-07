@@ -17,6 +17,8 @@ interface Question {
 interface Quiz {
   id: number;
   title: string;
+  is_free_test: boolean;
+  is_current_affairs?: boolean;
   questions: Question[];
 }
 
@@ -62,10 +64,10 @@ const QuestionTextFormatter = ({ text, className }: { text: string; className?: 
   const isConsider = lowerText.includes("consider the following statement") || lowerText.includes("consider the following");
 
   if (isMatch) {
-    formatted = formatted.replace(/\s+[l\|]\s+(?=[A-HP-S1-6][\.\-\)])/g, '\n');
-    formatted = formatted.replace(/(?:^|\s|, )([A-HP-S1-6][\.\-\)])(?=\s|\w)/g, '\n$1');
+    formatted = formatted.replace(/(list\s*[i1]+\s*:?)/ig, '\n$1\n');
+    formatted = formatted.replace(/(?:^|\s|, )(\(?[A-HP-S1-6][\.\-\)])(?=\s|\w)/ig, '\n$1');
   } else if (isConsider) {
-    formatted = formatted.replace(/(?:^|\s|, )([1-6][\.\-\)])(?=\s|\w)/g, '\n$1');
+    formatted = formatted.replace(/(?:^|\s|, )(\(?[1-6][\.\-\)])(?=\s|\w)/ig, '\n$1');
   } else {
     return <div className={`whitespace-pre-line ${className}`}>{text}</div>;
   }
@@ -75,7 +77,7 @@ const QuestionTextFormatter = ({ text, className }: { text: string; className?: 
   const items: { marker: string; content: string }[] = [];
 
   lines.forEach(line => {
-    const match = line.match(/^([A-HP-S1-6])[\.\-\)]\s*(.*)/);
+    const match = line.match(/^(\(?[A-HP-S1-6][\.\-\)])\s*(.*)/i);
     if (match) {
       items.push({ marker: match[1], content: line });
     } else {
@@ -150,6 +152,7 @@ const RecallSession = () => {
   const navigate = useNavigate();
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [loading, setLoading] = useState(true);
+  const [alreadyAttempted, setAlreadyAttempted] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>(() => {
     if (id) {
@@ -183,8 +186,17 @@ const RecallSession = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/${id}/`);
-        setQuiz(response.data);
+        const [quizRes, attemptsRes] = await Promise.all([
+          axios.get(`${import.meta.env.VITE_API_URL}/quizzes/${id}/`),
+          axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/attempts/`)
+        ]);
+        
+        const hasAttempted = attemptsRes.data.some((a: any) => a.quiz === parseInt(id!));
+        if (hasAttempted) {
+          setAlreadyAttempted(true);
+        }
+        
+        setQuiz(quizRes.data);
       } catch (err) {
         console.error("Failed to load quiz details:", err);
       } finally {
@@ -328,15 +340,40 @@ const RecallSession = () => {
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
+  if (alreadyAttempted && quiz) {
+    return (
+      <div className="bg-white min-h-screen flex items-center justify-center p-6">
+        <SEO title="Quiz Completed" description="You have already taken this quiz." />
+        <div className="bg-slate-50 border border-slate-200 rounded-3xl p-10 max-w-md w-full text-center">
+          <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle2 className="w-10 h-10" />
+          </div>
+          <h2 className="text-2xl font-black text-slate-900 font-playfair mb-3">Test Already Completed</h2>
+          <p className="text-slate-600 mb-8 font-inter">You have already submitted this test. You can review your performance in your performance dashboard.</p>
+          <Link to="/recall/test/history" className="px-8 py-4 bg-emerald-600 text-white rounded-xl font-bold text-sm shadow-md hover:bg-emerald-700 transition-colors inline-block">
+            View Performance Dashboard
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white min-h-screen py-12 px-6">
       <SEO title={`${quiz.title} - Online Practice`} description={`Online test session for ${quiz.title}`} />
 
       <div className="max-w-7xl mx-auto">
-        <Link to={`/recall/book/${(quiz as any).book?.id}`} className="inline-flex items-center gap-2 text-emerald-900/80 hover:text-emerald-600 font-bold text-xs uppercase tracking-widest mb-8">
-          <ArrowLeft className="w-4 h-4" />
-          Back to Book
-        </Link>
+        {quiz.is_current_affairs ? (
+          <Link to="/ca-quiz" className="inline-flex items-center gap-2 text-emerald-900/80 hover:text-emerald-600 font-bold text-xs uppercase tracking-widest mb-8">
+            <ArrowLeft className="w-4 h-4" />
+            Back to Current Affairs Quiz
+          </Link>
+        ) : (
+          <Link to={`/recall/book/${(quiz as any).book?.id}`} className="inline-flex items-center gap-2 text-emerald-900/80 hover:text-emerald-600 font-bold text-xs uppercase tracking-widest mb-8">
+            <ArrowLeft className="w-4 h-4" />
+            Back to Book
+          </Link>
+        )}
 
         {/* Quiz Completed Results Header */}
         {results ? (
@@ -369,13 +406,15 @@ const RecallSession = () => {
               <h2 className="text-xl md:text-2xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight">{quiz.title}</h2>
             </div>
 
-            <div className="flex flex-col items-center justify-center bg-slate-900 text-white px-6 py-3 rounded-2xl shadow-inner w-full md:w-auto">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Time Remaining</span>
-              <div className={`flex items-center gap-2 font-mono text-xl font-bold ${timeLeft < 300 ? 'text-red-400 animate-pulse' : 'text-emerald-400'}`}>
-                <Clock className="w-5 h-5" />
-                {formatTime(timeLeft)}
+            {!quiz.is_current_affairs && (
+              <div className="flex flex-col items-center justify-center bg-slate-900 text-white px-6 py-3 rounded-2xl shadow-inner w-full md:w-auto">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Time Remaining</span>
+                <div className={`flex items-center gap-2 font-mono text-xl font-bold ${timeLeft < 300 ? 'text-red-400 animate-pulse' : 'text-emerald-400'}`}>
+                  <Clock className="w-5 h-5" />
+                  {formatTime(timeLeft)}
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="flex flex-col items-start md:items-end w-full md:w-1/3">
               <div className="text-xs font-bold text-emerald-900/60 mb-2">
@@ -437,31 +476,24 @@ const RecallSession = () => {
                   </div>
                   <div className="flex justify-between items-center text-xs font-semibold text-slate-600">
                     <div className="flex items-center gap-3">
-                      <div className="w-4 h-4 rounded bg-sky-500 shadow-sm" />
-                      <span>Current</span>
-                    </div>
-                    <span>1</span>
-                  </div>
-                  <div className="flex justify-between items-center text-xs font-semibold text-slate-600">
-                    <div className="flex items-center gap-3">
                       <div className="w-4 h-4 rounded bg-emerald-500 shadow-sm" />
                       <span>Answered</span>
                     </div>
-                    <span>{quiz.questions.filter((q, idx) => idx !== currentQuestionIndex && !reviewQuestions[q.id.toString()] && !!answers[q.id.toString()]).length}</span>
+                    <span>{quiz.questions.filter((q) => !reviewQuestions[q.id.toString()] && !!answers[q.id.toString()]).length}</span>
                   </div>
                   <div className="flex justify-between items-center text-xs font-semibold text-slate-600">
                     <div className="flex items-center gap-3">
                       <div className="w-4 h-4 rounded bg-orange-500 shadow-sm" />
                       <span>Marked for Review</span>
                     </div>
-                    <span>{quiz.questions.filter((q, idx) => idx !== currentQuestionIndex && reviewQuestions[q.id.toString()]).length}</span>
+                    <span>{quiz.questions.filter((q) => reviewQuestions[q.id.toString()]).length}</span>
                   </div>
                   <div className="flex justify-between items-center text-xs font-semibold text-slate-600">
                     <div className="flex items-center gap-3">
                       <div className="w-4 h-4 rounded bg-white border border-slate-200 shadow-sm" />
                       <span>Not Answered</span>
                     </div>
-                    <span>{quiz.questions.filter((q, idx) => idx !== currentQuestionIndex && !reviewQuestions[q.id.toString()] && !answers[q.id.toString()]).length}</span>
+                    <span>{quiz.questions.filter((q) => !reviewQuestions[q.id.toString()] && !answers[q.id.toString()]).length}</span>
                   </div>
                 </div>
               </div>
@@ -629,12 +661,16 @@ const RecallSession = () => {
             ))}
 
             <div className="flex justify-center gap-4 py-6">
-              <button onClick={handleReattempt} className="px-8 py-4 border border-blue-900 text-emerald-600 rounded-xl hover:bg-emerald-100 font-bold text-sm shadow-sm active:scale-95 transition-all">
-                Reattempt Test
-              </button>
-              <Link to={`/recall/book/${(quiz as any).book?.id}`} className="px-8 py-4 bg-emerald-600 text-white rounded-xl hover:bg-blue-850 font-bold text-sm shadow-md active:scale-95 transition-all">
-                Return to Book
-              </Link>
+              {/* Reattempt button removed */}
+              {quiz.is_current_affairs ? (
+                <Link to="/ca-quiz" className="px-8 py-4 bg-emerald-600 text-white rounded-xl hover:bg-blue-850 font-bold text-sm shadow-md active:scale-95 transition-all">
+                  Back to Current Affairs Quizzes
+                </Link>
+              ) : (
+                <Link to={`/recall/book/${(quiz as any).book?.id}`} className="px-8 py-4 bg-emerald-600 text-white rounded-xl hover:bg-blue-850 font-bold text-sm shadow-md active:scale-95 transition-all">
+                  Return to Book
+                </Link>
+              )}
             </div>
           </div>
         )}

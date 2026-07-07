@@ -15,8 +15,8 @@ const mainNavItems = [
 ];
 
 const currentAffairsItems = [
-  { name: "Daily Current Affairs", path: "/current-affairs" },
-  { name: "Monthly Magazine", path: "/monthly-magazines" },
+  { name: "Current Affairs Quiz", path: "/ca-quiz" },
+  { name: "Monthly Magazine", path: "/ca-magazine" },
 ];
 
 const dropdownItems = [
@@ -151,6 +151,24 @@ const Navbar = () => {
                   </li>
                   <li>
                     <NavLink
+                      to="/admin/ca-quizzes"
+                      className={({ isActive }) =>
+                        `text-sm font-bold transition-all duration-200 relative group/item ${isActive
+                          ? "text-blue-900"
+                          : "text-slate-600 hover:text-blue-900"
+                        }`
+                      }
+                    >
+                      {({ isActive }) => (
+                        <>
+                          Admin CA Quizzes
+                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                        </>
+                      )}
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
                       to="/admin/orders"
                       className={({ isActive }) =>
                         `text-sm font-bold transition-all duration-200 relative group/item ${isActive
@@ -208,8 +226,6 @@ const Navbar = () => {
                     </NavLink>
                   </li>
 
-                  {/* DO NOT DELETE: Temporarily commented out until Current Affairs launch in future */}
-                  {/*
                   <li className="relative" ref={caDropdownRef}>
                     <button 
                       onClick={() => setIsCADropdownOpen(!isCADropdownOpen)}
@@ -238,7 +254,6 @@ const Navbar = () => {
                       </div>
                     </div>
                   </li>
-                  */}
 
                   {mainNavItems.slice(1).map((item) => (
                     <li key={item.name}>
@@ -363,12 +378,12 @@ const Navbar = () => {
                     <div className="p-2 bg-slate-50">
                       {!isAdmin && (
                         <Link 
-                          to="/recall/history"
+                          to="/recall/test/history"
                           onClick={() => setIsProfileDropdownOpen(false)}
                           className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:text-blue-900 hover:bg-white rounded-xl transition-all w-full text-left"
                         >
                           <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                          Test History
+                          Performance Dashboard
                         </Link>
                       )}
                       <button
@@ -451,6 +466,20 @@ const Navbar = () => {
                 </li>
                 <li>
                   <NavLink
+                    to="/admin/ca-quizzes"
+                    onClick={() => setIsMenuOpen(false)}
+                    className={({ isActive }) =>
+                      `text-lg font-bold px-6 py-3 block transition-colors ${isActive
+                        ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
+                        : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                      }`
+                    }
+                  >
+                    Admin CA Quizzes
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
                     to="/admin/orders"
                     onClick={() => setIsMenuOpen(false)}
                     className={({ isActive }) =>
@@ -495,8 +524,6 @@ const Navbar = () => {
                   </NavLink>
                 </li>
 
-                {/* DO NOT DELETE: Temporarily commented out until Current Affairs launch in future */}
-                {/*
                 <li className="px-6 py-3">
                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Current Affairs</p>
                    <div className="grid grid-cols-2 gap-4">
@@ -516,7 +543,6 @@ const Navbar = () => {
                       ))}
                    </div>
                 </li>
-                */}
 
                 {mainNavItems.slice(1).map((item) => (
                   <li key={item.name}>
@@ -597,11 +623,11 @@ const Navbar = () => {
                   </div>
                   {!isAdmin && (
                     <Link
-                      to="/recall/history"
+                      to="/recall/test/history"
                       onClick={() => setIsMenuOpen(false)}
                       className="py-3 bg-white border border-slate-200 text-slate-700 hover:text-blue-900 rounded-xl text-sm font-bold active:scale-95 transition-all text-center"
                     >
-                      Test History
+                      Performance Dashboard
                     </Link>
                   )}
                   <button

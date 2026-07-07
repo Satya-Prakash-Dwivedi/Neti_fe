@@ -29,36 +29,22 @@ interface QuizSummary {
   is_free_test: boolean;
   question_count: number;
   created_at: string;
+  is_current_affairs: boolean;
   questions?: Question[];
 }
 
-const AdminQuizzes = () => {
+const AdminCAQuizzes = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
-  const [bookId, setBookId] = useState<number | "">("");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [publishedQuizzes, setPublishedQuizzes] = useState<QuizSummary[]>([]);
-  const [books, setBooks] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ text: "", type: "" });
   const [activeTab, setActiveTab] = useState<"upload" | "list">("upload");
   const [editingQuizId, setEditingQuizId] = useState<number | null>(null);
 
-  const [listFilterSubject, setListFilterSubject] = useState("");
-  const [listFilterBookName, setListFilterBookName] = useState("");
-  const [listFilterClassName, setListFilterClassName] = useState("");
-
-  const uniqueListSubjects = Array.from(new Set(publishedQuizzes.map(q => q.book?.subject).filter(Boolean))) as string[];
-  const uniqueListBookNames = Array.from(new Set(publishedQuizzes.map(q => q.book?.book_name).filter(Boolean))) as string[];
-  const uniqueListClassNames = Array.from(new Set(publishedQuizzes.map(q => q.book?.class_name).filter(Boolean))) as string[];
-
-  const filteredQuizzesToDisplay = publishedQuizzes.filter(quiz => {
-    if (listFilterSubject && quiz.book?.subject !== listFilterSubject) return false;
-    if (listFilterBookName && quiz.book?.book_name !== listFilterBookName) return false;
-    if (listFilterClassName && quiz.book?.class_name !== listFilterClassName) return false;
-    return true;
-  });
+  const filteredQuizzesToDisplay = publishedQuizzes.filter(quiz => quiz.is_current_affairs);
 
   // Fetch published quizzes
   const fetchQuizzes = async () => {
@@ -70,24 +56,9 @@ const AdminQuizzes = () => {
     }
   };
 
-  const fetchBooks = async () => {
-    try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/admin/books/`);
-      setBooks(response.data);
-    } catch (err) {
-      console.error("Failed to fetch books:", err);
-    }
-  };
-
   useEffect(() => {
     fetchQuizzes();
-    fetchBooks();
   }, []);
-
-  const [selectedSubject, setSelectedSubject] = useState("");
-
-  const uniqueSubjects = Array.from(new Set(books.map(b => b.subject)));
-  const filteredBooks = selectedSubject ? books.filter(b => b.subject === selectedSubject) : books;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -127,11 +98,7 @@ const AdminQuizzes = () => {
 
   const handlePublish = async () => {
     if (!title.trim()) {
-      setStatusMsg({ text: "Chapter Name is required.", type: "error" });
-      return;
-    }
-    if (!bookId) {
-      setStatusMsg({ text: "Please select a Book.", type: "error" });
+      setStatusMsg({ text: "Quiz Title is required.", type: "error" });
       return;
     }
 
@@ -140,24 +107,22 @@ const AdminQuizzes = () => {
       if (editingQuizId) {
         await axios.put(`${import.meta.env.VITE_API_URL}/quizzes/admin/update/${editingQuizId}/`, {
           title,
-          book_id: bookId,
+          is_current_affairs: true,
           questions
         });
-        setStatusMsg({ text: `Chapter "${title}" has been updated successfully!`, type: "success" });
+        setStatusMsg({ text: `Current Affairs Quiz "${title}" has been updated successfully!`, type: "success" });
       } else {
         await axios.post(`${import.meta.env.VITE_API_URL}/quizzes/admin/create/`, {
           title,
-          book_id: bookId,
+          is_current_affairs: true,
           questions
         });
-        setStatusMsg({ text: `Chapter "${title}" has been published and is now live!`, type: "success" });
+        setStatusMsg({ text: `Current Affairs Quiz "${title}" has been published and is now live!`, type: "success" });
       }
       
       // Reset upload state
       setFile(null);
       setTitle("");
-      setBookId("");
-      setSelectedSubject("");
       setQuestions([]);
       setEditingQuizId(null);
       fetchQuizzes();
@@ -179,24 +144,6 @@ const AdminQuizzes = () => {
     }
   };
 
-  const handleToggleFreeTest = async (quizId: number, currentStatus: boolean) => {
-    if (currentStatus) return; // Already free, no need to toggle
-    
-    if (!window.confirm("Set this chapter as the free test for its book? Other chapters in the same book will become paid.")) return;
-    
-    try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/quizzes/admin/toggle-free/${quizId}/`, {
-        is_free_test: true
-      });
-      fetchQuizzes();
-      setStatusMsg({ text: "Free test chapter updated successfully.", type: "success" });
-    } catch (err) {
-      console.error("Failed to toggle free test:", err);
-      setStatusMsg({ text: "Failed to update free test chapter.", type: "error" });
-    }
-  };
-
-
   return (
     <div className="bg-slate-50 min-h-screen py-12 px-6">
       <SEO title="Admin Test Panel - Neti Academy" description="Manage online practice tests and upload CSV questions." />
@@ -204,8 +151,8 @@ const AdminQuizzes = () => {
       <div className="max-w-6xl mx-auto">
         <header className="mb-12 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-playfair font-bold text-slate-900 mb-2">Practice Test Engine</h1>
-            <p className="text-sm text-slate-500 font-medium">Create online tests by uploading question banks, previewing, and publishing.</p>
+            <h1 className="text-3xl md:text-4xl font-playfair font-bold text-slate-900 mb-2">Current Affairs Admin</h1>
+            <p className="text-sm text-slate-500 font-medium">Upload Current Affairs Quiz CSVs.</p>
           </div>
           
           <div className="bg-white border border-slate-200 rounded-full p-1 flex">
@@ -215,8 +162,6 @@ const AdminQuizzes = () => {
                 if (editingQuizId === null && questions.length === 0) {
                   setFile(null);
                   setTitle("");
-                  setBookId("");
-                  setSelectedSubject("");
                 }
               }}
               className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider ${activeTab === "upload" ? "bg-blue-900 text-white" : "text-slate-500 hover:text-blue-900"}`}
@@ -227,13 +172,7 @@ const AdminQuizzes = () => {
               onClick={() => setActiveTab("list")}
               className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider ${activeTab === "list" ? "bg-blue-900 text-white" : "text-slate-500 hover:text-blue-900"}`}
             >
-              Live Tests ({publishedQuizzes.length})
-            </button>
-            <button
-              onClick={() => navigate("/admin/books")}
-              className="px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider text-slate-500 hover:text-blue-900"
-            >
-              Manage Books
+              Live Tests ({filteredQuizzesToDisplay.length})
             </button>
           </div>
         </header>
@@ -290,13 +229,13 @@ const AdminQuizzes = () => {
                 <div className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm space-y-6">
                   <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="flex-1 w-full">
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Chapter Name</label>
+                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Quiz Title</label>
                       <input
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         className="w-full text-2xl font-bold border-b border-transparent focus:border-slate-300 focus:outline-none py-1"
-                        placeholder="e.g. Fundamental Rights"
+                        placeholder="e.g. Current Affairs - Week 1"
                       />
                     </div>
                     <button
@@ -305,37 +244,8 @@ const AdminQuizzes = () => {
                       className="w-full md:w-auto px-8 py-4 bg-green-700 hover:bg-green-850 text-white font-bold rounded-2xl text-sm shadow-md active:scale-95 transition-all flex items-center justify-center gap-2"
                     >
                       <CheckCircle className="w-5 h-5" />
-                      {editingQuizId ? "Save Changes" : "Publish Test Live"}
+                      {editingQuizId ? "Save Changes" : "Publish CA Quiz Live"}
                     </button>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-slate-50 mt-4">
-                    <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Subject</label>
-                      <select 
-                        value={selectedSubject} 
-                        onChange={e => { setSelectedSubject(e.target.value); setBookId(""); }} 
-                        className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
-                      >
-                        <option value="">All Subjects</option>
-                        {uniqueSubjects.map((sub: string) => (
-                          <option key={sub} value={sub}>{sub}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Book / Source</label>
-                      <select 
-                        value={bookId} 
-                        onChange={e => setBookId(Number(e.target.value))} 
-                        className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
-                      >
-                        <option value="">Select a Book...</option>
-                        {filteredBooks.map((b: any) => (
-                          <option key={b.id} value={b.id}>{b.book_name} {b.class_name ? `- ${b.class_name}` : ''}</option>
-                        ))}
-                      </select>
-                    </div>
                   </div>
                 </div>
 
@@ -484,8 +394,6 @@ const AdminQuizzes = () => {
                         setFile(null);
                         setEditingQuizId(null);
                         setTitle("");
-                        setBookId("");
-                        setSelectedSubject("");
                       }
                     }}
                     className="px-6 py-3 border border-slate-200 rounded-xl text-slate-500 hover:text-slate-700 font-bold text-xs"
@@ -508,49 +416,7 @@ const AdminQuizzes = () => {
         {activeTab === "list" && (
           <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden p-6 md:p-8">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-              <h3 className="text-xl font-playfair font-bold text-slate-900">Published Tests</h3>
-              
-              <div className="flex flex-wrap gap-2">
-                <select
-                  value={listFilterSubject}
-                  onChange={e => setListFilterSubject(e.target.value)}
-                  className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-bold text-slate-600 focus:outline-none focus:border-blue-900 bg-slate-50"
-                >
-                  <option value="">All Subjects</option>
-                  {uniqueListSubjects.map(sub => <option key={sub} value={sub}>{sub}</option>)}
-                </select>
-
-                <select
-                  value={listFilterBookName}
-                  onChange={e => setListFilterBookName(e.target.value)}
-                  className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-bold text-slate-600 focus:outline-none focus:border-blue-900 bg-slate-50"
-                >
-                  <option value="">All Books</option>
-                  {uniqueListBookNames.map(name => <option key={name} value={name}>{name}</option>)}
-                </select>
-
-                <select
-                  value={listFilterClassName}
-                  onChange={e => setListFilterClassName(e.target.value)}
-                  className="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-bold text-slate-600 focus:outline-none focus:border-blue-900 bg-slate-50"
-                >
-                  <option value="">All Classes</option>
-                  {uniqueListClassNames.map(cls => <option key={cls} value={cls}>{cls}</option>)}
-                </select>
-
-                {(listFilterSubject || listFilterBookName || listFilterClassName) && (
-                  <button
-                    onClick={() => {
-                      setListFilterSubject("");
-                      setListFilterBookName("");
-                      setListFilterClassName("");
-                    }}
-                    className="px-3 py-1.5 text-xs font-bold text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-                  >
-                    Clear
-                  </button>
-                )}
-              </div>
+              <h3 className="text-xl font-playfair font-bold text-slate-900">Published CA Tests</h3>
             </div>
 
             {filteredQuizzesToDisplay.length === 0 ? (
@@ -569,8 +435,6 @@ const AdminQuizzes = () => {
                         {quiz.title}
                       </h4>
                       <div className="flex flex-wrap gap-4 text-xs font-semibold text-slate-400 mt-2">
-                        <span>{quiz.book ? `${quiz.book.book_name} / ${quiz.book.subject} ${quiz.book.class_name ? `/ ${quiz.book.class_name}` : ''}` : "Unknown Book"}</span>
-                        <span>•</span>
                         <span>{quiz.question_count} Questions</span>
                         <span>•</span>
                         <span>Published: {new Date(quiz.created_at).toLocaleDateString()}</span>
@@ -594,21 +458,10 @@ const AdminQuizzes = () => {
                       >
                         Preview Test
                       </button>
-                      {!quiz.is_free_test && (
-                        <button
-                          onClick={() => handleToggleFreeTest(quiz.id, quiz.is_free_test)}
-                          className="px-4 py-2 text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 rounded-xl transition-all active:scale-95 border border-emerald-200"
-                          title="Set as Free Test for this Book"
-                        >
-                          Set Free
-                        </button>
-                      )}
                       <button
                         onClick={() => {
                           setEditingQuizId(quiz.id);
                           setTitle(quiz.title);
-                          setBookId(quiz.book?.id || "");
-                          setSelectedSubject(quiz.book?.subject || "");
                           setQuestions(quiz.questions || []);
                           setActiveTab("upload");
                         }}
@@ -636,4 +489,4 @@ const AdminQuizzes = () => {
   );
 };
 
-export default AdminQuizzes;
+export default AdminCAQuizzes;

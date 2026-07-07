@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft, Clock, CheckCircle2, TrendingUp, History } from "lucide-react";
 import SEO from "../components/SEO";
@@ -13,13 +13,18 @@ interface QuizAttempt {
   total_questions: number;
   correct_answers: number;
   completed_at: string;
+  is_current_affairs?: boolean;
 }
 
 const RecallHistory = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [attempts, setAttempts] = useState<QuizAttempt[]>([]);
   const [loading, setLoading] = useState(true);
   const { showToast } = useToast();
+
+  const searchParams = new URLSearchParams(location.search);
+  const isCaOnly = searchParams.get('type') === 'ca';
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -28,7 +33,13 @@ const RecallHistory = () => {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/attempts/`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        setAttempts(response.data);
+        
+        let fetchedAttempts = response.data;
+        if (isCaOnly) {
+          fetchedAttempts = fetchedAttempts.filter((a: QuizAttempt) => a.is_current_affairs);
+        }
+        
+        setAttempts(fetchedAttempts);
       } catch (err) {
         console.error("Failed to load history:", err);
         showToast("Failed to load test history", "error");
@@ -54,15 +65,15 @@ const RecallHistory = () => {
 
   return (
     <div className="bg-white min-h-screen py-12 px-6">
-      <SEO title="Score History - Recall Hub" description="Track your practice test scores and history." />
+      <SEO title={isCaOnly ? "Current Affairs Dashboard - Neti Academy" : "Performance Dashboard - Neti Academy"} description="Track your practice test scores and history." />
       
       <div className="max-w-4xl mx-auto">
         <button 
-          onClick={() => navigate('/recall')}
+          onClick={() => navigate(isCaOnly ? '/ca-quiz' : '/recall')}
           className="flex items-center gap-2 text-sm font-bold text-emerald-900/80 hover:text-emerald-600 transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
-          Back to Recall Hub
+          Back to {isCaOnly ? 'Current Affairs' : 'Recall Hub'}
         </button>
 
         <header className="mb-12 flex flex-col md:flex-row gap-8 items-start md:items-center justify-between bg-white rounded-3xl p-8 border border-emerald-100 shadow-sm">
@@ -71,9 +82,11 @@ const RecallHistory = () => {
               <History className="w-4 h-4" />
               <span>Performance Tracking</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight mb-2">Test History</h1>
+            <h1 className="text-3xl md:text-4xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight mb-2">
+              {isCaOnly ? 'Current Affairs Dashboard' : 'Performance Dashboard'}
+            </h1>
             <p className="text-base text-slate-700 font-medium leading-relaxed">
-              Review your past attempts and track your accuracy over time.
+              Track your progress and review past {isCaOnly ? 'current affairs' : ''} attempts.
             </p>
           </div>
           
@@ -97,11 +110,14 @@ const RecallHistory = () => {
             </div>
             <h3 className="text-xl font-bold text-slate-800 font-playfair">No Tests Taken Yet</h3>
             <p className="text-emerald-900/80 text-sm max-w-sm">
-              You haven't attempted any tests in the Recall Hub. Start practicing to see your history here.
+              You haven't attempted any tests. Start practicing to see your history here.
             </p>
-            <Link to="/recall" className="px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-bold text-sm shadow-md transition-all mt-4">
-              Explore Books
-            </Link>
+            <button 
+              onClick={() => navigate(isCaOnly ? '/ca-quiz' : '/recall')}
+              className="px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-bold text-sm shadow-md transition-all mt-4"
+            >
+              Start Practice
+            </button>
           </div>
         ) : (
           <div className="space-y-4">
@@ -136,9 +152,7 @@ const RecallHistory = () => {
                       </div>
                     </div>
                     
-                    <Link to={`/recall/session/${attempt.quiz}`} className="px-6 py-3 border border-emerald-100 text-slate-700 font-medium rounded-xl hover:bg-emerald-50 hover:text-emerald-600 hover:border-blue-200 font-bold text-xs transition-all flex items-center justify-center">
-                      Reattempt
-                    </Link>
+                    {/* Reattempt button removed */}
                   </div>
                 </div>
               );

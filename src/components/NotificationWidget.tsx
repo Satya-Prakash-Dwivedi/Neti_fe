@@ -102,6 +102,17 @@ const NotificationWidget = () => {
       });
     }
 
+    // Add Recall Hub static notice
+    items.push({
+      id: "recall-hub-launch",
+      type: "New Feature",
+      path: "/recall",
+      btnText: "Explore Recall Hub",
+      timestamp: parseDateToTime(new Date().toISOString().split('T')[0]),
+      displayTitle: "Recall Hub is now live! Practice with interactive quizzes and track your performance.",
+      priority: 20 // Highest priority to ensure it shows up first
+    });
+
 
     if (items.length > 0) {
       // Sort by priority first (Magazines, Mock Tests, etc.), then by timestamp descending

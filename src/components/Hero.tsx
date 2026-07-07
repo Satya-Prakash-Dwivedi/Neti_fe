@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 import type { DailyDigest } from "../data/currentAffairs";
 
 /**
@@ -13,6 +14,8 @@ import type { DailyDigest } from "../data/currentAffairs";
 const Hero = () => {
   const [dailyDigests, setDailyDigests] = useState<DailyDigest[]>([]);
   const [loading, setLoading] = useState(true);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_API_URL}/current-affairs/`)
@@ -28,6 +31,11 @@ const Hero = () => {
 
   // Django returns results sorted newest-first, so we simply take the first 7
   const recentDigests = Array.isArray(dailyDigests) ? dailyDigests.slice(0, 7) : [];
+  const latestDigest = recentDigests.length > 0 ? recentDigests[0] : null;
+
+  const handleDailyQuizClick = () => {
+    navigate('/ca-quiz');
+  };
 
   return (
     <section className="pt-4 md:pt-8 pb-12 md:pb-20 bg-white overflow-hidden">
@@ -39,7 +47,7 @@ const Hero = () => {
         <div className="text-slate-600 leading-relaxed md:leading-loose text-sm md:text-base font-inter">
           {/* Right Floated Content - Recall Hub Feature Card (Compact & Shifted Up to Eliminate Left Gap) */}
           <div className="w-full md:w-[380px] lg:w-[420px] md:float-right md:ml-8 md:-mt-16 lg:-mt-20 md:mb-6 mb-8">
-            <div className="bg-white text-slate-900 p-6 md:p-7 rounded-[2rem] md:rounded-[2.5rem] shadow-xl relative overflow-hidden group border-2 border-blue-900/20 hover:border-blue-900/35 transition-all flex flex-col justify-between">
+            <div className="bg-white text-slate-900 p-6 md:p-7 rounded-[2rem] md:rounded-[2.5rem] shadow-lg relative overflow-hidden group border border-blue-200 hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
               {/* Soft subtle glow matching theme accents */}
               <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-100/60 rounded-full blur-3xl group-hover:bg-blue-200/60 transition-all duration-700"></div>
               <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-50/80 rounded-full blur-3xl group-hover:bg-blue-100/50 transition-all duration-700"></div>
@@ -166,6 +174,31 @@ const Hero = () => {
           </div>
         </div>
         */}
+
+        {/* Daily Quiz Banner */}
+        <div 
+          onClick={handleDailyQuizClick}
+          className="clear-both mt-12 bg-gradient-to-r from-blue-900 to-indigo-900 rounded-3xl p-8 md:p-10 shadow-2xl relative overflow-hidden group cursor-pointer transition-transform hover:-translate-y-1"
+        >
+           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 group-hover:scale-110 transition-transform duration-700"></div>
+           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+             <div>
+               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-blue-50 text-[10px] font-bold tracking-widest uppercase mb-4 border border-white/10 shadow-sm">
+                 <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+                 Daily Challenge
+               </div>
+               <h3 className="text-2xl md:text-3xl font-playfair font-bold text-white mb-2">
+                 Today's Quiz
+               </h3>
+               <p className="text-blue-100 text-sm md:text-base max-w-xl font-inter">
+                 Test your knowledge with high-yield MCQs handpicked for today. Instant results and crisp explanations included.
+               </p>
+             </div>
+             <button className="shrink-0 bg-white text-blue-900 font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-full shadow-lg group-hover:bg-blue-50 group-hover:scale-105 transition-all font-inter">
+               Explore Quizzes →
+             </button>
+           </div>
+        </div>
       </div>
     </section>
   );

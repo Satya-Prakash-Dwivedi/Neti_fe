@@ -93,14 +93,27 @@ const StudentQuizzes = () => {
                         </span>
                       </div>
                       
-                      <Link 
-                        to={`/recall/session/${quiz.id}`}
-                        target="_blank"
-                        className="px-5 py-3 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-all flex items-center gap-2 shrink-0 active:scale-95 shadow-sm shadow-slate-950/10"
-                      >
-                        Start Test
-                        <PlayCircle className="w-4 h-4" />
-                      </Link>
+                      {(() => {
+                        const hasAttempted = attempts.some(a => a.quiz === quiz.id);
+                        if (hasAttempted) {
+                          return (
+                            <div className="px-5 py-3 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-xl flex items-center gap-2 shrink-0 border border-emerald-100 cursor-not-allowed">
+                              <CheckCircle2 className="w-4 h-4" />
+                              Completed
+                            </div>
+                          );
+                        }
+                        return (
+                          <Link 
+                            to={`/recall/session/${quiz.id}`}
+                            target="_blank"
+                            className="px-5 py-3 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-slate-800 transition-all flex items-center gap-2 shrink-0 active:scale-95 shadow-sm shadow-slate-950/10"
+                          >
+                            Start Test
+                            <PlayCircle className="w-4 h-4" />
+                          </Link>
+                        );
+                      })()}
                     </div>
                   ))}
                 </div>

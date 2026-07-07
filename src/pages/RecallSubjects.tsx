@@ -39,8 +39,8 @@ const RecallSubjects = () => {
               Select a book or source category to view available subjects.
             </p>
           </div>
-          <Link to="/recall/history" className="px-6 py-2.5 bg-emerald-600 text-white font-bold rounded-full text-xs shadow-md hover:bg-emerald-700 transition-colors">
-            View History
+          <Link to="/recall/test/history" className="px-6 py-2.5 bg-emerald-600 text-white font-bold rounded-full text-xs shadow-md hover:bg-emerald-700 transition-colors">
+            Performance Dashboard
           </Link>
         </header>
 
