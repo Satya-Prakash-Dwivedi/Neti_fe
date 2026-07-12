@@ -187,11 +187,7 @@ function App() {
             />
             <Route 
               path="/recall/session/:id" 
-              element={
-                <StudentRoute>
-                  <RecallSession />
-                </StudentRoute>
-              } 
+              element={<RecallSession />} 
             />
             <Route 
               path="/admin/practice-tests" 
