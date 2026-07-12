@@ -29,14 +29,14 @@ const FeaturedMaterials = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl md:text-4xl font-playfair font-bold text-slate-900">
+            <h2 className="text-3xl md:text-4xl font-lora font-bold text-slate-900">
               Featured Study Materials
             </h2>
             <p className="mt-4 text-slate-600">
               Carefully curated academic resources designed for focus.
             </p>
           </div>
-          <button className="hidden md:block text-blue-900 font-semibold hover:underline mt-4 md:mt-0">
+          <button className="hidden md:block text-[var(--color-neti-accent)] font-semibold hover:underline mt-4 md:mt-0">
             View All Materials →
           </button>
         </div>
@@ -47,7 +47,7 @@ const FeaturedMaterials = () => {
           ))}
         </div>
         
-        <button className="md:hidden w-full py-4 mt-8 border border-slate-200 rounded-lg text-blue-900 font-semibold">
+        <button className="md:hidden w-full py-4 mt-8 border border-slate-200 rounded-lg text-[var(--color-neti-accent)] font-semibold">
           View All Materials
         </button>
       </div>

@@ -8,7 +8,7 @@ const Testimonial = () => {
           </svg>
         </div>
         
-        <blockquote className="text-2xl md:text-4xl font-playfair font-medium leading-tight mb-10 italic">
+        <blockquote className="text-2xl md:text-4xl font-lora font-medium leading-tight mb-10 italic">
           "This platform simplifies preparation. The structured approach and the minimalist interface 
           helped me retain more information in significantly less time."
         </blockquote>

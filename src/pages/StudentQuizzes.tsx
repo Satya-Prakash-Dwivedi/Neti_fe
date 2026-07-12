@@ -51,7 +51,7 @@ const StudentQuizzes = () => {
       
       <div className="max-w-5xl mx-auto">
         <header className="mb-12 text-center md:text-left">
-          <h1 className="text-3xl md:text-5xl font-playfair font-bold text-slate-900 mb-4">Practice Tests</h1>
+          <h1 className="text-3xl md:text-5xl font-lora font-bold text-slate-900 mb-4">Practice Tests</h1>
           <p className="text-base md:text-lg text-slate-600 max-w-2xl leading-relaxed">
             Strengthen your conceptual command. Attend live test series calibrating core UPSC prelims questions.
           </p>
@@ -83,9 +83,9 @@ const StudentQuizzes = () => {
                       key={quiz.id} 
                       className="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 flex items-center justify-between gap-6 hover:shadow-md transition-shadow group relative"
                     >
-                      <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-900/10 group-hover:bg-blue-900 transition-colors" />
+                      <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--color-neti-accent)]/10 group-hover:bg-[var(--color-neti-accent)] transition-colors" />
                       <div>
-                        <h4 className="font-bold text-slate-800 text-base md:text-lg group-hover:text-blue-900 transition-colors mb-2">
+                        <h4 className="font-bold text-slate-800 text-base md:text-lg group-hover:text-[var(--color-neti-accent)] transition-colors mb-2">
                           {quiz.title}
                         </h4>
                         <span className="text-xs font-bold text-slate-400 bg-slate-50 px-3 py-1 rounded-full uppercase tracking-wider">
@@ -97,7 +97,7 @@ const StudentQuizzes = () => {
                         const hasAttempted = attempts.some(a => a.quiz === quiz.id);
                         if (hasAttempted) {
                           return (
-                            <div className="px-5 py-3 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-xl flex items-center gap-2 shrink-0 border border-emerald-100 cursor-not-allowed">
+                            <div className="px-5 py-3 bg-slate-100 text-slate-800 text-xs font-bold rounded-xl flex items-center gap-2 shrink-0 border border-slate-200 cursor-not-allowed">
                               <CheckCircle2 className="w-4 h-4" />
                               Completed
                             </div>

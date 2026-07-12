@@ -32,7 +32,7 @@ const Ecosystem = () => {
     <section className="py-20 bg-white border-y border-slate-200">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-playfair font-bold text-slate-900">
+          <h2 className="text-3xl md:text-4xl font-lora font-bold text-slate-900">
             Comprehensive Study Ecosystem
           </h2>
           <p className="mt-4 text-slate-600 max-w-2xl mx-auto italic font-medium">
@@ -44,13 +44,13 @@ const Ecosystem = () => {
           {items.map((item) => (
             <div 
               key={item.title} 
-              className="p-8 md:p-12 rounded-3xl border border-slate-100 bg-slate-50 hover:border-blue-200 hover:shadow-xl transition-all group relative flex flex-col h-full"
+              className="p-8 md:p-12 rounded-3xl border border-slate-100 bg-slate-50 hover:border-[var(--color-neti-accent)]/30 hover:shadow-xl transition-all group relative flex flex-col h-full"
             >
               <div className="text-5xl mb-8 grayscale group-hover:grayscale-0 transition-all transform group-hover:scale-110 duration-300">
                 {item.icon}
               </div>
               
-              <h3 className="text-2xl md:text-3xl font-playfair font-bold text-slate-900 mb-4 leading-tight">{item.title}</h3>
+              <h3 className="text-2xl md:text-3xl font-lora font-bold text-slate-900 mb-4 leading-tight">{item.title}</h3>
               <p className="text-slate-600 leading-relaxed text-sm md:text-base mb-8 flex-1">
                 {item.text}
               </p>
@@ -58,7 +58,7 @@ const Ecosystem = () => {
               {item.isInternal ? (
                 <Link 
                   to={item.path} 
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-900 text-white rounded-2xl font-bold text-sm hover:bg-blue-800 transition-all shadow-lg shadow-blue-900/10 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[var(--color-neti-accent)] text-white rounded-2xl font-bold text-sm hover:bg-[var(--color-neti-accent)] transition-all shadow-lg shadow-[var(--color-neti-accent)]/10 active:scale-95"
                 >
                   {item.btnText} <span>→</span>
                 </Link>
@@ -67,7 +67,7 @@ const Ecosystem = () => {
                   href={item.path}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-900 text-white rounded-2xl font-bold text-sm hover:bg-blue-800 transition-all shadow-lg shadow-blue-900/10 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[var(--color-neti-accent)] text-white rounded-2xl font-bold text-sm hover:bg-[var(--color-neti-accent)] transition-all shadow-lg shadow-[var(--color-neti-accent)]/10 active:scale-95"
                 >
                   {item.btnText} <span>↓</span>
                 </a>

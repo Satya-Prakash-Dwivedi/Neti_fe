@@ -98,10 +98,10 @@ const Navbar = () => {
                 className="h-14 w-14 md:h-20 md:w-20 rounded-full object-cover shadow-md transition-transform group-hover:scale-105 ring-2 ring-slate-100"
               />
               <div className="flex flex-col">
-                <span className="text-blue-900 font-playfair text-base md:text-2xl font-bold tracking-tight leading-none">
+                <span className="text-[var(--color-neti-accent)] font-lora text-base md:text-2xl font-bold tracking-tight leading-none">
                   NETI ACADEMY
                 </span>
-                <span className="text-blue-900/60 font-playfair italic text-[9px] md:text-xs font-medium tracking-wide mt-1">
+                <span className="text-[var(--color-neti-accent)]/60 font-lora italic text-[9px] md:text-xs font-medium tracking-wide mt-1">
                   नेति नेति — not this, not this
                 </span>
               </div>
@@ -118,15 +118,15 @@ const Navbar = () => {
                       to="/admin/practice-tests"
                       className={({ isActive }) =>
                         `text-sm font-bold transition-all duration-200 relative group/item ${isActive
-                          ? "text-blue-900"
-                          : "text-slate-600 hover:text-blue-900"
+                          ? "text-[var(--color-neti-accent)]"
+                          : "text-slate-600 hover:text-[var(--color-neti-accent)]"
                         }`
                       }
                     >
                       {({ isActive }) => (
                         <>
                           Admin Tests
-                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[var(--color-neti-accent)] transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
                         </>
                       )}
                     </NavLink>
@@ -136,15 +136,15 @@ const Navbar = () => {
                       to="/admin/current-affairs"
                       className={({ isActive }) =>
                         `text-sm font-bold transition-all duration-200 relative group/item ${isActive
-                          ? "text-blue-900"
-                          : "text-slate-600 hover:text-blue-900"
+                          ? "text-[var(--color-neti-accent)]"
+                          : "text-slate-600 hover:text-[var(--color-neti-accent)]"
                         }`
                       }
                     >
                       {({ isActive }) => (
                         <>
                           Admin Current Affairs
-                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[var(--color-neti-accent)] transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
                         </>
                       )}
                     </NavLink>
@@ -154,15 +154,15 @@ const Navbar = () => {
                       to="/admin/ca-quizzes"
                       className={({ isActive }) =>
                         `text-sm font-bold transition-all duration-200 relative group/item ${isActive
-                          ? "text-blue-900"
-                          : "text-slate-600 hover:text-blue-900"
+                          ? "text-[var(--color-neti-accent)]"
+                          : "text-slate-600 hover:text-[var(--color-neti-accent)]"
                         }`
                       }
                     >
                       {({ isActive }) => (
                         <>
                           Admin CA Quizzes
-                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[var(--color-neti-accent)] transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
                         </>
                       )}
                     </NavLink>
@@ -172,15 +172,15 @@ const Navbar = () => {
                       to="/admin/orders"
                       className={({ isActive }) =>
                         `text-sm font-bold transition-all duration-200 relative group/item ${isActive
-                          ? "text-blue-900"
-                          : "text-slate-600 hover:text-blue-900"
+                          ? "text-[var(--color-neti-accent)]"
+                          : "text-slate-600 hover:text-[var(--color-neti-accent)]"
                         }`
                       }
                     >
                       {({ isActive }) => (
                         <>
                           Admin Orders
-                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[var(--color-neti-accent)] transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
                         </>
                       )}
                     </NavLink>
@@ -193,15 +193,15 @@ const Navbar = () => {
                       to={mainNavItems[0].path}
                       className={({ isActive }) =>
                         `text-sm font-bold transition-all duration-200 relative group/item ${isActive
-                          ? "text-blue-900"
-                          : "text-slate-600 hover:text-blue-900"
+                          ? "text-[var(--color-neti-accent)]"
+                          : "text-slate-600 hover:text-[var(--color-neti-accent)]"
                         }`
                       }
                     >
                       {({ isActive }) => (
                         <>
                           {mainNavItems[0].name}
-                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[var(--color-neti-accent)] transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
                         </>
                       )}
                     </NavLink>
@@ -212,15 +212,15 @@ const Navbar = () => {
                       to="/recall"
                       className={({ isActive }) =>
                         `text-sm font-bold transition-all duration-200 relative group/item ${isActive
-                          ? "text-blue-900"
-                          : "text-slate-600 hover:text-blue-900"
+                          ? "text-[var(--color-neti-accent)]"
+                          : "text-slate-600 hover:text-[var(--color-neti-accent)]"
                         }`
                       }
                     >
                       {({ isActive }) => (
                         <>
                           Recall Hub
-                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[var(--color-neti-accent)] transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
                         </>
                       )}
                     </NavLink>
@@ -229,7 +229,7 @@ const Navbar = () => {
                   <li className="relative" ref={caDropdownRef}>
                     <button 
                       onClick={() => setIsCADropdownOpen(!isCADropdownOpen)}
-                      className={`flex items-center gap-1 text-sm font-bold transition-colors ${isCADropdownOpen ? 'text-blue-900' : 'text-slate-600 hover:text-blue-900'}`}
+                      className={`flex items-center gap-1 text-sm font-bold transition-colors ${isCADropdownOpen ? 'text-[var(--color-neti-accent)]' : 'text-slate-600 hover:text-[var(--color-neti-accent)]'}`}
                     >
                       Current Affairs
                       <svg className={`w-4 h-4 transition-transform duration-200 ${isCADropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -245,7 +245,7 @@ const Navbar = () => {
                             to={item.path}
                             onClick={() => setIsCADropdownOpen(false)}
                             className={({ isActive }) =>
-                              `block px-6 py-3 text-sm font-bold transition-colors ${isActive ? 'text-blue-900 bg-blue-50' : 'text-slate-600 hover:text-blue-900 hover:bg-slate-50'}`
+                              `block px-6 py-3 text-sm font-bold transition-colors ${isActive ? 'text-[var(--color-neti-accent)] bg-blue-50' : 'text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50'}`
                             }
                           >
                             {item.name}
@@ -261,15 +261,15 @@ const Navbar = () => {
                         to={item.path}
                         className={({ isActive }) =>
                           `text-sm font-bold transition-all duration-200 relative group/item ${isActive
-                            ? "text-blue-900"
-                            : "text-slate-600 hover:text-blue-900"
+                            ? "text-[var(--color-neti-accent)]"
+                            : "text-slate-600 hover:text-[var(--color-neti-accent)]"
                           }`
                         }
                       >
                         {({ isActive }) => (
                           <>
                             {item.name}
-                            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                            <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[var(--color-neti-accent)] transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
                           </>
                         )}
                       </NavLink>
@@ -281,7 +281,7 @@ const Navbar = () => {
                   <li className="relative" ref={dropdownRef}>
                     <button 
                       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                      className={`flex items-center gap-1 text-sm font-bold transition-colors ${isDropdownOpen ? 'text-blue-900' : 'text-slate-600 hover:text-blue-900'}`}
+                      className={`flex items-center gap-1 text-sm font-bold transition-colors ${isDropdownOpen ? 'text-[var(--color-neti-accent)]' : 'text-slate-600 hover:text-[var(--color-neti-accent)]'}`}
                     >
                       Insights
                       <svg className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -297,7 +297,7 @@ const Navbar = () => {
                             to={item.path}
                             onClick={() => setIsDropdownOpen(false)}
                             className={({ isActive }) =>
-                              `block px-6 py-3 text-sm font-bold transition-colors ${isActive ? 'text-blue-900 bg-blue-50' : 'text-slate-600 hover:text-blue-900 hover:bg-slate-50'}`
+                              `block px-6 py-3 text-sm font-bold transition-colors ${isActive ? 'text-[var(--color-neti-accent)] bg-blue-50' : 'text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50'}`
                             }
                           >
                             {item.name}
@@ -313,15 +313,15 @@ const Navbar = () => {
                       to="/contact"
                       className={({ isActive }) =>
                         `text-sm font-bold transition-all duration-200 relative group/item ${isActive
-                          ? "text-blue-900"
-                          : "text-slate-600 hover:text-blue-900"
+                          ? "text-[var(--color-neti-accent)]"
+                          : "text-slate-600 hover:text-[var(--color-neti-accent)]"
                         }`
                       }
                     >
                       {({ isActive }) => (
                         <>
                           Contact
-                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-blue-900 transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
+                          <span className={`absolute -bottom-1 left-0 w-full h-0.5 bg-[var(--color-neti-accent)] transition-transform duration-300 ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover/item:scale-x-100 opacity-30'}`} />
                         </>
                       )}
                     </NavLink>
@@ -380,7 +380,7 @@ const Navbar = () => {
                         <Link 
                           to="/recall/test/history"
                           onClick={() => setIsProfileDropdownOpen(false)}
-                          className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:text-blue-900 hover:bg-white rounded-xl transition-all w-full text-left"
+                          className="flex items-center gap-3 px-4 py-3 text-sm font-bold text-slate-700 hover:text-[var(--color-neti-accent)] hover:bg-white rounded-xl transition-all w-full text-left"
                         >
                           <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                           Performance Dashboard
@@ -400,13 +400,13 @@ const Navbar = () => {
                 <div className="flex items-center gap-3">
                   <Link
                     to="/login"
-                    className="text-xs font-bold text-slate-600 hover:text-blue-900 transition-colors uppercase tracking-wider"
+                    className="text-xs font-bold text-slate-600 hover:text-[var(--color-neti-accent)] transition-colors uppercase tracking-wider"
                   >
                     Log In
                   </Link>
                   <Link
                     to="/register"
-                    className="text-xs font-bold px-4 py-2 bg-blue-900 text-white rounded-full hover:bg-blue-850 active:scale-95 transition-all shadow-sm"
+                    className="text-xs font-bold px-4 py-2 bg-[var(--color-neti-accent)] text-white rounded-full hover:bg-[var(--color-neti-accent-amber)] active:scale-95 transition-all shadow-sm"
                   >
                     Sign Up
                   </Link>
@@ -418,7 +418,7 @@ const Navbar = () => {
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 text-slate-600 hover:text-blue-900 transition-colors focus:outline-none"
+            className="md:hidden p-2 text-slate-600 hover:text-[var(--color-neti-accent)] transition-colors focus:outline-none"
             aria-label="Toggle menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -442,8 +442,8 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className={({ isActive }) =>
                       `text-lg font-bold px-6 py-3 block transition-colors ${isActive
-                        ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
-                        : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                        ? "text-[var(--color-neti-accent)] bg-blue-50/50 border-l-4 border-[var(--color-neti-accent)]"
+                        : "text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50"
                       }`
                     }
                   >
@@ -456,8 +456,8 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className={({ isActive }) =>
                       `text-lg font-bold px-6 py-3 block transition-colors ${isActive
-                        ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
-                        : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                        ? "text-[var(--color-neti-accent)] bg-blue-50/50 border-l-4 border-[var(--color-neti-accent)]"
+                        : "text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50"
                       }`
                     }
                   >
@@ -470,8 +470,8 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className={({ isActive }) =>
                       `text-lg font-bold px-6 py-3 block transition-colors ${isActive
-                        ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
-                        : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                        ? "text-[var(--color-neti-accent)] bg-blue-50/50 border-l-4 border-[var(--color-neti-accent)]"
+                        : "text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50"
                       }`
                     }
                   >
@@ -484,8 +484,8 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className={({ isActive }) =>
                       `text-lg font-bold px-6 py-3 block transition-colors ${isActive
-                        ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
-                        : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                        ? "text-[var(--color-neti-accent)] bg-blue-50/50 border-l-4 border-[var(--color-neti-accent)]"
+                        : "text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50"
                       }`
                     }
                   >
@@ -501,8 +501,8 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className={({ isActive }) =>
                       `text-lg font-bold px-6 py-3 block transition-colors ${isActive
-                        ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
-                        : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                        ? "text-[var(--color-neti-accent)] bg-blue-50/50 border-l-4 border-[var(--color-neti-accent)]"
+                        : "text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50"
                       }`
                     }
                   >
@@ -515,8 +515,8 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className={({ isActive }) =>
                       `text-lg font-bold px-6 py-3 block transition-colors ${isActive
-                        ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
-                        : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                        ? "text-[var(--color-neti-accent)] bg-blue-50/50 border-l-4 border-[var(--color-neti-accent)]"
+                        : "text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50"
                       }`
                     }
                   >
@@ -534,7 +534,7 @@ const Navbar = () => {
                           onClick={() => setIsMenuOpen(false)}
                           className={({ isActive }) =>
                             `text-sm font-bold p-4 rounded-2xl border transition-colors ${isActive 
-                              ? 'text-blue-900 bg-blue-50 border-blue-100' 
+                              ? 'text-[var(--color-neti-accent)] bg-blue-50 border-blue-100' 
                               : 'text-slate-600 bg-white border-slate-100 hover:border-blue-100'}`
                           }
                         >
@@ -551,8 +551,8 @@ const Navbar = () => {
                       onClick={() => setIsMenuOpen(false)}
                       className={({ isActive }) =>
                         `text-lg font-bold px-6 py-3 block transition-colors ${isActive
-                          ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
-                          : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                          ? "text-[var(--color-neti-accent)] bg-blue-50/50 border-l-4 border-[var(--color-neti-accent)]"
+                          : "text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50"
                         }`
                       }
                     >
@@ -573,7 +573,7 @@ const Navbar = () => {
                           onClick={() => setIsMenuOpen(false)}
                           className={({ isActive }) =>
                             `text-sm font-bold p-4 rounded-2xl border transition-colors ${isActive 
-                              ? 'text-blue-900 bg-blue-50 border-blue-100' 
+                              ? 'text-[var(--color-neti-accent)] bg-blue-50 border-blue-100' 
                               : 'text-slate-600 bg-white border-slate-100 hover:border-blue-100'}`
                           }
                         >
@@ -589,8 +589,8 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className={({ isActive }) =>
                       `text-lg font-bold px-6 py-3 block transition-colors ${isActive
-                        ? "text-blue-900 bg-blue-50/50 border-l-4 border-blue-900"
-                        : "text-slate-600 hover:text-blue-900 hover:bg-slate-50"
+                        ? "text-[var(--color-neti-accent)] bg-blue-50/50 border-l-4 border-[var(--color-neti-accent)]"
+                        : "text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-slate-50"
                       }`
                     }
                   >
@@ -625,7 +625,7 @@ const Navbar = () => {
                     <Link
                       to="/recall/test/history"
                       onClick={() => setIsMenuOpen(false)}
-                      className="py-3 bg-white border border-slate-200 text-slate-700 hover:text-blue-900 rounded-xl text-sm font-bold active:scale-95 transition-all text-center"
+                      className="py-3 bg-white border border-slate-200 text-slate-700 hover:text-[var(--color-neti-accent)] rounded-xl text-sm font-bold active:scale-95 transition-all text-center"
                     >
                       Performance Dashboard
                     </Link>
@@ -642,14 +642,14 @@ const Navbar = () => {
                   <Link
                     to="/login"
                     onClick={() => setIsMenuOpen(false)}
-                    className="py-3 border border-slate-200 text-slate-700 hover:text-blue-900 rounded-xl text-sm font-bold active:scale-95 transition-all text-center"
+                    className="py-3 border border-slate-200 text-slate-700 hover:text-[var(--color-neti-accent)] rounded-xl text-sm font-bold active:scale-95 transition-all text-center"
                   >
                     Log In
                   </Link>
                   <Link
                     to="/register"
                     onClick={() => setIsMenuOpen(false)}
-                    className="py-3 bg-blue-900 text-white rounded-xl text-sm font-bold active:scale-95 transition-all text-center"
+                    className="py-3 bg-[var(--color-neti-accent)] text-white rounded-xl text-sm font-bold active:scale-95 transition-all text-center"
                   >
                     Sign Up
                   </Link>
@@ -678,7 +678,7 @@ const Navbar = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
               </div>
-              <h3 className="font-playfair text-xl md:text-2xl text-blue-900 font-bold tracking-tight">
+              <h3 className="font-lora text-xl md:text-2xl text-[var(--color-neti-accent)] font-bold tracking-tight">
                 Confirm Log Out
               </h3>
               <p className="text-slate-500 text-sm mt-3 leading-relaxed">

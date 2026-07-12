@@ -25,12 +25,12 @@ const Courses = () => {
         
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-6 bg-blue-50/50 backdrop-blur-sm border border-blue-100/50 rounded-2xl shadow-sm">
-             <span className="flex h-1.5 w-1.5 rounded-full bg-blue-900 animate-pulse"></span>
-             <span className="text-[9px] font-bold tracking-[0.2em] text-blue-900 uppercase">Academy Excellence</span>
+             <span className="flex h-1.5 w-1.5 rounded-full bg-[var(--color-neti-accent)] animate-pulse"></span>
+             <span className="text-[9px] font-bold tracking-[0.2em] text-[var(--color-neti-accent)] uppercase">Academy Excellence</span>
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-playfair font-bold text-slate-900 mb-6 tracking-tighter leading-[1.1]">
-            Curated <span className="text-blue-900 underline decoration-blue-100 underline-offset-8">Excellence</span> <br />
+          <h1 className="text-5xl md:text-6xl font-lora font-bold text-slate-900 mb-6 tracking-tighter leading-[1.1]">
+            Curated <span className="text-[var(--color-neti-accent)] underline decoration-blue-100 underline-offset-8">Excellence</span> <br />
             For Serious Aspirants
           </h1>
           
@@ -54,7 +54,7 @@ const Courses = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-blue-950/40 to-transparent"></div>
               <div className="absolute top-5 left-5 flex gap-2">
-                <span className="px-3 py-1 bg-blue-900/90 backdrop-blur-md text-white text-[8px] font-bold tracking-[0.2em] uppercase rounded-full border border-white/10">
+                <span className="px-3 py-1 bg-[var(--color-neti-accent)]/90 backdrop-blur-md text-white text-[8px] font-bold tracking-[0.2em] uppercase rounded-full border border-white/10">
                   Live Classes
                 </span>
                 <span className="px-3 py-1 bg-emerald-500/90 backdrop-blur-md text-white text-[8px] font-bold tracking-[0.2em] uppercase rounded-full border border-white/10 shadow-sm">
@@ -65,12 +65,12 @@ const Courses = () => {
 
             <div className="p-8 flex flex-col flex-1">
               <div className="flex items-center gap-2 mb-4">
-                 <span className="text-[8px] font-black text-blue-900 uppercase tracking-[0.2em]">Live Program</span>
+                 <span className="text-[8px] font-black text-[var(--color-neti-accent)] uppercase tracking-[0.2em]">Live Program</span>
                  <span className="w-1 h-1 rounded-full bg-slate-200"></span>
                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">65 Sessions</span>
               </div>
               
-              <h2 className="text-2xl font-playfair font-bold text-slate-900 mb-3 leading-tight group-hover:text-blue-900 transition-colors">
+              <h2 className="text-2xl font-lora font-bold text-slate-900 mb-3 leading-tight group-hover:text-[var(--color-neti-accent)] transition-colors">
                 Free Polity Classes <br />for UPSC Prelims
               </h2>
               
@@ -80,7 +80,7 @@ const Courses = () => {
               
               <Link 
                 to="/courses/free-polity-classes"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 text-white font-bold text-[9px] uppercase tracking-[0.2em] rounded-lg hover:bg-blue-900 transition-all shadow-lg active:scale-95 group/btn w-fit"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 text-white font-bold text-[9px] uppercase tracking-[0.2em] rounded-lg hover:bg-[var(--color-neti-accent)] transition-all shadow-lg active:scale-95 group/btn w-fit"
               >
                 Open Details 
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -97,7 +97,7 @@ const Courses = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
               <div className="absolute top-5 left-5 flex gap-2">
-                <span className="px-3 py-1 bg-blue-900/90 backdrop-blur-md text-white text-[8px] font-bold tracking-[0.2em] uppercase rounded-full border border-white/10">
+                <span className="px-3 py-1 bg-[var(--color-neti-accent)]/90 backdrop-blur-md text-white text-[8px] font-bold tracking-[0.2em] uppercase rounded-full border border-white/10">
                   New Release
                 </span>
                 <span className="px-3 py-1 bg-emerald-500/90 backdrop-blur-md text-white text-[8px] font-bold tracking-[0.2em] uppercase rounded-full border border-white/10 shadow-sm">
@@ -108,12 +108,12 @@ const Courses = () => {
 
             <div className="p-8 flex flex-col flex-1">
               <div className="flex items-center gap-2 mb-4">
-                 <span className="text-[8px] font-black text-blue-900 uppercase tracking-[0.2em]">Magazines</span>
+                 <span className="text-[8px] font-black text-[var(--color-neti-accent)] uppercase tracking-[0.2em]">Magazines</span>
                  <span className="w-1 h-1 rounded-full bg-slate-200"></span>
                  <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest underline underline-offset-4 decoration-slate-100">70 Pages</span>
               </div>
               
-              <h2 className="text-2xl font-playfair font-bold text-slate-900 mb-3 leading-tight group-hover:text-blue-900 transition-colors">
+              <h2 className="text-2xl font-lora font-bold text-slate-900 mb-3 leading-tight group-hover:text-[var(--color-neti-accent)] transition-colors">
                 Environment & Ecology <br />Prelims Magazine
               </h2>
               
@@ -123,7 +123,7 @@ const Courses = () => {
               
               <Link 
                 to="/courses/neti-prelims-environment-ecology-magazine"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 text-white font-bold text-[9px] uppercase tracking-[0.2em] rounded-lg hover:bg-blue-900 transition-all shadow-lg active:scale-95 group/btn w-fit"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-900 text-white font-bold text-[9px] uppercase tracking-[0.2em] rounded-lg hover:bg-[var(--color-neti-accent)] transition-all shadow-lg active:scale-95 group/btn w-fit"
               >
                 Open Details 
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -157,7 +157,7 @@ const Courses = () => {
                  <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Revision Series</span>
               </div>
               
-              <h2 className="text-2xl font-playfair font-bold text-slate-900 mb-3 leading-tight">
+              <h2 className="text-2xl font-lora font-bold text-slate-900 mb-3 leading-tight">
                 Prelims <br />Revision Series
               </h2>
               
@@ -167,7 +167,7 @@ const Courses = () => {
               
               <Link 
                 to="/revision-series"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-900 font-bold text-[9px] uppercase tracking-[0.2em] rounded-lg hover:border-blue-900 hover:text-blue-900 transition-all shadow-sm active:scale-95 group/btn w-fit"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white border border-slate-200 text-slate-900 font-bold text-[9px] uppercase tracking-[0.2em] rounded-lg hover:border-[var(--color-neti-accent)] hover:text-[var(--color-neti-accent)] transition-all shadow-sm active:scale-95 group/btn w-fit"
               >
                 Explore Modules 
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -178,13 +178,13 @@ const Courses = () => {
 
         {/* Other Academic Courses Section (Optional) */}
         <div className="pt-16 border-t border-slate-100 text-center max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-blue-900 text-[8px] font-black uppercase tracking-[0.3em] rounded-full mb-6">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-blue-900"></span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-[var(--color-neti-accent)] text-[8px] font-black uppercase tracking-[0.3em] rounded-full mb-6">
+            <span className="flex h-1.5 w-1.5 rounded-full bg-[var(--color-neti-accent)]"></span>
             Educational Programs
           </div>
           
-          <h2 className="text-5xl font-playfair font-bold text-slate-900 mb-8 leading-tight">
-            Upcoming <span className="text-blue-900 italic">Prelims</span> and Polity
+          <h2 className="text-5xl font-lora font-bold text-slate-900 mb-8 leading-tight">
+            Upcoming <span className="text-[var(--color-neti-accent)] italic">Prelims</span> and Polity
           </h2>
           
           <p className="text-slate-400 text-lg font-light leading-relaxed mb-12">
@@ -198,9 +198,9 @@ const Courses = () => {
                   <img src={course.previewImage} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
                 <div className="p-8">
-                  <h4 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-blue-900 transition-colors font-playfair">{course.title}</h4>
+                  <h4 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-[var(--color-neti-accent)] transition-colors font-lora">{course.title}</h4>
                   <p className="text-slate-500 text-xs mb-8 font-light line-clamp-2">{course.description}</p>
-                  <Link to={`/courses/${course.id}`} className="text-blue-900 font-bold text-[9px] uppercase tracking-[0.2em] flex items-center gap-2 hover:gap-3 transition-all">
+                  <Link to={`/courses/${course.id}`} className="text-[var(--color-neti-accent)] font-bold text-[9px] uppercase tracking-[0.2em] flex items-center gap-2 hover:gap-3 transition-all">
                     View Details <span>→</span>
                   </Link>
                 </div>
@@ -219,7 +219,7 @@ const Courses = () => {
           <div className="w-12 h-12 border border-slate-800 rounded-full flex items-center justify-center mx-auto mb-10 opacity-30">
             <div className="w-1 h-1 bg-white rounded-full"></div>
           </div>
-          <h2 className="text-4xl font-playfair font-bold text-white mb-10 leading-snug tracking-tight italic opacity-90">
+          <h2 className="text-4xl font-lora font-bold text-white mb-10 leading-snug tracking-tight italic opacity-90">
             "Education is the most powerful weapon which you can use to change the world."
           </h2>
           <div className="flex items-center justify-center gap-12 pt-8">

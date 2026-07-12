@@ -30,12 +30,17 @@ const CAQuizzes = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [quizzesRes, attemptsRes] = await Promise.all([
-          axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/ca-quizzes/`),
-          axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/attempts/`)
-        ]);
+        const quizzesRes = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/ca-quizzes/`);
         setQuizzes(quizzesRes.data);
-        setAttempts(attemptsRes.data);
+        
+        if (user) {
+          const attemptsRes = await axios.get(`${import.meta.env.VITE_API_URL}/quizzes/student/attempts/`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+          });
+          setAttempts(attemptsRes.data);
+        }
       } catch (err) {
         console.error("Failed to fetch quizzes or attempts:", err);
       } finally {
@@ -43,7 +48,7 @@ const CAQuizzes = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [user]);
 
   return (
     <div className="bg-slate-50 min-h-screen py-12 px-6">
@@ -52,18 +57,11 @@ const CAQuizzes = () => {
       <div className="max-w-5xl mx-auto">
         <header className="mb-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-playfair font-bold text-blue-900 mb-3">Current Affairs Quizzes</h1>
+            <h1 className="text-3xl md:text-4xl font-lora font-bold text-[var(--color-neti-accent)] mb-3">Current Affairs Quizzes</h1>
             <p className="text-sm md:text-base text-slate-600 max-w-xl leading-relaxed font-inter">
               Test your knowledge with our meticulously curated daily and weekly current affairs. High-yield MCQs designed for serious competitive exam preparation.
             </p>
           </div>
-          <Link
-            to="/recall/test/history?type=ca"
-            className="px-6 py-3 bg-white text-blue-900 border border-blue-200 hover:border-blue-900 hover:bg-blue-50 font-bold rounded-xl flex items-center gap-2 shadow-sm transition-all whitespace-nowrap text-sm"
-          >
-            <History className="w-4 h-4" />
-            Performance Dashboard
-          </Link>
         </header>
 
         {loading ? (
@@ -92,12 +90,12 @@ const CAQuizzes = () => {
                       key={quiz.id} 
                       className="bg-white rounded-3xl border border-slate-200 p-6 md:p-8 flex items-center justify-between gap-6 hover:shadow-md transition-shadow group relative overflow-hidden"
                     >
-                      <div className="absolute top-0 left-0 w-2 h-full bg-blue-900 group-hover:bg-blue-800 transition-colors" />
+                      <div className="absolute top-0 left-0 w-2 h-full bg-[var(--color-neti-accent)] group-hover:bg-[var(--color-neti-accent)] transition-colors" />
                       <div>
-                        <h4 className="font-playfair font-bold text-slate-900 text-lg md:text-xl group-hover:text-blue-900 transition-colors mb-2">
+                        <h4 className="font-lora font-bold text-slate-900 text-lg md:text-xl group-hover:text-[var(--color-neti-accent)] transition-colors mb-2">
                           {quiz.title}
                         </h4>
-                        <span className="text-[10px] font-bold text-blue-900 bg-blue-50 border border-blue-100 px-3 py-1 rounded-full uppercase tracking-wider">
+                        <span className="text-[10px] font-bold text-[var(--color-neti-accent)] bg-blue-50 border border-blue-100 px-3 py-1 rounded-full uppercase tracking-wider">
                           {quiz.question_count} MCQs
                         </span>
                       </div>

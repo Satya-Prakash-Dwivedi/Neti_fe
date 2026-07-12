@@ -211,7 +211,7 @@ const RecallBookDetail = () => {
   }
 
   if (!book) {
-    return <div className="bg-white min-h-screen flex items-center justify-center font-bold text-emerald-900/80">Book not found.</div>;
+    return <div className="bg-white min-h-screen flex items-center justify-center font-bold text-slate-900/80">Book not found.</div>;
   }
 
   const isFullBookPurchased = orders.some(o => o.book_id === book.id);
@@ -235,31 +235,31 @@ const RecallBookDetail = () => {
       <div className="max-w-4xl mx-auto">
         <button
           onClick={() => navigate(`/recall/${encodeURIComponent(book.subject)}`)}
-          className="flex items-center gap-2 text-sm font-bold text-emerald-900/80 hover:text-emerald-600 transition-colors mb-8"
+          className="flex items-center gap-2 text-sm font-bold text-slate-900/80 hover:text-slate-700 transition-colors mb-8"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to {book.subject}
         </button>
 
-        <header className="mb-12 flex flex-col md:flex-row gap-8 items-start md:items-center bg-white rounded-3xl p-8 border border-emerald-100 shadow-sm">
+        <header className="mb-12 flex flex-col md:flex-row gap-8 items-start md:items-center bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
           {book.cover_image ? (
-            <img src={book.cover_image} alt="cover" className="w-32 md:w-48 rounded-xl shadow-md border border-emerald-100" />
+            <img src={book.cover_image} alt="cover" className="w-32 md:w-48 rounded-xl shadow-md border border-slate-200" />
           ) : (
-            <div className="w-32 md:w-48 h-48 md:h-64 bg-slate-100 rounded-xl flex items-center justify-center border border-emerald-100">
+            <div className="w-32 md:w-48 h-48 md:h-64 bg-slate-100 rounded-xl flex items-center justify-center border border-slate-200">
               <BookOpen className="w-12 h-12 text-slate-300" />
             </div>
           )}
           <div className="flex-1">
-            <div className="flex items-center gap-3 text-xs font-bold text-emerald-900/60 uppercase tracking-widest mb-3">
+            <div className="flex items-center gap-3 text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
               <span>{book.subject}</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-playfair font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent tracking-tight mb-4">{displayTitle}</h1>
+            <h1 className="text-3xl md:text-4xl font-lora font-black bg-gradient-to-r from-slate-700 to-slate-900 bg-clip-text text-transparent tracking-tight mb-4">{displayTitle}</h1>
             <p className="text-base text-slate-700 font-medium leading-relaxed mb-6">
               Complete question bank for {displayTitle}. Unlock individual chapters or purchase the entire book at a discount.
             </p>
 
             <div className="flex items-center gap-4 flex-wrap">
-              <span className="text-sm font-bold text-emerald-900/80 bg-slate-100 px-4 py-2 rounded-xl">
+              <span className="text-sm font-bold text-slate-900/80 bg-slate-100 px-4 py-2 rounded-xl">
                 {quizzes.length} Chapters Available
               </span>
 
@@ -281,11 +281,11 @@ const RecallBookDetail = () => {
                       placeholder="Referral Code (Optional)" 
                       value={referralCode}
                       onChange={(e) => setReferralCode(e.target.value.toUpperCase())}
-                      className="px-4 py-2 border border-slate-200 rounded-l-xl text-sm w-full font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500 uppercase"
+                      className="px-4 py-2 border border-slate-200 rounded-l-xl text-sm w-full font-mono focus:outline-none focus:ring-2 focus:ring-slate-1000 uppercase"
                     />
                     <div className="bg-slate-50 border-y border-r border-slate-200 rounded-r-xl px-4 py-2 min-w-[80px] flex items-center justify-center">
                       {referralConfig && isValidReferral ? (
-                        <span className="text-xs text-emerald-600 font-bold whitespace-nowrap">
+                        <span className="text-xs text-slate-700 font-bold whitespace-nowrap">
                           -{referralConfig.discount_percentage}% Off
                         </span>
                       ) : (
@@ -296,7 +296,7 @@ const RecallBookDetail = () => {
                   <button
                     onClick={() => handlePurchase(book.id)}
                     disabled={purchasingId === book.id}
-                    className="w-full px-6 py-3.5 bg-emerald-600 text-white text-sm font-bold rounded-xl hover:bg-emerald-700 transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
+                    className="w-full px-6 py-3.5 bg-slate-700 text-white text-sm font-bold rounded-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
                   >
                     <Lock className="w-4 h-4" />
                     {purchasingId === book.id ? "Processing..." : `Unlock Full Book (₹${getDisplayPrice()})`}
@@ -308,9 +308,9 @@ const RecallBookDetail = () => {
         </header>
 
         <div className="space-y-4">
-          <h3 className="text-xl font-bold text-slate-800 mb-6 font-playfair">Chapters</h3>
+          <h3 className="text-xl font-bold text-slate-800 mb-6 font-lora">Chapters</h3>
           {quizzes.length === 0 ? (
-            <div className="bg-white rounded-3xl border border-emerald-100 p-12 text-center text-emerald-900/60 italic text-sm">
+            <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center text-slate-500 italic text-sm">
               No chapters available for this book yet.
             </div>
           ) : (
@@ -324,14 +324,14 @@ const RecallBookDetail = () => {
               return (
                 <div
                   key={quiz.id}
-                  className={`bg-white rounded-3xl border ${isUnlocked ? (isFreeTrial ? 'border-emerald-300' : 'border-green-200') + ' shadow-sm hover:shadow-lg' : 'border-emerald-100 hover:border-emerald-200 hover:shadow-md'} transition-all duration-300 ease-out hover:-translate-y-1 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden`}
+                  className={`bg-white rounded-3xl border ${isUnlocked ? (isFreeTrial ? 'border-slate-400' : 'border-green-200') + ' shadow-sm hover:shadow-lg' : 'border-slate-200 hover:border-slate-200 hover:shadow-md'} transition-all duration-300 ease-out hover:-translate-y-1 p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative overflow-hidden`}
                 >
                   {isUnlocked && (
-                    <div className={`absolute top-0 left-0 w-1.5 h-full ${isFreeTrial ? 'bg-emerald-1000' : 'bg-green-500'}`} />
+                    <div className={`absolute top-0 left-0 w-1.5 h-full ${isFreeTrial ? 'bg-slate-2000' : 'bg-green-500'}`} />
                   )}
 
                   <div className="flex-1 flex gap-4 items-center">
-                    <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-emerald-900/80 text-sm shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-900/80 text-sm shrink-0">
                       {idx + 1}
                     </div>
                     <div>
@@ -340,14 +340,14 @@ const RecallBookDetail = () => {
                           {quiz.title}
                         </h4>
                         {isUnlocked && (
-                          <span className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider ${isFreeTrial ? 'text-emerald-700 bg-emerald-100 animate-pulse ring-1 ring-emerald-300 shadow-sm' : 'text-green-700 bg-green-50'}`}>
+                          <span className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider ${isFreeTrial ? 'text-slate-800 bg-slate-200 animate-pulse ring-1 ring-slate-400 shadow-sm' : 'text-green-700 bg-green-50'}`}>
                             <CheckCircle className="w-3 h-3" /> {isFreeTrial ? 'Free Trial' : 'Unlocked'}
                           </span>
                         )}
                       </div>
 
                       <div className="flex items-center gap-4 text-xs font-bold">
-                        <span className="text-emerald-900/60 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider">
+                        <span className="text-slate-500 bg-slate-100 px-3 py-1 rounded-full uppercase tracking-wider">
                           {quiz.question_count} MCQs
                         </span>
                       </div>
@@ -359,13 +359,13 @@ const RecallBookDetail = () => {
                       <Link
                         to={`/recall/session/${quiz.id}`}
                         target="_blank"
-                        className={`flex-1 md:flex-none px-6 py-3 text-white text-xs font-bold rounded-xl transition-all duration-300 ease-out flex items-center justify-center gap-2 shadow-sm ${isFreeTrial ? 'bg-emerald-600 hover:bg-emerald-700 hover:shadow-emerald-600/30 hover:-translate-y-0.5' : 'bg-green-700 hover:bg-green-800 hover:-translate-y-0.5'}`}
+                        className={`flex-1 md:flex-none px-6 py-3 text-white text-xs font-bold rounded-xl transition-all duration-300 ease-out flex items-center justify-center gap-2 shadow-sm ${isFreeTrial ? 'bg-slate-700 hover:bg-slate-800 hover:shadow-slate-700/30 hover:-translate-y-0.5' : 'bg-green-700 hover:bg-green-800 hover:-translate-y-0.5'}`}
                       >
                         Start Session
                         <PlayCircle className="w-4 h-4" />
                       </Link>
                     ) : (
-                      <div className="flex-1 md:flex-none px-6 py-3 bg-slate-100 text-emerald-900/60 text-xs font-bold rounded-xl flex items-center justify-center gap-2">
+                      <div className="flex-1 md:flex-none px-6 py-3 bg-slate-100 text-slate-500 text-xs font-bold rounded-xl flex items-center justify-center gap-2">
                         <Lock className="w-4 h-4" /> Locked
                       </div>
                     )}

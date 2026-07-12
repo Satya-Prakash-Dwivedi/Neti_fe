@@ -51,7 +51,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16 mb-16">
           {/* Brand & Description */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <h3 className="text-2xl font-playfair font-bold text-blue-900 mb-6">NETI ACADEMY</h3>
+            <h3 className="text-2xl font-lora font-bold text-[var(--color-neti-accent)] mb-6">NETI ACADEMY</h3>
             <p className="text-sm text-slate-500 leading-relaxed max-w-xs">
               A platform for focused exam preparation, with clarity, discipline, and mental balance.
             </p>
@@ -68,7 +68,7 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-blue-900 transition-all font-inter"
+                className="w-full bg-white border border-slate-200 px-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[var(--color-neti-accent)] transition-all font-inter"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -80,7 +80,7 @@ const Footer = () => {
                   ? "bg-green-600 text-white"
                   : status === "error"
                     ? "bg-red-600 text-white"
-                    : "bg-blue-900 text-white hover:bg-blue-800 shadow-md active:scale-95"
+                    : "bg-[var(--color-neti-accent)] text-white hover:bg-[var(--color-neti-accent)] shadow-md active:scale-95"
                   }`}
               >
                 {status === "submitting" ? "Subscribing..." :
@@ -114,10 +114,10 @@ const Footer = () => {
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <h4 className="text-xs font-bold text-slate-900 uppercase tracking-widest mb-6">Legal</h4>
             <ul className="space-y-3">
-              <li><a href="/privacy-policy" className="text-sm text-slate-500 hover:text-blue-900 transition-colors">Privacy Policy</a></li>
-              <li><a href="/refund-policy" className="text-sm text-slate-500 hover:text-blue-900 transition-colors">Refund & Cancellation Policy</a></li>
-              <li><a href="/terms-and-conditions" className="text-sm text-slate-500 hover:text-blue-900 transition-colors">Terms & Conditions</a></li>
-              <li><a href="/contact" className="text-sm text-slate-500 hover:text-blue-900 transition-colors">Contact Us</a></li>
+              <li><a href="/privacy-policy" className="text-sm text-slate-500 hover:text-[var(--color-neti-accent)] transition-colors">Privacy Policy</a></li>
+              <li><a href="/refund-policy" className="text-sm text-slate-500 hover:text-[var(--color-neti-accent)] transition-colors">Refund & Cancellation Policy</a></li>
+              <li><a href="/terms-and-conditions" className="text-sm text-slate-500 hover:text-[var(--color-neti-accent)] transition-colors">Terms & Conditions</a></li>
+              <li><a href="/contact" className="text-sm text-slate-500 hover:text-[var(--color-neti-accent)] transition-colors">Contact Us</a></li>
             </ul>
           </div>
         </div>

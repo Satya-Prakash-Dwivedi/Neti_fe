@@ -23,7 +23,7 @@ const formatText = (text: string) => {
             href={match[2]} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-800 underline transition-colors font-medium decoration-blue-300 underline-offset-4"
+            className="text-blue-600 hover:text-[var(--color-neti-accent)] underline transition-colors font-medium decoration-blue-300 underline-offset-4"
           >
             {match[1]}
           </a>
@@ -134,7 +134,7 @@ const renderContent = (text: string) => {
       let textColor = "text-slate-800";
       let iconBg = "bg-slate-200";
 
-      if (emoji === '📌') { bgColor = "bg-blue-50/40"; borderColor = "border-blue-100"; textColor = "text-blue-900"; iconBg = "bg-blue-100"; }
+      if (emoji === '📌') { bgColor = "bg-blue-50/40"; borderColor = "border-blue-100"; textColor = "text-[var(--color-neti-accent)]"; iconBg = "bg-blue-100"; }
       if (emoji === '⚠️') { bgColor = "bg-amber-50/40"; borderColor = "border-amber-100"; textColor = "text-amber-900"; iconBg = "bg-amber-100"; }
       if (emoji === '🔗') { bgColor = "bg-indigo-50/40"; borderColor = "border-indigo-100"; textColor = "text-indigo-900"; iconBg = "bg-indigo-100"; }
       if (emoji === '📝') { bgColor = "bg-slate-50"; borderColor = "border-slate-200"; textColor = "text-slate-800"; iconBg = "bg-slate-200"; }
@@ -162,7 +162,7 @@ const renderContent = (text: string) => {
     if (trimmedLine.startsWith('###')) {
       flushList(idx);
       result.push(
-        <h3 key={idx} className="text-xl font-playfair font-bold text-slate-900 mt-10 mb-6 pb-2 border-b border-slate-100 flex items-center gap-3">
+        <h3 key={idx} className="text-xl font-lora font-bold text-slate-900 mt-10 mb-6 pb-2 border-b border-slate-100 flex items-center gap-3">
           <span className="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
           {formatText(trimmedLine.replace(/^###\s*/, ''))}
         </h3>
@@ -170,7 +170,7 @@ const renderContent = (text: string) => {
     } else if (trimmedLine.startsWith('##')) {
       flushList(idx);
       result.push(
-        <h2 key={idx} className="text-2xl font-playfair font-bold text-slate-900 mt-12 mb-8">
+        <h2 key={idx} className="text-2xl font-lora font-bold text-slate-900 mt-12 mb-8">
           {formatText(trimmedLine.replace(/^##\s*/, ''))}
         </h2>
       );
@@ -244,13 +244,13 @@ const CurrentAffairDetail = () => {
       <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center">
         <div className="bg-slate-50 p-12 rounded-[3rem] border border-slate-100 max-w-lg shadow-sm">
           <span className="text-4xl mb-6 block grayscale">🔍</span>
-          <h2 className="text-3xl font-playfair font-bold text-slate-900 mb-4">Digest Not Found</h2>
+          <h2 className="text-3xl font-lora font-bold text-slate-900 mb-4">Digest Not Found</h2>
           <p className="text-slate-600 mb-10 leading-relaxed font-inter">
             The Daily Current Affairs for this date isn't in our library yet, or the link may have expired.
           </p>
           <Link
             to="/current-affairs"
-            className="px-10 py-4 bg-blue-900 text-white font-bold rounded-2xl hover:bg-blue-800 transition-all shadow-lg active:scale-95"
+            className="px-10 py-4 bg-[var(--color-neti-accent)] text-white font-bold rounded-2xl hover:bg-[var(--color-neti-accent)] transition-all shadow-lg active:scale-95"
           >
             Explore Recent Updates
           </Link>
@@ -268,14 +268,14 @@ const CurrentAffairDetail = () => {
       />
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-10 md:py-16">
         <header className="mb-10 md:mb-16 text-center">
-          <Link to="/current-affairs" className="text-[10px] md:text-xs font-bold text-slate-400 hover:text-blue-900 uppercase tracking-[0.2em] inline-block mb-6 md:mb-8 transition-colors">
+          <Link to="/current-affairs" className="text-[10px] md:text-xs font-bold text-slate-400 hover:text-[var(--color-neti-accent)] uppercase tracking-[0.2em] inline-block mb-6 md:mb-8 transition-colors">
             ← Back to Daily Listing
           </Link>
           <div className="flex flex-col items-center gap-3 md:gap-4">
-            <span className="text-[10px] md:text-sm font-bold text-blue-900 tracking-widest uppercase py-1 border-y border-blue-900/10">
+            <span className="text-[10px] md:text-sm font-bold text-[var(--color-neti-accent)] tracking-widest uppercase py-1 border-y border-[var(--color-neti-accent)]/10">
               DAY {digest.dayIndex || 1} | {digest.day}, {digest.date}
             </span>
-            <h1 className="text-3xl md:text-5xl font-playfair font-bold text-slate-900 leading-tight">
+            <h1 className="text-3xl md:text-5xl font-lora font-bold text-slate-900 leading-tight">
               {digest.tagline}
             </h1>
           </div>
@@ -294,16 +294,16 @@ const CurrentAffairDetail = () => {
         <div className="space-y-12 md:space-y-16">
           {(digest.topics || []).map((topic, idx) => (
             <article key={topic.id} className="bg-white rounded-2xl md:rounded-3xl border border-slate-200 p-6 md:p-12 shadow-sm relative overflow-hidden group">
-              <span className="absolute top-0 right-0 p-6 md:p-8 text-4xl md:text-6xl font-playfair italic font-bold text-slate-50 z-0 select-none group-hover:text-blue-50/50 transition-colors">
+              <span className="absolute top-0 right-0 p-6 md:p-8 text-4xl md:text-6xl font-lora italic font-bold text-slate-50 z-0 select-none group-hover:text-blue-50/50 transition-colors">
                 {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}
               </span>
 
               <div className="relative z-10">
-                <span className="text-[10px] md:text-xs font-bold text-blue-900 uppercase tracking-widest mb-3 md:mb-4 inline-block px-3 py-1 bg-blue-50 rounded-full border border-blue-100">
+                <span className="text-[10px] md:text-xs font-bold text-[var(--color-neti-accent)] uppercase tracking-widest mb-3 md:mb-4 inline-block px-3 py-1 bg-blue-50 rounded-full border border-blue-100">
                   {topic.subtitle}
                 </span>
 
-                <h2 className="text-xl md:text-3xl font-playfair font-bold text-slate-900 mb-6 md:mb-8 border-b border-slate-100 pb-4 leading-snug">
+                <h2 className="text-xl md:text-3xl font-lora font-bold text-slate-900 mb-6 md:mb-8 border-b border-slate-100 pb-4 leading-snug">
                   {topic.title}
                 </h2>
 
@@ -316,7 +316,7 @@ const CurrentAffairDetail = () => {
                     <div className="flex flex-col gap-6 mt-10 md:mt-14">
                       {topic.whyItMatters && (
                         <div className="bg-slate-50 p-6 md:p-10 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden group/matter">
-                          <div className="absolute top-0 left-0 w-1.5 h-full bg-slate-800 transition-colors group-hover/matter:bg-blue-900"></div>
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-slate-800 transition-colors group-hover/matter:bg-[var(--color-neti-accent)]"></div>
                           <h4 className="text-xs md:text-sm font-bold text-slate-900 uppercase tracking-widest mb-4">
                             Why it matters for UPSC
                           </h4>
@@ -328,8 +328,8 @@ const CurrentAffairDetail = () => {
 
                       {topic.revise && (
                         <div className="bg-blue-50/50 p-6 md:p-10 rounded-2xl border border-blue-100 shadow-sm relative overflow-hidden group/revise">
-                          <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-600 transition-colors group-hover/revise:bg-blue-800"></div>
-                          <h4 className="text-xs md:text-sm font-bold text-blue-900 uppercase tracking-widest mb-4">
+                          <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-600 transition-colors group-hover/revise:bg-[var(--color-neti-accent)]"></div>
+                          <h4 className="text-xs md:text-sm font-bold text-[var(--color-neti-accent)] uppercase tracking-widest mb-4">
                             REVISE
                           </h4>
                           <div className="text-sm md:text-base text-slate-800 leading-relaxed font-inter space-y-4">
@@ -342,8 +342,8 @@ const CurrentAffairDetail = () => {
 
                   {topic.pyqConnect && (
                     <div className="mt-6 md:mt-8 p-4 md:p-5 bg-blue-50/50 rounded-xl border border-blue-100/50 flex items-start gap-3">
-                      <span className="bg-blue-900 text-white text-[9px] px-2 py-0.5 rounded font-bold uppercase mt-1 shrink-0 italic">PYQ</span>
-                      <p className="text-[11px] md:text-sm text-blue-900 font-medium leading-relaxed">
+                      <span className="bg-[var(--color-neti-accent)] text-white text-[9px] px-2 py-0.5 rounded font-bold uppercase mt-1 shrink-0 italic">PYQ</span>
+                      <p className="text-[11px] md:text-sm text-[var(--color-neti-accent)] font-medium leading-relaxed">
                         {topic.pyqConnect}
                       </p>
                     </div>
@@ -357,14 +357,14 @@ const CurrentAffairDetail = () => {
         {/* Daily Summary Section (Revise Today) */}
         {digest.reviseSummary && digest.reviseSummary.length > 0 && (
           <section className="mt-12 md:mt-16 bg-white rounded-2xl md:rounded-3xl border border-slate-200 p-6 md:p-12 shadow-sm">
-            <h3 className="text-[10px] md:text-xs font-bold text-blue-900 uppercase tracking-[0.2em] mb-6 md:mb-8 flex items-center gap-3">
-              <span className="w-6 md:w-8 h-px bg-blue-900"></span>
+            <h3 className="text-[10px] md:text-xs font-bold text-[var(--color-neti-accent)] uppercase tracking-[0.2em] mb-6 md:mb-8 flex items-center gap-3">
+              <span className="w-6 md:w-8 h-px bg-[var(--color-neti-accent)]"></span>
               REVISE TODAY
             </h3>
             <ul className="space-y-4 md:space-y-5">
               {digest.reviseSummary.map((point, i) => (
                 <li key={i} className="flex items-start gap-3 md:gap-4 text-slate-700 font-inter text-sm md:text-base leading-relaxed">
-                  <span className="text-blue-900 mt-1 shrink-0">
+                  <span className="text-[var(--color-neti-accent)] mt-1 shrink-0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="md:w-[18px] md:h-[18px]"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </span>
                   {point}
@@ -378,23 +378,23 @@ const CurrentAffairDetail = () => {
         {digest.practiceQuestions && (
           <section className="mt-16 md:mt-24 space-y-12">
             <div className="flex flex-col items-center text-center mb-12">
-              <span className="text-blue-900 font-black text-[10px] md:text-xs uppercase tracking-[0.4em] mb-4">Assessment Module</span>
-              <h2 className="text-3xl md:text-4xl font-playfair font-bold text-slate-900">Practice & Mastery</h2>
-              <div className="w-12 h-1 bg-blue-900 mt-6 rounded-full"></div>
+              <span className="text-[var(--color-neti-accent)] font-black text-[10px] md:text-xs uppercase tracking-[0.4em] mb-4">Assessment Module</span>
+              <h2 className="text-3xl md:text-4xl font-lora font-bold text-slate-900">Practice & Mastery</h2>
+              <div className="w-12 h-1 bg-[var(--color-neti-accent)] mt-6 rounded-full"></div>
             </div>
 
             {/* MCQs */}
             {digest.practiceQuestions.mcqs && digest.practiceQuestions.mcqs.length > 0 && (
               <div className="space-y-8">
                 <h3 className="text-lg md:text-xl font-bold text-slate-900 flex items-center gap-3">
-                  <span className="px-3 py-1 bg-blue-900 text-white text-[10px] rounded-lg font-black tracking-widest uppercase italic">MCQs</span>
+                  <span className="px-3 py-1 bg-[var(--color-neti-accent)] text-white text-[10px] rounded-lg font-black tracking-widest uppercase italic">MCQs</span>
                   Daily Prelims Check
                 </h3>
                 <div className="grid grid-cols-1 gap-6">
                   {digest.practiceQuestions.mcqs.map((mcq, idx) => (
                     <div key={idx} className="bg-white border border-slate-200 rounded-3xl p-6 md:p-10 shadow-sm hover:shadow-md transition-shadow group/mcq">
                       <div className="flex gap-4 mb-6">
-                        <span className="text-slate-300 font-playfair font-bold text-3xl group-hover/mcq:text-blue-100 transition-colors">Q{idx + 1}</span>
+                        <span className="text-slate-300 font-lora font-bold text-3xl group-hover/mcq:text-blue-100 transition-colors">Q{idx + 1}</span>
                         <p className="text-slate-800 font-inter font-medium leading-relaxed whitespace-pre-line">{mcq.question}</p>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-12 mb-8">
@@ -405,7 +405,7 @@ const CurrentAffairDetail = () => {
                         ))}
                       </div>
                       <details className="pl-12 group/details">
-                        <summary className="cursor-pointer text-blue-900 font-bold text-xs uppercase tracking-widest list-none flex items-center gap-2 hover:text-blue-800 transition-colors">
+                        <summary className="cursor-pointer text-[var(--color-neti-accent)] font-bold text-xs uppercase tracking-widest list-none flex items-center gap-2 hover:text-[var(--color-neti-accent)] transition-colors">
                           <span className="p-1 rounded-full bg-blue-50 group-hover/details:bg-blue-100 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-open/details:rotate-180 transition-transform"><polyline points="6 9 12 15 18 9"></polyline></svg>
                           </span>
@@ -438,7 +438,7 @@ const CurrentAffairDetail = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                       </div>
                       <span className="text-slate-500 font-bold text-xs uppercase tracking-[0.3em] mb-6 block">Question {idx + 1}</span>
-                      <h4 className="text-lg md:text-xl font-playfair font-bold mb-8 leading-relaxed italic pr-12">
+                      <h4 className="text-lg md:text-xl font-lora font-bold mb-8 leading-relaxed italic pr-12">
                         "{main.question}"
                       </h4>
                       <div className="flex items-center gap-4 text-slate-400 text-[10px] md:text-xs font-bold uppercase tracking-widest pt-6 border-t border-white/10">
@@ -463,10 +463,10 @@ const CurrentAffairDetail = () => {
                     {prevDigest && (
                       <Link 
                         to={`/current-affairs/${prevDigest.id}`}
-                        className="group bg-white border border-slate-200 p-5 md:p-6 rounded-2xl md:rounded-3xl hover:border-blue-900 transition-all flex flex-col items-start gap-2 shadow-sm hover:shadow-md active:scale-95"
+                        className="group bg-white border border-slate-200 p-5 md:p-6 rounded-2xl md:rounded-3xl hover:border-[var(--color-neti-accent)] transition-all flex flex-col items-start gap-2 shadow-sm hover:shadow-md active:scale-95"
                       >
-                         <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-blue-900">← Previous Day</span>
-                         <span className="text-xs md:text-sm font-playfair font-bold text-slate-900">{prevDigest.date}</span>
+                         <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-[var(--color-neti-accent)]">← Previous Day</span>
+                         <span className="text-xs md:text-sm font-lora font-bold text-slate-900">{prevDigest.date}</span>
                       </Link>
                     )}
                   </div>
@@ -474,10 +474,10 @@ const CurrentAffairDetail = () => {
                     {nextDigest && (
                       <Link 
                         to={`/current-affairs/${nextDigest.id}`}
-                        className="group bg-white border border-slate-200 p-5 md:p-6 rounded-2xl md:rounded-3xl hover:border-blue-900 transition-all flex flex-col items-start md:items-end gap-2 text-left md:text-right shadow-sm hover:shadow-md active:scale-95"
+                        className="group bg-white border border-slate-200 p-5 md:p-6 rounded-2xl md:rounded-3xl hover:border-[var(--color-neti-accent)] transition-all flex flex-col items-start md:items-end gap-2 text-left md:text-right shadow-sm hover:shadow-md active:scale-95"
                       >
-                         <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-blue-900">Next Day →</span>
-                         <span className="text-xs md:text-sm font-playfair font-bold text-slate-900">{nextDigest.date}</span>
+                         <span className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-widest group-hover:text-[var(--color-neti-accent)]">Next Day →</span>
+                         <span className="text-xs md:text-sm font-lora font-bold text-slate-900">{nextDigest.date}</span>
                       </Link>
                     )}
                   </div>

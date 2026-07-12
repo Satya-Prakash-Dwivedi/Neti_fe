@@ -28,13 +28,13 @@ const MaterialCard = ({
         ) : (
           <>
             <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-slate-100 opacity-50"></div>
-            <div className="text-slate-300 font-playfair italic text-lg opacity-40">
+            <div className="text-slate-300 font-lora italic text-lg opacity-40">
               Resource Card
             </div>
           </>
         )}
         {tag && (
-          <span className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-bold text-blue-900 border border-slate-200 rounded-full z-10">
+          <span className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm text-[10px] uppercase tracking-wider font-bold text-[var(--color-neti-accent)] border border-slate-200 rounded-full z-10">
             {tag}
           </span>
         )}
@@ -42,7 +42,7 @@ const MaterialCard = ({
       
       {/* Content */}
       <div className="p-5 flex-grow">
-        <h4 className="text-lg font-bold text-slate-900 mb-1 group-hover:text-blue-900 transition-colors">
+        <h4 className="text-lg font-bold text-slate-900 mb-1 group-hover:text-[var(--color-neti-accent)] transition-colors">
           {title}
         </h4>
         <p className="text-sm text-slate-500 leading-relaxed">

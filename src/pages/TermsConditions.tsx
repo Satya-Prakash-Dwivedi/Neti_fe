@@ -3,10 +3,10 @@ const TermsConditions = () => {
     <div className="bg-slate-50 min-h-screen">
       <div className="max-w-4xl mx-auto px-6 py-20 md:py-32">
         <header className="mb-12">
-          <span className="text-xs font-bold text-blue-900 tracking-[0.3em] uppercase mb-4 inline-block">
+          <span className="text-xs font-bold text-[var(--color-neti-accent)] tracking-[0.3em] uppercase mb-4 inline-block">
             Legal
           </span>
-          <h1 className="text-4xl md:text-5xl font-playfair font-bold text-slate-900 mb-6">Terms & Conditions</h1>
+          <h1 className="text-4xl md:text-5xl font-lora font-bold text-slate-900 mb-6">Terms & Conditions</h1>
           <p className="text-slate-500">Last updated: {new Date().toLocaleDateString()}</p>
         </header>
         <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed space-y-6">

@@ -15,7 +15,7 @@ const MonthlyMagazines = () => {
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-playfair font-bold text-blue-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-lora font-bold text-[var(--color-neti-accent)] mb-4">
             Monthly Magazines
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">

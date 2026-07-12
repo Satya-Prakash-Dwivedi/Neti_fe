@@ -127,10 +127,10 @@ const ProductDetail = () => {
 
         {/* Product Info */}
         <div className="w-full md:w-1/2">
-           <span className="text-xs font-bold uppercase tracking-widest text-blue-900 mb-4 inline-block">
+           <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-neti-accent)] mb-4 inline-block">
              {product.subject}
            </span>
-           <h1 className="text-4xl font-playfair font-bold text-slate-900 mb-6 font-primary">
+           <h1 className="text-4xl font-lora font-bold text-slate-900 mb-6 font-primary">
              {product.title}
            </h1>
            <p className="text-3xl font-bold text-slate-900 mb-8">
@@ -164,7 +164,7 @@ const ProductDetail = () => {
               </div>
               <button 
                 onClick={handleBuyNow}
-                className="w-full py-5 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-800 transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
+                className="w-full py-5 bg-[var(--color-neti-accent)] text-white font-bold rounded-xl hover:bg-[var(--color-neti-accent)] transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
               >
                 Buy Now & Download PDF (₹{getDisplayPrice()})
               </button>

@@ -15,10 +15,10 @@ export const CAMagazine = () => {
         <div className="bg-white border border-slate-200 rounded-3xl shadow-sm p-10 md:p-16 text-center relative overflow-hidden group max-w-xl mx-auto">
           
           {/* Accent Border */}
-          <div className="absolute top-0 left-0 w-full h-1.5 bg-blue-900"></div>
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-[var(--color-neti-accent)]"></div>
 
           {/* Icon */}
-          <div className="w-16 h-16 bg-blue-50 text-blue-900 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm transition-transform duration-500">
+          <div className="w-16 h-16 bg-blue-50 text-[var(--color-neti-accent)] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm transition-transform duration-500">
             <BookOpen className="w-8 h-8" />
           </div>
 
@@ -27,7 +27,7 @@ export const CAMagazine = () => {
             In Development
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-playfair font-black text-slate-900 mb-4 tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-lora font-black text-slate-900 mb-4 tracking-tight">
             Monthly Magazine
           </h1>
           

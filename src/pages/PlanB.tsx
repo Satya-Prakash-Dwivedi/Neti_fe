@@ -22,7 +22,7 @@ const PlanB = () => {
                 <p className="text-emerald-900/40 font-bold italic tracking-wide text-base md:text-xl">
                   Perspective is the Real Practice.
                 </p>
-                <h1 className="text-4xl md:text-7xl font-playfair font-bold text-slate-900 leading-tight">
+                <h1 className="text-4xl md:text-7xl font-lora font-bold text-slate-900 leading-tight">
                   Plan B
                 </h1>
               </div>
@@ -75,14 +75,14 @@ const PlanB = () => {
         <div className="prose prose-slate max-w-none">
           
           <section className="mb-16 md:mb-20">
-            <h2 className="text-2xl md:text-4xl font-playfair font-bold text-slate-900 border-b-2 border-emerald-900 inline-block pb-2 mb-6 md:mb-8">The Reality</h2>
+            <h2 className="text-2xl md:text-4xl font-lora font-bold text-slate-900 border-b-2 border-emerald-900 inline-block pb-2 mb-6 md:mb-8">The Reality</h2>
             <p className="text-slate-700 leading-relaxed text-base md:text-lg">
               UPSC is uncertain. Not because you lack ability, but because the exam is designed in such a way that 99.99% of candidates will fail. Lakhs of serious, hard-working people appear every year. Very few seats are available. The outcome is never fully in your control.
             </p>
           </section>
 
           <section className="mb-12 md:mb-16 bg-white p-6 md:p-10 rounded-2xl md:rounded-[2.5rem] border border-slate-200 shadow-sm">
-            <h2 className="text-xl md:text-2xl font-playfair font-bold text-slate-900 mb-4 md:mb-6">Why Are We Here?</h2>
+            <h2 className="text-xl md:text-2xl font-lora font-bold text-slate-900 mb-4 md:mb-6">Why Are We Here?</h2>
             <p className="text-sm md:text-base text-slate-600 mb-6 leading-relaxed">
               Most aspirants avoid the Plan B conversation entirely. Not because they don’t think about it, but because from childhood, we have been taught to focus on just one goal.
             </p>
@@ -95,7 +95,7 @@ const PlanB = () => {
           </section>
 
           <section className="mb-12 md:mb-16">
-            <h2 className="text-xl md:text-2xl font-playfair font-bold text-slate-900 mb-4 md:mb-6">What a Plan B Actually Does</h2>
+            <h2 className="text-xl md:text-2xl font-lora font-bold text-slate-900 mb-4 md:mb-6">What a Plan B Actually Does</h2>
             <p className="text-sm md:text-base text-slate-700 font-bold mb-4">A Plan B does not pull you away from UPSC.</p>
             <p className="text-sm md:text-base text-slate-700 mb-8 leading-relaxed">
               Instead, it gives what most people lack: <span className="text-emerald-900 underline font-bold decoration-emerald-200 underline-offset-4">CLARITY</span>. It gives the mind a place to stand. When you know you have options – even if you never use them – the fear of failure decreases. And when that fear reduces, you prepare with CONFIDENCE.
@@ -117,7 +117,7 @@ const PlanB = () => {
             <div className="relative z-10 w-full">
               <div className="flex items-center gap-4 mb-8 md:mb-12">
                 <div className="h-px bg-emerald-900/10 flex-1"></div>
-                <h2 className="text-2xl md:text-3xl font-playfair font-black text-emerald-900 tracking-tight">How NETI Can Help</h2>
+                <h2 className="text-2xl md:text-3xl font-lora font-black text-emerald-900 tracking-tight">How NETI Can Help</h2>
                 <div className="h-px bg-emerald-900/10 flex-1"></div>
               </div>
               
@@ -187,7 +187,7 @@ const PlanB = () => {
           </section>
 
           <section className="mb-12 md:mb-16 text-center">
-            <h2 className="text-2xl md:text-3xl font-playfair font-bold text-slate-900 mb-8 md:mb-12">How It Works</h2>
+            <h2 className="text-2xl md:text-3xl font-lora font-bold text-slate-900 mb-8 md:mb-12">How It Works</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-left">
               {[
                 'Fill a short Google Form — and tell us about your background.',
@@ -206,7 +206,7 @@ const PlanB = () => {
           {/* Start Here / CTA */}
           <section className="bg-emerald-50/50 border border-emerald-100 p-8 md:p-16 rounded-2xl md:rounded-[3rem] text-center text-slate-900 relative overflow-hidden group shadow-sm">
             <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-200/40 rounded-full blur-3xl -mr-32 -mt-32"></div>
-            <h2 className="text-2xl md:text-4xl font-playfair font-bold mb-4 relative z-10 text-emerald-950">Start Here</h2>
+            <h2 className="text-2xl md:text-4xl font-lora font-bold mb-4 relative z-10 text-emerald-950">Start Here</h2>
             <p className="text-slate-600 mb-8 md:mb-10 max-w-sm md:max-w-md mx-auto relative z-10 text-sm md:text-base leading-relaxed">
               It takes three minutes. The first conversation is free. Clarity is about knowing you have options.
             </p>

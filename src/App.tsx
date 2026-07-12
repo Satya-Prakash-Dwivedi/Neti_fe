@@ -52,6 +52,8 @@ import TermsConditions from './pages/TermsConditions';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
+import OurMethod from './pages/OurMethod';
+
 // ScrollToTop component to reset scroll on route change
 function ScrollToTop() {
   const { pathname, search } = useLocation();
@@ -104,6 +106,8 @@ const AdminRoute = ({ children }: { children: React.ReactNode }) => {
 function App() {
   const location = useLocation();
   const isTestScreen = location.pathname.includes('/recall/session/');
+  const isAuthScreen = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/forgot-password' || location.pathname === '/reset-password';
+  const hideLayout = isTestScreen || isAuthScreen;
 
   useEffect(() => {
     initPostHog();
@@ -114,10 +118,11 @@ function App() {
       <ToastProvider>
         <div className="min-h-screen bg-slate-50 font-inter">
         <ScrollToTop />
-        {!isTestScreen && <Navbar />}
+        {!hideLayout && <Navbar />}
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/our-method" element={<OurMethod />} />
             <Route path="/study-materials" element={<StudyMaterials />} />
             <Route path="/study-materials/:id" element={<ProductDetail />} />
             {/* DO NOT DELETE: Temporarily commented out user-facing Current Affairs routes for future release */}
@@ -246,7 +251,7 @@ function App() {
             />
           </Routes>
         </main>
-        {!isTestScreen && <Footer />}
+        {!hideLayout && <Footer />}
         </div>
       </ToastProvider>
     </AuthProvider>

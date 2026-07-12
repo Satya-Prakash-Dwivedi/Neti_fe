@@ -108,7 +108,7 @@ const AdminOrders = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-900"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--color-neti-accent)]"></div>
       </div>
     );
   }
@@ -122,13 +122,13 @@ const AdminOrders = () => {
           <div className="space-y-4">
             <Link 
               to="/admin/practice-tests"
-              className="inline-flex items-center text-sm font-medium text-slate-500 hover:text-blue-900 transition-colors"
+              className="inline-flex items-center text-sm font-medium text-slate-500 hover:text-[var(--color-neti-accent)] transition-colors"
             >
               <ArrowLeft className="w-4 h-4 mr-1.5" />
               Back to Dashboard
             </Link>
             <div>
-              <h1 className="text-3xl font-playfair font-bold text-blue-900 tracking-tight">
+              <h1 className="text-3xl font-lora font-bold text-[var(--color-neti-accent)] tracking-tight">
                 Order History
               </h1>
               <p className="text-slate-500 mt-1">
@@ -148,7 +148,7 @@ const AdminOrders = () => {
             </div>
             <div className="bg-white px-6 py-4 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-center">
               <span className="text-sm font-medium text-slate-500 mb-1">Successful Orders</span>
-              <div className="flex items-center gap-2 text-2xl font-bold text-blue-900">
+              <div className="flex items-center gap-2 text-2xl font-bold text-[var(--color-neti-accent)]">
                 <CheckCircle className="w-5 h-5 text-blue-600" />
                 {totalPaidOrders}
               </div>
@@ -177,7 +177,7 @@ const AdminOrders = () => {
                 placeholder="Search by student, email, quiz or payment ID..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-blue-900 sm:text-sm transition-all"
+                className="block w-full pl-10 pr-3 py-2.5 border border-slate-200 rounded-xl leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:border-[var(--color-neti-accent)] sm:text-sm transition-all"
               />
             </div>
           </div>
@@ -219,7 +219,7 @@ const AdminOrders = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center">
-                          <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-900 font-bold text-xs uppercase">
+                          <div className="flex-shrink-0 h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-[var(--color-neti-accent)] font-bold text-xs uppercase">
                             {order.user__name?.charAt(0) || <User className="w-4 h-4" />}
                           </div>
                           <div className="ml-3">
@@ -230,7 +230,7 @@ const AdminOrders = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center text-sm text-slate-900 font-medium">
-                          <BookOpen className="w-4 h-4 mr-2 text-blue-900/60" />
+                          <BookOpen className="w-4 h-4 mr-2 text-[var(--color-neti-accent)]/60" />
                           {order.quiz__title}
                         </div>
                         {order.razorpay_payment_id && (
@@ -248,7 +248,7 @@ const AdminOrders = () => {
                       <td className="px-6 py-4">
                         {order.referral_code_used ? (
                           <div className="flex flex-col">
-                            <span className="text-xs font-bold text-blue-900 bg-blue-50 px-2 py-1 rounded w-fit mb-1 font-mono">
+                            <span className="text-xs font-bold text-[var(--color-neti-accent)] bg-blue-50 px-2 py-1 rounded w-fit mb-1 font-mono">
                               {order.referral_code_used}
                             </span>
                             <span className="text-xs text-slate-500">

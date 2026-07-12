@@ -141,7 +141,7 @@ const AdminBooks = () => {
       
       <div className="max-w-6xl mx-auto">
         <header className="mb-12 text-center md:text-left">
-          <h1 className="text-3xl md:text-4xl font-playfair font-bold text-slate-900 mb-2">Manage Books</h1>
+          <h1 className="text-3xl md:text-4xl font-lora font-bold text-slate-900 mb-2">Manage Books</h1>
           <p className="text-sm text-slate-500 font-medium">Create and edit books before uploading chapter test CSVs to them.</p>
         </header>
 
@@ -154,7 +154,7 @@ const AdminBooks = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 bg-white border border-slate-200 rounded-3xl p-6 shadow-sm self-start">
             <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-blue-900" />
+              <BookOpen className="w-5 h-5 text-[var(--color-neti-accent)]" />
               {isEditing ? "Edit Book" : "Create New Book"}
             </h3>
             
@@ -165,7 +165,7 @@ const AdminBooks = () => {
                   type="text"
                   value={bookName}
                   onChange={(e) => setBookName(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                  className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                   placeholder="e.g. NCERT"
                 />
               </div>
@@ -175,7 +175,7 @@ const AdminBooks = () => {
                   type="text"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                  className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                   placeholder="e.g. History"
                 />
               </div>
@@ -185,7 +185,7 @@ const AdminBooks = () => {
                   type="text"
                   value={className}
                   onChange={(e) => setClassName(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                  className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                   placeholder="e.g. Class 6th"
                 />
               </div>
@@ -207,9 +207,9 @@ const AdminBooks = () => {
                     }}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-                  <div className="w-full px-4 py-2 border border-slate-200 border-dashed rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20 flex items-center justify-between text-slate-500">
+                  <div className="w-full px-4 py-2 border border-slate-200 border-dashed rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20 flex items-center justify-between text-slate-500">
                     <span className="truncate">{sourceImage ? sourceImage.name : "Choose an image file..."}</span>
-                    <Upload className="w-4 h-4 text-blue-900" />
+                    <Upload className="w-4 h-4 text-[var(--color-neti-accent)]" />
                   </div>
                 </div>
               </div>
@@ -231,9 +231,9 @@ const AdminBooks = () => {
                     }}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-                  <div className="w-full px-4 py-2 border border-slate-200 border-dashed rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20 flex items-center justify-between text-slate-500">
+                  <div className="w-full px-4 py-2 border border-slate-200 border-dashed rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20 flex items-center justify-between text-slate-500">
                     <span className="truncate">{coverImage ? coverImage.name : "Choose an image file..."}</span>
-                    <Upload className="w-4 h-4 text-blue-900" />
+                    <Upload className="w-4 h-4 text-[var(--color-neti-accent)]" />
                   </div>
                 </div>
               </div>
@@ -243,7 +243,7 @@ const AdminBooks = () => {
                   type="number"
                   value={fullPrice}
                   onChange={(e) => setFullPrice(e.target.value)}
-                  className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                  className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                 />
               </div>
               <div className="flex items-center gap-2 pt-2">
@@ -252,7 +252,7 @@ const AdminBooks = () => {
                   id="isActive"
                   checked={isActive}
                   onChange={(e) => setIsActive(e.target.checked)}
-                  className="w-4 h-4 text-blue-900 rounded focus:ring-blue-900"
+                  className="w-4 h-4 text-[var(--color-neti-accent)] rounded focus:ring-blue-900"
                 />
                 <label htmlFor="isActive" className="text-sm font-bold text-slate-600 cursor-pointer">
                   Active (Visible to Students)
@@ -263,7 +263,7 @@ const AdminBooks = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-4 py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-bold rounded-xl text-xs shadow-md active:scale-95 transition-all flex items-center justify-center gap-2"
+                  className="flex-1 px-4 py-2.5 bg-[var(--color-neti-accent)] hover:bg-[var(--color-neti-accent)] text-white font-bold rounded-xl text-xs shadow-md active:scale-95 transition-all flex items-center justify-center gap-2"
                 >
                   <Save className="w-4 h-4" />
                   {isEditing ? "Update" : "Create"}
@@ -282,7 +282,7 @@ const AdminBooks = () => {
           </div>
 
           <div className="lg:col-span-2 bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden p-6">
-            <h3 className="text-xl font-playfair font-bold text-slate-900 mb-6">Existing Books</h3>
+            <h3 className="text-xl font-lora font-bold text-slate-900 mb-6">Existing Books</h3>
             {books.length === 0 ? (
               <div className="text-center py-12 text-slate-400 italic text-sm">
                 No books created yet.
@@ -304,7 +304,7 @@ const AdminBooks = () => {
                       <div>
                         <h4 className="font-bold text-slate-800 text-base">{book.book_name} - {book.subject} {book.class_name ? `- ${book.class_name}` : ''}</h4>
                         <div className="flex flex-wrap gap-2 text-xs font-semibold text-slate-400 mt-1">
-                          <span className="text-blue-900">₹{book.full_price}</span>
+                          <span className="text-[var(--color-neti-accent)]">₹{book.full_price}</span>
                           <span>•</span>
                           <span>{book.subject}</span>
                           <span>•</span>
@@ -317,14 +317,14 @@ const AdminBooks = () => {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => window.open(`/admin/books/${book.id}/rearrange`, '_blank')}
-                        className="px-3 py-1.5 bg-blue-50 text-blue-900 font-bold text-[10px] uppercase tracking-wider rounded-lg hover:bg-blue-100 transition-colors mr-2"
+                        className="px-3 py-1.5 bg-blue-50 text-[var(--color-neti-accent)] font-bold text-[10px] uppercase tracking-wider rounded-lg hover:bg-blue-100 transition-colors mr-2"
                         title="Rearrange Chapters"
                       >
                         Rearrange Chapters
                       </button>
                       <button
                         onClick={() => handleEdit(book)}
-                        className="p-2 text-blue-900 hover:bg-blue-50 rounded-xl transition-all"
+                        className="p-2 text-[var(--color-neti-accent)] hover:bg-blue-50 rounded-xl transition-all"
                         title="Edit Book"
                       >
                         <Edit className="w-4 h-4" />

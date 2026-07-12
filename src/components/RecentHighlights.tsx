@@ -10,7 +10,7 @@ const RecentHighlights = () => {
     <section className="py-20 px-6 bg-[#F8F9FB]">
       <div className="max-w-7xl mx-auto">
         <header className="mb-12 text-center">
-          <h2 className="text-3xl font-playfair font-bold text-slate-900 mb-4">Recent Highlights</h2>
+          <h2 className="text-3xl font-lora font-bold text-slate-900 mb-4">Recent Highlights</h2>
           <p className="text-slate-500 max-w-2xl mx-auto">Discover our latest thinking and platform updates.</p>
         </header>
 
@@ -31,7 +31,7 @@ const RecentHighlights = () => {
                     </span>
                   </div>
                   <Link to={`/mind/${recentMind.id}`}>
-                    <h3 className="text-xl font-playfair font-bold text-slate-900 mb-2 group-hover:text-[#1E3A8A] transition-colors leading-tight">
+                    <h3 className="text-xl font-lora font-bold text-slate-900 mb-2 group-hover:text-[var(--color-neti-accent)] transition-colors leading-tight">
                       {recentMind.title}
                     </h3>
                   </Link>
@@ -39,7 +39,7 @@ const RecentHighlights = () => {
                     {recentMind.excerpt}
                   </p>
                 </div>
-                <Link to={`/mind/${recentMind.id}`} className="text-xs font-bold text-[#C8A951] uppercase tracking-wider hover:text-yellow-600 transition-colors flex items-center gap-1">
+                <Link to={`/mind/${recentMind.id}`} className="text-xs font-bold text-[var(--color-neti-accent-amber)] uppercase tracking-wider hover:text-[var(--color-neti-accent)] transition-colors flex items-center gap-1">
                   Read Article →
                 </Link>
               </div>
@@ -48,16 +48,16 @@ const RecentHighlights = () => {
 
           {/* Announcement Container */}
           {recentAnnouncement && (
-            <article className="bg-blue-50/50 border border-blue-100 rounded-3xl overflow-hidden hover:shadow-lg transition-all group flex flex-col sm:flex-row">
+            <article className="bg-[var(--color-neti-accent)]/5 border border-[var(--color-neti-accent)]/10 rounded-3xl overflow-hidden hover:shadow-lg transition-all group flex flex-col sm:flex-row">
               <div className="p-8 sm:w-full flex flex-col justify-between h-full">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="px-3 py-1 bg-blue-100/50 text-[#1E3A8A] text-[10px] font-bold uppercase tracking-wider rounded-md">
+                    <span className="px-3 py-1 bg-[var(--color-neti-accent)]/10 text-[var(--color-neti-accent)] text-[10px] font-bold uppercase tracking-wider rounded-md">
                       Platform Update
                     </span>
                   </div>
                   <Link to={`/blogs/${recentAnnouncement.id}`}>
-                    <h3 className="text-2xl font-playfair font-bold text-slate-900 mb-3 group-hover:text-[#1E3A8A] transition-colors leading-tight">
+                    <h3 className="text-2xl font-lora font-bold text-slate-900 mb-3 group-hover:text-[var(--color-neti-accent)] transition-colors leading-tight">
                       {recentAnnouncement.title}
                     </h3>
                   </Link>
@@ -65,7 +65,7 @@ const RecentHighlights = () => {
                     {recentAnnouncement.excerpt}
                   </p>
                 </div>
-                <Link to={`/blogs/${recentAnnouncement.id}`} className="text-xs font-bold text-[#1E3A8A] uppercase tracking-wider hover:text-[#C8A951] transition-colors flex items-center gap-1 mt-auto">
+                <Link to={`/blogs/${recentAnnouncement.id}`} className="text-xs font-bold text-[var(--color-neti-accent)] uppercase tracking-wider hover:text-[var(--color-neti-accent-amber)] transition-colors flex items-center gap-1 mt-auto">
                   View Announcement →
                 </Link>
               </div>

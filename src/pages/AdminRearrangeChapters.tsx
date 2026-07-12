@@ -142,15 +142,15 @@ const AdminRearrangeChapters = () => {
       
       <div className="max-w-4xl mx-auto">
         <header className="mb-8 flex flex-col gap-4">
-          <Link to="/admin/books" className="inline-flex items-center gap-2 text-blue-900/80 hover:text-blue-600 font-bold text-xs uppercase tracking-widest">
+          <Link to="/admin/books" className="inline-flex items-center gap-2 text-[var(--color-neti-accent)]/80 hover:text-blue-600 font-bold text-xs uppercase tracking-widest">
             <ArrowLeft className="w-4 h-4" />
             Back to Books
           </Link>
           
           <div>
-            <h1 className="text-3xl md:text-4xl font-playfair font-bold text-slate-900 mb-2">Rearrange Chapters</h1>
+            <h1 className="text-3xl md:text-4xl font-lora font-bold text-slate-900 mb-2">Rearrange Chapters</h1>
             <p className="text-sm text-slate-500 font-medium">
-              Book: <strong className="text-blue-900">{book?.book_name} {book?.class_name ? `- ${book?.class_name}` : ""}</strong>
+              Book: <strong className="text-[var(--color-neti-accent)]">{book?.book_name} {book?.class_name ? `- ${book?.class_name}` : ""}</strong>
             </p>
           </div>
         </header>
@@ -172,7 +172,7 @@ const AdminRearrangeChapters = () => {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-6 py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-bold rounded-xl text-xs shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="px-6 py-2.5 bg-[var(--color-neti-accent)] hover:bg-[var(--color-neti-accent)] text-white font-bold rounded-xl text-xs shadow-md active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
                 {saving ? "Saving..." : "Save New Order"}

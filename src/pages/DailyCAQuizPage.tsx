@@ -88,7 +88,7 @@ export default function DailyCAQuizPage() {
 
   return (
     <div className="max-w-3xl mx-auto p-4 py-8">
-      <h1 className="text-3xl font-playfair font-bold text-slate-900 mb-6">
+      <h1 className="text-3xl font-lora font-bold text-slate-900 mb-6">
         Daily Quiz - {date}
       </h1>
       
@@ -124,7 +124,7 @@ export default function DailyCAQuizPage() {
                     }
                   } else {
                     if (selected === opt) {
-                      optClass += "border-blue-500 bg-blue-50 text-blue-800";
+                      optClass += "border-blue-500 bg-blue-50 text-[var(--color-neti-accent)]";
                     } else {
                       optClass += "border-slate-200 hover:border-blue-300 hover:bg-slate-50 text-slate-700";
                     }

@@ -166,7 +166,7 @@ const NotificationWidget = () => {
             <svg className="w-5 h-5 text-[#C8A951]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
-            <h4 className="font-playfair font-bold text-lg tracking-wide">Latest Release</h4>
+            <h4 className="font-lora font-bold text-lg tracking-wide">Latest Release</h4>
           </div>
           <button
             onClick={handleClose}
@@ -186,7 +186,7 @@ const NotificationWidget = () => {
               {latestRelease.type}
             </span>
           </div>
-          <h5 className="font-playfair font-bold text-[#0F172A] text-xl mb-2">
+          <h5 className="font-lora font-bold text-[#0F172A] text-xl mb-2">
             {latestRelease.displayTitle}
           </h5>
           <p className="text-sm font-inter text-[#475569] leading-relaxed mb-6 line-clamp-3">
@@ -210,7 +210,7 @@ const NotificationWidget = () => {
       {/* Persistent Icon Button (Visible when closed) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`bg-[#1E3A8A] text-white p-4 rounded-full shadow-xl hover:scale-105 hover:bg-blue-900 transition-all duration-300 flex items-center justify-center relative ${
+        className={`bg-[#1E3A8A] text-white p-4 rounded-full shadow-xl hover:scale-105 hover:bg-[var(--color-neti-accent)] transition-all duration-300 flex items-center justify-center relative ${
           isOpen ? "scale-0 opacity-0 absolute" : "scale-100 opacity-100"
         }`}
         aria-label="Open notifications"

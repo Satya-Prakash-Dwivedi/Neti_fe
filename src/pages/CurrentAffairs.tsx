@@ -74,10 +74,10 @@ const CurrentAffairs = () => {
       
       <div className="max-w-5xl mx-auto px-4 md:px-6 py-12 md:py-16">
         <header className="mb-10 md:mb-16 text-center relative">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-[10px] md:text-sm font-bold text-blue-900 bg-white shadow-sm border border-blue-100 rounded-full uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-[10px] md:text-sm font-bold text-[var(--color-neti-accent)] bg-white shadow-sm border border-blue-100 rounded-full uppercase tracking-widest">
             UPSC 2026 Daily Digest
           </div>
-          <h1 className="text-3xl md:text-5xl font-playfair font-bold text-slate-900 mb-6">Daily Current Affairs</h1>
+          <h1 className="text-3xl md:text-5xl font-lora font-bold text-slate-900 mb-6">Daily Current Affairs</h1>
           <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
             Stay ahead with curated daily analysis. We filter the noise and provide only what matters for your Prelims and Mains.
           </p>
@@ -87,7 +87,7 @@ const CurrentAffairs = () => {
         <div className="mb-12 sticky top-24 z-10 px-1">
           <div className="bg-white/90 backdrop-blur-md p-2 rounded-2xl md:rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-200/40 flex flex-col md:flex-row gap-2">
             <div className="relative flex-1 group">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 group-focus-within:text-blue-900 transition-colors" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 group-focus-within:text-[var(--color-neti-accent)] transition-colors" />
               <input 
                 type="text"
                 placeholder="Search by topic, keyword, or any content..."
@@ -109,7 +109,7 @@ const CurrentAffairs = () => {
             </div>
             
             <div className="relative md:w-60 group">
-              <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none group-focus-within:text-blue-900 transition-colors" />
+              <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none group-focus-within:text-[var(--color-neti-accent)] transition-colors" />
               <input 
                 type="date"
                 onChange={(e) => {
@@ -145,15 +145,15 @@ const CurrentAffairs = () => {
                 key={digest.id} 
                 className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all group relative"
               >
-                <div className="absolute top-0 left-0 w-1.5 h-full bg-blue-900/10 group-hover:bg-blue-900 transition-colors" />
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-[var(--color-neti-accent)]/10 group-hover:bg-[var(--color-neti-accent)] transition-colors" />
                 
                 <div className="p-6 md:p-10">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 border-b border-slate-50 pb-6">
                     <div>
-                      <span className="text-[10px] md:text-xs font-bold text-blue-900 tracking-widest uppercase mb-1 block">
+                      <span className="text-[10px] md:text-xs font-bold text-[var(--color-neti-accent)] tracking-widest uppercase mb-1 block">
                         {digest.day}, {digest.date}
                       </span>
-                      <h2 className="text-xl md:text-2xl font-playfair font-bold text-slate-900 group-hover:text-blue-900 transition-colors">
+                      <h2 className="text-xl md:text-2xl font-lora font-bold text-slate-900 group-hover:text-[var(--color-neti-accent)] transition-colors">
                         {digest.tagline}
                       </h2>
                     </div>
@@ -170,9 +170,9 @@ const CurrentAffairs = () => {
                     {digest.topics.map((topic, idx) => (
                       <Link key={topic.id} to={`/current-affairs/${digest.id}`} className="group/topic">
                         <div className="flex gap-4 items-start">
-                          <span className="text-slate-200 font-playfair italic text-lg md:text-xl group-hover/topic:text-blue-900 transition-colors shrink-0">0{idx + 1}</span>
+                          <span className="text-slate-200 font-lora italic text-lg md:text-xl group-hover/topic:text-[var(--color-neti-accent)] transition-colors shrink-0">0{idx + 1}</span>
                           <div>
-                            <h3 className="text-xs md:text-sm font-bold text-slate-800 group-hover/topic:text-blue-900 transition-colors leading-tight mb-1">
+                            <h3 className="text-xs md:text-sm font-bold text-slate-800 group-hover/topic:text-[var(--color-neti-accent)] transition-colors leading-tight mb-1">
                               {topic.title}
                             </h3>
                             <p className="text-[10px] md:text-xs text-slate-400 line-clamp-1 uppercase tracking-tighter">{topic.subtitle}</p>
@@ -196,7 +196,7 @@ const CurrentAffairs = () => {
               <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
                 <Search className="w-10 h-10" />
               </div>
-              <h3 className="text-xl font-playfair font-bold text-slate-900 mb-2">No digests found</h3>
+              <h3 className="text-xl font-lora font-bold text-slate-900 mb-2">No digests found</h3>
               <p className="text-slate-500 mb-8 max-w-sm mx-auto text-sm">We couldn't find any current affairs for "{searchTerm}". Try another date or keyword.</p>
               <button 
                 onClick={clearSearch}

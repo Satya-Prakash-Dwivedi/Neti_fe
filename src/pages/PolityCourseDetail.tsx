@@ -21,7 +21,7 @@ const PolityCourseDetail = () => {
         <div className="mb-12">
           <Link 
             to="/courses"
-            className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-blue-900 transition-colors uppercase tracking-widest group"
+            className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-[var(--color-neti-accent)] transition-colors uppercase tracking-widest group"
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             Back to Courses
@@ -31,11 +31,11 @@ const PolityCourseDetail = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           <div className="lg:col-span-2">
             <header className="mb-12">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-900 text-white text-[8px] font-bold tracking-[0.3em] uppercase rounded-full mb-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--color-neti-accent)] text-white text-[8px] font-bold tracking-[0.3em] uppercase rounded-full mb-6">
                 <span className="w-1 h-1 rounded-full bg-white animate-ping"></span>
                 Live Announcement
               </div>
-              <h1 className="text-4xl md:text-6xl font-playfair font-bold text-slate-900 mb-6 leading-tight">
+              <h1 className="text-4xl md:text-6xl font-lora font-bold text-slate-900 mb-6 leading-tight">
                 Free Polity Classes <br /> Starting in June
               </h1>
               <p className="text-slate-500 text-lg md:text-xl font-light leading-relaxed max-w-2xl">
@@ -67,8 +67,8 @@ const PolityCourseDetail = () => {
 
             <article className="space-y-16">
               <section className="space-y-6">
-                <h3 className="text-2xl font-playfair font-bold text-slate-900 flex items-center gap-3">
-                   <span className="w-2 h-2 rounded-full bg-blue-900"></span>
+                <h3 className="text-2xl font-lora font-bold text-slate-900 flex items-center gap-3">
+                   <span className="w-2 h-2 rounded-full bg-[var(--color-neti-accent)]"></span>
                    Why Polity, and Why Now?
                 </h3>
                 <div className="prose prose-slate max-w-none">
@@ -87,8 +87,8 @@ const PolityCourseDetail = () => {
               </section>
 
               <section className="space-y-6">
-                <h3 className="text-2xl font-playfair font-bold text-slate-900 flex items-center gap-3">
-                   <span className="w-2 h-2 rounded-full bg-blue-900"></span>
+                <h3 className="text-2xl font-lora font-bold text-slate-900 flex items-center gap-3">
+                   <span className="w-2 h-2 rounded-full bg-[var(--color-neti-accent)]"></span>
                    The Course Roadmap
                 </h3>
                 <div className="bg-slate-900 p-8 md:p-12 rounded-[2.5rem] text-white relative overflow-hidden group">
@@ -110,16 +110,16 @@ const PolityCourseDetail = () => {
               </section>
 
               <section className="space-y-8">
-                <h3 className="text-2xl font-playfair font-bold text-slate-900 flex items-center gap-3">
-                   <span className="w-2 h-2 rounded-full bg-blue-900"></span>
+                <h3 className="text-2xl font-lora font-bold text-slate-900 flex items-center gap-3">
+                   <span className="w-2 h-2 rounded-full bg-[var(--color-neti-accent)]"></span>
                    Teaching Philosophy
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {[
-                    { t: "Visual-first", d: "Flowcharts, tables, and mind maps to make complex articles unforgettable.", icon: <BookOpen className="text-blue-900" /> },
-                    { t: "PYQ Integration", d: "Built into every lecture. We don't just teach; we show you how UPSC tests it.", icon: <Users className="text-blue-900" /> },
-                    { t: "Active Recall", d: "3–5 MCQs at the end of every session to lock in what you've learned.", icon: <Clock className="text-blue-900" /> },
-                    { t: "Priority Tagging", d: "We tag every concept as Must, Should, or Good-to-know to optimize your time.", icon: <Calendar className="text-blue-900" /> }
+                    { t: "Visual-first", d: "Flowcharts, tables, and mind maps to make complex articles unforgettable.", icon: <BookOpen className="text-[var(--color-neti-accent)]" /> },
+                    { t: "PYQ Integration", d: "Built into every lecture. We don't just teach; we show you how UPSC tests it.", icon: <Users className="text-[var(--color-neti-accent)]" /> },
+                    { t: "Active Recall", d: "3–5 MCQs at the end of every session to lock in what you've learned.", icon: <Clock className="text-[var(--color-neti-accent)]" /> },
+                    { t: "Priority Tagging", d: "We tag every concept as Must, Should, or Good-to-know to optimize your time.", icon: <Calendar className="text-[var(--color-neti-accent)]" /> }
                   ].map((item, i) => (
                     <div key={i} className="p-8 bg-white border border-slate-100 rounded-3xl hover:shadow-xl transition-all duration-500 group">
                       <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
@@ -139,7 +139,7 @@ const PolityCourseDetail = () => {
               <div className="bg-slate-50 border border-slate-100 rounded-[2.5rem] p-10">
                 <div className="space-y-8 mb-10">
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-blue-900 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--color-neti-accent)] flex items-center justify-center shrink-0">
                       <Calendar className="text-white" size={20} />
                     </div>
                     <div>
@@ -148,7 +148,7 @@ const PolityCourseDetail = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-blue-900 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--color-neti-accent)] flex items-center justify-center shrink-0">
                       <BookOpen className="text-white" size={20} />
                     </div>
                     <div>
@@ -157,7 +157,7 @@ const PolityCourseDetail = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-blue-900 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--color-neti-accent)] flex items-center justify-center shrink-0">
                       <Users className="text-white" size={20} />
                     </div>
                     <div>
@@ -166,7 +166,7 @@ const PolityCourseDetail = () => {
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-blue-900 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-[var(--color-neti-accent)] flex items-center justify-center shrink-0">
                       <Clock className="text-white" size={20} />
                     </div>
                     <div>
@@ -181,7 +181,7 @@ const PolityCourseDetail = () => {
                     href="https://forms.gle/ZV7oUdM9513CWegg9"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-5 bg-blue-900 text-white font-bold text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/20 flex items-center justify-center gap-2 group mb-4 active:scale-95"
+                    className="w-full py-5 bg-[var(--color-neti-accent)] text-white font-bold text-xs uppercase tracking-[0.2em] rounded-2xl hover:bg-[var(--color-neti-accent)] transition-all shadow-xl shadow-[var(--color-neti-accent)]/20 flex items-center justify-center gap-2 group mb-4 active:scale-95"
                   >
                     Join Priority List
                     <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -196,7 +196,7 @@ const PolityCourseDetail = () => {
                 </div>
               </div>
 
-              <div className="p-8 bg-blue-900 rounded-[2.5rem] text-white">
+              <div className="p-8 bg-[var(--color-neti-accent)] rounded-[2.5rem] text-white">
                 <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-6 italic">The Neti Neti Principle</p>
                 <p className="text-sm text-blue-100 leading-relaxed font-light">
                   Remove noise. Focus only on what moves you closer to clearing Prelims. Zero fees. Zero motivation fluff. Pure academic consistency.
@@ -223,7 +223,7 @@ const PolityCourseDetail = () => {
 
       <footer className="bg-slate-900 py-20 mt-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-           <h2 className="text-3xl font-playfair font-bold text-white mb-8 leading-snug italic opacity-90">
+           <h2 className="text-3xl font-lora font-bold text-white mb-8 leading-snug italic opacity-90">
              "Starting the first week of June, we're running a complete, free, live Polity course for UPSC Prelims."
            </h2>
            <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.4em]">Integrated Learning · Expert Mentorship</p>

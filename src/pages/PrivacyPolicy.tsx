@@ -3,10 +3,10 @@ const PrivacyPolicy = () => {
     <div className="bg-slate-50 min-h-screen">
       <div className="max-w-4xl mx-auto px-6 py-20 md:py-32">
         <header className="mb-12">
-          <span className="text-xs font-bold text-blue-900 tracking-[0.3em] uppercase mb-4 inline-block">
+          <span className="text-xs font-bold text-[var(--color-neti-accent)] tracking-[0.3em] uppercase mb-4 inline-block">
             Legal
           </span>
-          <h1 className="text-4xl md:text-5xl font-playfair font-bold text-slate-900 mb-6">Privacy Policy</h1>
+          <h1 className="text-4xl md:text-5xl font-lora font-bold text-slate-900 mb-6">Privacy Policy</h1>
           <p className="text-slate-500">Last updated: {new Date().toLocaleDateString()}</p>
         </header>
         <div className="prose prose-slate max-w-none text-slate-700 leading-relaxed space-y-6">
@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
           </p>
           <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-4">3. Contact Us</h2>
           <p>
-            If you have any questions about this Privacy Policy, please contact us at <a href="mailto:admin@netiacademy.com" className="text-blue-900 font-bold hover:underline">admin@netiacademy.com</a>.
+            If you have any questions about this Privacy Policy, please contact us at <a href="mailto:admin@netiacademy.com" className="text-[var(--color-neti-accent)] font-bold hover:underline">admin@netiacademy.com</a>.
           </p>
         </div>
       </div>

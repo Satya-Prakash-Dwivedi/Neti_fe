@@ -42,7 +42,7 @@ const StudyMaterials = () => {
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
       <header className="mb-12">
-        <h1 className="text-4xl font-playfair font-bold text-slate-900 mb-4">Question Bank & Study Materials</h1>
+        <h1 className="text-4xl font-lora font-bold text-slate-900 mb-4">Question Bank & Study Materials</h1>
         <p className="text-lg text-slate-600 max-w-2xl">
           Structured, high-quality question banks designed for deep conceptual clarity and rigorous practice.
         </p>
@@ -60,7 +60,7 @@ const StudyMaterials = () => {
           {Object.keys(subjectsMap).map((subjectName) => (
             <section key={subjectName}>
               <div className="flex items-center gap-4 mb-8">
-                <h2 className="text-2xl font-playfair font-bold text-blue-900">{subjectName}</h2>
+                <h2 className="text-2xl font-lora font-bold text-[var(--color-neti-accent)]">{subjectName}</h2>
                 <div className="h-px flex-1 bg-slate-200"></div>
               </div>
               
@@ -78,7 +78,7 @@ const StudyMaterials = () => {
                       <span className="text-sm font-semibold text-slate-900">₹{product.price}</span>
                       <Link 
                         to={`/study-materials/${product.id}`} 
-                        className="text-xs font-bold uppercase tracking-widest text-blue-900 hover:text-blue-700 transition-colors"
+                        className="text-xs font-bold uppercase tracking-widest text-[var(--color-neti-accent)] hover:text-blue-700 transition-colors"
                       >
                         View Details →
                       </Link>

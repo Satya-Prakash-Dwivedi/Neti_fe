@@ -1,15 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-neti-bg: #F8F9FB;
-  --color-neti-text: #0F172A;
-  --color-neti-secondary: #475569;
-  --color-neti-accent: #1E3A8A;
-  --color-neti-gold: #C8A951;
-  --color-neti-border: #E2E8F0;
+  --color-neti-bg: #F5F4EF;
+  --color-neti-surface: #FFFFFF;
+  --color-neti-text: #1C1C1E;
+  --color-neti-text-muted: #6B6B72;
+  --color-neti-accent: #2D6A4F;
+  --color-neti-accent-amber: #B5832A;
+  --color-neti-border: #E4E2DC;
+  
+  --color-neti-dark-bg: #0F1117;
+  --color-neti-dark-surface: #1A1D27;
+  --color-neti-dark-text: #E8E6E0;
 
   --font-inter: "Inter", sans-serif;
   --font-playfair: "Playfair Display", serif;
+  --font-lora: "Lora", serif;
 }
 
 @layer base {
@@ -20,6 +26,6 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-playfair);
+    font-family: var(--font-lora);
   }
 }

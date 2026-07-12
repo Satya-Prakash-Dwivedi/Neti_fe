@@ -196,7 +196,7 @@ const AdminCurrentAffairs = () => {
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-playfair font-bold text-slate-900">Current Affairs Admin</h1>
+            <h1 className="text-3xl font-lora font-bold text-slate-900">Current Affairs Admin</h1>
             <p className="text-sm text-slate-500">Publish, modify, and delete daily Prelims & Mains resources.</p>
           </div>
           {view === "list" ? (
@@ -220,7 +220,7 @@ const AdminCurrentAffairs = () => {
                   setEditingId(null);
                   setView("form");
                 }}
-                className="flex items-center gap-2 px-5 py-2.5 bg-blue-900 text-white rounded-xl hover:bg-blue-800 transition-all font-semibold text-sm"
+                className="flex items-center gap-2 px-5 py-2.5 bg-[var(--color-neti-accent)] text-white rounded-xl hover:bg-[var(--color-neti-accent)] transition-all font-semibold text-sm"
               >
                 <Plus className="w-4 h-4" /> Add Daily Digest
               </button>
@@ -278,7 +278,7 @@ const AdminCurrentAffairs = () => {
                       <td className="p-4 md:p-6 text-right space-x-2">
                         <button
                           onClick={() => handleEdit(d)}
-                          className="p-2 text-blue-900 hover:bg-blue-50 rounded-lg transition-colors inline-flex"
+                          className="p-2 text-[var(--color-neti-accent)] hover:bg-blue-50 rounded-lg transition-colors inline-flex"
                         >
                           <Edit className="w-4 h-4" />
                         </button>
@@ -361,7 +361,7 @@ const AdminCurrentAffairs = () => {
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, reviseSummary: [...form.reviseSummary, ""] })}
-                  className="text-xs font-bold text-blue-900 hover:underline flex items-center gap-1"
+                  className="text-xs font-bold text-[var(--color-neti-accent)] hover:underline flex items-center gap-1"
                 >
                   <Plus className="w-3.5 h-3.5" /> Add Bullet Point
                 </button>
@@ -397,14 +397,14 @@ const AdminCurrentAffairs = () => {
 
             <div className="border-t border-slate-100 pt-6">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-lg font-playfair font-bold text-slate-900">Topics & In-depth Analysis</h3>
+                <h3 className="text-lg font-lora font-bold text-slate-900">Topics & In-depth Analysis</h3>
                 <button
                   type="button"
                   onClick={() => setForm({
                     ...form,
                     topics: [...form.topics, { title: "", subtitle: "", content: "", whyItMatters: "", revise: "", pyqConnect: "" }]
                   })}
-                  className="text-xs font-bold text-blue-900 hover:underline flex items-center gap-1"
+                  className="text-xs font-bold text-[var(--color-neti-accent)] hover:underline flex items-center gap-1"
                 >
                   <Plus className="w-4 h-4" /> Add Topic
                 </button>
@@ -424,7 +424,7 @@ const AdminCurrentAffairs = () => {
                       <Trash className="w-4 h-4" />
                     </button>
 
-                    <h4 className="text-sm font-bold text-blue-900 uppercase tracking-wider">Topic #{index + 1}</h4>
+                    <h4 className="text-sm font-bold text-[var(--color-neti-accent)] uppercase tracking-wider">Topic #{index + 1}</h4>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
@@ -520,7 +520,7 @@ const AdminCurrentAffairs = () => {
             </div>
 
             <div className="border-t border-slate-100 pt-6">
-              <h3 className="text-lg font-playfair font-bold text-slate-900 mb-6">Assessment & Practice Questions</h3>
+              <h3 className="text-lg font-lora font-bold text-slate-900 mb-6">Assessment & Practice Questions</h3>
 
               <div className="space-y-6">
                 <div className="flex justify-between items-center">
@@ -531,7 +531,7 @@ const AdminCurrentAffairs = () => {
                       const updatedMCQs = [...form.practiceQuestions.mcqs, { question: "", options: ["", "", "", ""], answer: "A", explanation: "" }];
                       setForm({ ...form, practiceQuestions: { ...form.practiceQuestions, mcqs: updatedMCQs } });
                     }}
-                    className="text-xs font-bold text-blue-900 hover:underline flex items-center gap-1"
+                    className="text-xs font-bold text-[var(--color-neti-accent)] hover:underline flex items-center gap-1"
                   >
                     <Plus className="w-3.5 h-3.5" /> Add MCQ
                   </button>
@@ -628,7 +628,7 @@ const AdminCurrentAffairs = () => {
                       const updatedMains = [...form.practiceQuestions.mains, { question: "", context: "" }];
                       setForm({ ...form, practiceQuestions: { ...form.practiceQuestions, mains: updatedMains } });
                     }}
-                    className="text-xs font-bold text-blue-900 hover:underline flex items-center gap-1"
+                    className="text-xs font-bold text-[var(--color-neti-accent)] hover:underline flex items-center gap-1"
                   >
                     <Plus className="w-3.5 h-3.5" /> Add Prompt
                   </button>
@@ -691,7 +691,7 @@ const AdminCurrentAffairs = () => {
               </button>
               <button
                 type="submit"
-                className="px-6 py-3 bg-blue-900 text-white rounded-xl hover:bg-blue-800 transition-all font-bold text-sm flex items-center gap-2"
+                className="px-6 py-3 bg-[var(--color-neti-accent)] text-white rounded-xl hover:bg-[var(--color-neti-accent)] transition-all font-bold text-sm flex items-center gap-2"
               >
                 <Save className="w-4 h-4" /> Save Digest
               </button>

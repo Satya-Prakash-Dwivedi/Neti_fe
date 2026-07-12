@@ -34,14 +34,14 @@ const BlogDetail = () => {
       />
       <header className="mb-12">
         <div className="flex items-center gap-4 mb-6">
-           <span className="px-3 py-1 bg-blue-50 text-blue-800 text-xs font-bold uppercase tracking-wider rounded-full">
+           <span className="px-3 py-1 bg-blue-50 text-[var(--color-neti-accent)] text-xs font-bold uppercase tracking-wider rounded-full">
              {post.category}
            </span>
            <span className="text-xs text-slate-400 font-medium font-inter">
              {post.date} • By {post.author}
            </span>
         </div>
-        <h1 className="text-5xl font-playfair font-bold text-slate-900 mb-8 font-primary">
+        <h1 className="text-5xl font-lora font-bold text-slate-900 mb-8 font-primary">
           {post.title}
         </h1>
         <div className="aspect-video w-full rounded-2xl overflow-hidden mb-12 shadow-xl border border-slate-100">
@@ -61,7 +61,7 @@ const BlogDetail = () => {
                   <ShieldAlert size={20} />
                   <span className="text-sm font-bold tracking-widest uppercase">Secure Access</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4 font-playfair">Download Question Paper</h3>
+                <h3 className="text-2xl font-bold text-white mb-4 font-lora">Download Question Paper</h3>
                 <p className="text-slate-300 mb-8 text-sm max-w-lg leading-relaxed">
                   The official question paper for <strong className="text-white">{post.title}</strong> is now available for download.
                 </p>
@@ -97,11 +97,11 @@ const BlogDetail = () => {
                }
 
                if (para.startsWith('### ')) {
-                   return <h3 key={idx} className="text-2xl font-bold font-playfair text-slate-900 mt-10 mb-4 border-b border-slate-100 pb-2" dangerouslySetInnerHTML={parseInline(para.replace('### ', ''))} />
+                   return <h3 key={idx} className="text-2xl font-bold font-lora text-slate-900 mt-10 mb-4 border-b border-slate-100 pb-2" dangerouslySetInnerHTML={parseInline(para.replace('### ', ''))} />
                }
                
                if (para.startsWith('#### ')) {
-                   return <h4 key={idx} className="text-xl font-bold font-playfair text-slate-900 mt-8 mb-3" dangerouslySetInnerHTML={parseInline(para.replace('#### ', ''))} />
+                   return <h4 key={idx} className="text-xl font-bold font-lora text-slate-900 mt-8 mb-3" dangerouslySetInnerHTML={parseInline(para.replace('#### ', ''))} />
                }
 
                if (para.trim() === '---') {
@@ -110,12 +110,12 @@ const BlogDetail = () => {
                
                if (para.startsWith('- ') || /^\d+\. /.test(para)) {
                    return <p key={idx} className="ml-4 flex items-start gap-2">
-                      <span className="text-blue-900 font-bold">•</span>
+                      <span className="text-[var(--color-neti-accent)] font-bold">•</span>
                       <span dangerouslySetInnerHTML={parseInline(para.replace(/^- |^\d+\. /, ''))} />
                    </p>
                }
                if (para.startsWith('**') && para.endsWith('**') && para.length < 50) {
-                   return <h3 key={idx} className="text-xl font-bold font-playfair text-slate-900 mt-8 mb-4" dangerouslySetInnerHTML={parseInline(para.replace(/\*\*(.*?)\*\*/g, '$1'))} />
+                   return <h3 key={idx} className="text-xl font-bold font-lora text-slate-900 mt-8 mb-4" dangerouslySetInnerHTML={parseInline(para.replace(/\*\*(.*?)\*\*/g, '$1'))} />
                }
                return <p key={idx} dangerouslySetInnerHTML={parseInline(para)} />
             })}
@@ -132,7 +132,7 @@ const BlogDetail = () => {
                   <ShieldAlert size={20} />
                   <span className="text-sm font-bold tracking-widest uppercase">Verified Solutions</span>
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4 font-playfair">Download GS1 Solutions</h3>
+                <h3 className="text-2xl font-bold text-white mb-4 font-lora">Download GS1 Solutions</h3>
                 <p className="text-emerald-100 mb-8 text-sm max-w-lg leading-relaxed">
                   The detailed solutions document for <strong className="text-white">{post.title}</strong> is now available. 
                   Includes option-by-option elimination and source references.
@@ -155,13 +155,13 @@ const BlogDetail = () => {
          {post.category === "Magazine" && (
            <div className="mt-12 p-10 bg-blue-50/50 rounded-[2rem] border border-blue-100/50 text-center relative overflow-hidden group">
               <div className="relative z-10 py-4">
-                <h3 className="text-3xl font-bold text-slate-900 mb-4 font-playfair">Magazine Now Available</h3>
+                <h3 className="text-3xl font-bold text-slate-900 mb-4 font-lora">Magazine Now Available</h3>
                 <p className="text-slate-600 mb-8 text-base max-w-xl mx-auto leading-relaxed">
-                  We are pleased to announce that the <strong className="text-blue-900 font-bold">{post.title}</strong> has been released. You can now access and download the full module through our dedicated Courses portal.
+                  We are pleased to announce that the <strong className="text-[var(--color-neti-accent)] font-bold">{post.title}</strong> has been released. You can now access and download the full module through our dedicated Courses portal.
                 </p>
                 <Link 
                   to="/courses"
-                  className="inline-flex items-center gap-3 px-10 py-4 bg-blue-900 text-white font-bold text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-slate-900 transition-all shadow-xl shadow-blue-100 group/link"
+                  className="inline-flex items-center gap-3 px-10 py-4 bg-[var(--color-neti-accent)] text-white font-bold text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-slate-900 transition-all shadow-xl shadow-blue-100 group/link"
                 >
                   Go to Course Page
                   <span className="group-hover:translate-x-1 transition-transform">→</span>

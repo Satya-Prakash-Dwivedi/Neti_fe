@@ -80,10 +80,10 @@ const Contact = () => {
     <div className="bg-slate-50 min-h-screen">
       <div className="max-w-5xl mx-auto px-6 py-20 md:py-32">
         <header className="mb-20 text-center">
-          <span className="text-xs font-bold text-blue-900 tracking-[0.3em] uppercase mb-4 inline-block">
+          <span className="text-xs font-bold text-[var(--color-neti-accent)] tracking-[0.3em] uppercase mb-4 inline-block">
             Get in Touch
           </span>
-          <h1 className="text-4xl md:text-5xl font-playfair font-bold text-slate-900 mb-6">Connect with Neti Academy</h1>
+          <h1 className="text-4xl md:text-5xl font-lora font-bold text-slate-900 mb-6">Connect with Neti Academy</h1>
           <p className="text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
             Have a specific doubt or need guidance on your Plan B?
             Our admin team is here to help you find clarity.
@@ -100,7 +100,7 @@ const Contact = () => {
               </h3>
               <a
                 href="mailto:admin@netiacademy.com"
-                className="text-2xl md:text-3xl font-playfair font-bold text-blue-900 hover:text-blue-800 transition-colors break-words"
+                className="text-2xl md:text-3xl font-lora font-bold text-[var(--color-neti-accent)] hover:text-[var(--color-neti-accent)] transition-colors break-words"
               >
                 admin@netiacademy.com
               </a>
@@ -141,7 +141,7 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:border-blue-900 focus:bg-white transition-all font-medium text-slate-900"
+                    className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:border-[var(--color-neti-accent)] focus:bg-white transition-all font-medium text-slate-900"
                     placeholder="e.g. John Doe"
                   />
                 </div>
@@ -153,7 +153,7 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:border-blue-900 focus:bg-white transition-all font-medium text-slate-900"
+                    className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:border-[var(--color-neti-accent)] focus:bg-white transition-all font-medium text-slate-900"
                     placeholder="e.g. john.doe@example.com"
                   />
                 </div>
@@ -167,7 +167,7 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:border-blue-900 focus:bg-white transition-all font-medium text-slate-900 resize-none"
+                  className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none focus:border-[var(--color-neti-accent)] focus:bg-white transition-all font-medium text-slate-900 resize-none"
                   placeholder="How can we help you today?"
                 ></textarea>
               </div>
@@ -187,8 +187,8 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={status === "submitting"}
-                className={`w-full py-5 bg-blue-900 text-white font-bold rounded-2xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-3 ${
-                  status === "submitting" ? "opacity-70 cursor-not-allowed" : "hover:bg-blue-800"
+                className={`w-full py-5 bg-[var(--color-neti-accent)] text-white font-bold rounded-2xl transition-all shadow-lg active:scale-95 flex items-center justify-center gap-3 ${
+                  status === "submitting" ? "opacity-70 cursor-not-allowed" : "hover:bg-[var(--color-neti-accent)]"
                 }`}
               >
                 {status === "submitting" ? (
@@ -207,12 +207,7 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Footer Link */}
-        <div className="mt-24 pt-12 border-t border-slate-100 text-center">
-          <Link to="/" className="text-sm font-medium text-slate-400 hover:text-blue-900 transition-colors uppercase tracking-widest">
-            Return to Homepage
-          </Link>
-        </div>
+
       </div>
     </div>
   );

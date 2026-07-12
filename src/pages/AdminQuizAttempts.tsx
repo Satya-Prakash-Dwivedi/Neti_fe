@@ -234,7 +234,7 @@ const AdminQuizAttempts = () => {
   if (loading) {
     return (
       <div className="bg-slate-50 min-h-screen flex items-center justify-center">
-        <div className="animate-spin text-blue-900"><RefreshCw className="w-8 h-8" /></div>
+        <div className="animate-spin text-[var(--color-neti-accent)]"><RefreshCw className="w-8 h-8" /></div>
       </div>
     );
   }
@@ -244,7 +244,7 @@ const AdminQuizAttempts = () => {
       <div className="bg-slate-50 min-h-screen flex items-center justify-center p-6 text-center">
         <div>
           <h3 className="text-xl font-bold text-slate-800 mb-4">Test not found.</h3>
-          <Link to="/admin/practice-tests" className="text-blue-900 font-bold underline">Back to Test Engine</Link>
+          <Link to="/admin/practice-tests" className="text-[var(--color-neti-accent)] font-bold underline">Back to Test Engine</Link>
         </div>
       </div>
     );
@@ -258,7 +258,7 @@ const AdminQuizAttempts = () => {
         {/* Navigation */}
         <Link 
           to="/admin/practice-tests" 
-          className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-900 font-bold text-xs uppercase tracking-widest mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-slate-500 hover:text-[var(--color-neti-accent)] font-bold text-xs uppercase tracking-widest mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Test Dashboard
@@ -268,14 +268,14 @@ const AdminQuizAttempts = () => {
         <div className="bg-white border border-slate-200 rounded-3xl p-6 md:p-8 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="bg-blue-50 text-blue-900 border border-blue-100/50 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="bg-blue-50 text-[var(--color-neti-accent)] border border-blue-100/50 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                 Auditing Dashboard
               </span>
               <span className="text-xs text-slate-400 font-bold">
                 {quiz.question_count} Questions
               </span>
             </div>
-            <h1 className="text-2xl md:text-3xl font-playfair font-bold text-slate-900 leading-snug">
+            <h1 className="text-2xl md:text-3xl font-lora font-bold text-slate-900 leading-snug">
               {quiz.title}
             </h1>
           </div>
@@ -284,7 +284,7 @@ const AdminQuizAttempts = () => {
             <button
               onClick={downloadCSVReport}
               disabled={attempts.length === 0}
-              className="flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-900 text-white rounded-xl text-xs font-bold shadow-md shadow-blue-950/10 hover:bg-blue-850 active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 px-6 py-3.5 bg-[var(--color-neti-accent)] text-white rounded-xl text-xs font-bold shadow-md shadow-blue-950/10 hover:bg-[var(--color-neti-accent-amber)] active:scale-95 disabled:opacity-40 disabled:pointer-events-none transition-all w-full sm:w-auto"
             >
               <Download className="w-4 h-4" />
               Download CSV Report
@@ -295,7 +295,7 @@ const AdminQuizAttempts = () => {
         {/* Students Table */}
         <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
           <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
-            <h3 className="font-playfair text-lg font-bold text-slate-950">Student Completion Ledger</h3>
+            <h3 className="font-lora text-lg font-bold text-slate-950">Student Completion Ledger</h3>
             <span className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
               {attempts.length} Attempts Total
             </span>
@@ -330,7 +330,7 @@ const AdminQuizAttempts = () => {
                         className="hover:bg-slate-50/40 transition-colors group cursor-pointer"
                         onClick={() => setSelectedAttempt(attempt)}
                       >
-                        <td className="px-6 py-4.5 text-sm font-bold text-slate-800 group-hover:text-blue-900 transition-colors">
+                        <td className="px-6 py-4.5 text-sm font-bold text-slate-800 group-hover:text-[var(--color-neti-accent)] transition-colors">
                           {attempt.student.name}
                         </td>
                         <td className="px-6 py-4.5 text-sm text-slate-500 font-medium">
@@ -360,7 +360,7 @@ const AdminQuizAttempts = () => {
                               e.stopPropagation();
                               setSelectedAttempt(attempt);
                             }}
-                            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-blue-900 hover:bg-blue-50 border border-slate-200 hover:border-blue-100 px-3.5 py-2 rounded-xl transition-all"
+                            className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-[var(--color-neti-accent)] hover:bg-blue-50 border border-slate-200 hover:border-blue-100 px-3.5 py-2 rounded-xl transition-all"
                           >
                             <BarChart2 className="w-3.5 h-3.5" />
                             Review
@@ -393,7 +393,7 @@ const AdminQuizAttempts = () => {
                 <span className="text-[10px] font-bold text-[#1E3A8A] uppercase tracking-widest block mb-1">
                   Student Audit Review
                 </span>
-                <h4 className="font-playfair text-xl font-bold text-slate-900">
+                <h4 className="font-lora text-xl font-bold text-slate-900">
                   {selectedAttempt.student.name}
                 </h4>
                 <p className="text-xs text-slate-400 mt-1 font-medium">
@@ -416,7 +416,7 @@ const AdminQuizAttempts = () => {
               </div>
               <div className="text-right">
                 <p className="text-[10px] font-bold text-blue-200 uppercase tracking-widest">Final Grade</p>
-                <p className="text-2xl font-playfair font-black text-[#C8A951] mt-0.5">
+                <p className="text-2xl font-lora font-black text-[#C8A951] mt-0.5">
                   {selectedAttempt.score} / {selectedAttempt.total_questions}
                 </p>
               </div>
@@ -476,7 +476,7 @@ const AdminQuizAttempts = () => {
                       </div>
                     </div>
 
-                    <div className="bg-white p-4 rounded-xl border-l-4 border-blue-900 border border-slate-200/50 space-y-2">
+                    <div className="bg-white p-4 rounded-xl border-l-4 border-[var(--color-neti-accent)] border border-slate-200/50 space-y-2">
                       <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">
                         Correct Option: <strong className="text-green-700">{question.correct_option}</strong> 
                         {studentAnswer && <span> | Student Choice: <strong className={isCorrect ? "text-green-700" : "text-red-700"}>{studentAnswer}</strong></span>}

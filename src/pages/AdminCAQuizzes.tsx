@@ -151,7 +151,7 @@ const AdminCAQuizzes = () => {
       <div className="max-w-6xl mx-auto">
         <header className="mb-12 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-playfair font-bold text-slate-900 mb-2">Current Affairs Admin</h1>
+            <h1 className="text-3xl md:text-4xl font-lora font-bold text-slate-900 mb-2">Current Affairs Admin</h1>
             <p className="text-sm text-slate-500 font-medium">Upload Current Affairs Quiz CSVs.</p>
           </div>
           
@@ -164,13 +164,13 @@ const AdminCAQuizzes = () => {
                   setTitle("");
                 }
               }}
-              className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider ${activeTab === "upload" ? "bg-blue-900 text-white" : "text-slate-500 hover:text-blue-900"}`}
+              className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider ${activeTab === "upload" ? "bg-[var(--color-neti-accent)] text-white" : "text-slate-500 hover:text-[var(--color-neti-accent)]"}`}
             >
               {editingQuizId ? "Edit Test" : "Upload & Generate"}
             </button>
             <button
               onClick={() => setActiveTab("list")}
-              className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider ${activeTab === "list" ? "bg-blue-900 text-white" : "text-slate-500 hover:text-blue-900"}`}
+              className={`px-6 py-2.5 rounded-full text-xs font-bold transition-all uppercase tracking-wider ${activeTab === "list" ? "bg-[var(--color-neti-accent)] text-white" : "text-slate-500 hover:text-[var(--color-neti-accent)]"}`}
             >
               Live Tests ({filteredQuizzesToDisplay.length})
             </button>
@@ -188,17 +188,17 @@ const AdminCAQuizzes = () => {
             {/* Upload Area */}
             {questions.length === 0 && !editingQuizId && (
               <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8 md:p-12 text-center max-w-2xl mx-auto">
-                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-900">
+                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-[var(--color-neti-accent)]">
                   <Upload className="w-8 h-8" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">Upload Question CSV</h3>
                 <p className="text-sm text-slate-500 mb-8 leading-relaxed">
                   Upload a standard question bank CSV. Make sure it contains columns for: <br />
-                  <code className="text-xs font-bold text-blue-900 bg-blue-50 px-2 py-1 rounded">question, option_a, option_b, option_c, option_d, correct_option, difficulty, solution</code>
+                  <code className="text-xs font-bold text-[var(--color-neti-accent)] bg-blue-50 px-2 py-1 rounded">question, option_a, option_b, option_c, option_d, correct_option, difficulty, solution</code>
                 </p>
 
                 <form onSubmit={handleUpload} className="space-y-6">
-                  <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 hover:border-blue-900/50 rounded-2xl p-6 transition-all bg-slate-50/50 cursor-pointer relative group">
+                  <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 hover:border-[var(--color-neti-accent)]/50 rounded-2xl p-6 transition-all bg-slate-50/50 cursor-pointer relative group">
                     <input
                       type="file"
                       accept=".csv"
@@ -206,8 +206,8 @@ const AdminCAQuizzes = () => {
                       onChange={handleFileChange}
                       className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                     />
-                    <FileText className="w-8 h-8 text-slate-400 mb-2 group-hover:text-blue-900 transition-colors" />
-                    <span className="text-sm font-bold text-slate-600 group-hover:text-blue-900 transition-colors">
+                    <FileText className="w-8 h-8 text-slate-400 mb-2 group-hover:text-[var(--color-neti-accent)] transition-colors" />
+                    <span className="text-sm font-bold text-slate-600 group-hover:text-[var(--color-neti-accent)] transition-colors">
                       {file ? file.name : "Select CSV File"}
                     </span>
                   </div>
@@ -215,7 +215,7 @@ const AdminCAQuizzes = () => {
                   <button
                     type="submit"
                     disabled={loading || !file}
-                    className="px-8 py-3.5 bg-blue-900 text-white rounded-xl font-bold text-xs shadow-md shadow-blue-950/10 hover:bg-blue-850 disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-all"
+                    className="px-8 py-3.5 bg-[var(--color-neti-accent)] text-white rounded-xl font-bold text-xs shadow-md shadow-blue-950/10 hover:bg-[var(--color-neti-accent-amber)] disabled:opacity-30 disabled:pointer-events-none active:scale-95 transition-all"
                   >
                     {loading ? "Processing..." : "Generate Test Preview"}
                   </button>
@@ -267,7 +267,7 @@ const AdminCAQuizzes = () => {
                         setQuestions([newQ, ...questions]);
                         setStatusMsg({ text: "New empty question added at the top.", type: "success" });
                       }}
-                      className="text-xs font-bold text-blue-900 bg-blue-50 hover:bg-blue-100 px-4 py-1.5 rounded-full transition-colors flex items-center gap-1"
+                      className="text-xs font-bold text-[var(--color-neti-accent)] bg-blue-50 hover:bg-blue-100 px-4 py-1.5 rounded-full transition-colors flex items-center gap-1"
                     >
                       <Plus className="w-3 h-3" /> Add Question
                     </button>
@@ -297,7 +297,7 @@ const AdminCAQuizzes = () => {
                           <select
                             value={q.difficulty}
                             onChange={(e) => handleQuestionChange(idx, "difficulty", e.target.value)}
-                            className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:border-blue-900"
+                            className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-bold text-slate-700 focus:outline-none focus:border-[var(--color-neti-accent)]"
                           >
                             <option value="Easy">Easy</option>
                             <option value="Medium">Medium</option>
@@ -313,7 +313,7 @@ const AdminCAQuizzes = () => {
                             value={q.question_text}
                             onChange={(e) => handleQuestionChange(idx, "question_text", e.target.value)}
                             rows={2}
-                            className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                            className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                           />
                         </div>
 
@@ -324,7 +324,7 @@ const AdminCAQuizzes = () => {
                               type="text"
                               value={q.option_a}
                               onChange={(e) => handleQuestionChange(idx, "option_a", e.target.value)}
-                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                             />
                           </div>
                           <div>
@@ -333,7 +333,7 @@ const AdminCAQuizzes = () => {
                               type="text"
                               value={q.option_b}
                               onChange={(e) => handleQuestionChange(idx, "option_b", e.target.value)}
-                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                             />
                           </div>
                           <div>
@@ -342,7 +342,7 @@ const AdminCAQuizzes = () => {
                               type="text"
                               value={q.option_c}
                               onChange={(e) => handleQuestionChange(idx, "option_c", e.target.value)}
-                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                             />
                           </div>
                           <div>
@@ -351,7 +351,7 @@ const AdminCAQuizzes = () => {
                               type="text"
                               value={q.option_d}
                               onChange={(e) => handleQuestionChange(idx, "option_d", e.target.value)}
-                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                             />
                           </div>
                         </div>
@@ -362,7 +362,7 @@ const AdminCAQuizzes = () => {
                             <select
                               value={q.correct_option}
                               onChange={(e) => handleQuestionChange(idx, "correct_option", e.target.value)}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-blue-900 cursor-pointer"
+                              className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-bold text-slate-700 focus:outline-none focus:border-[var(--color-neti-accent)] cursor-pointer"
                             >
                               <option value="A">Option A</option>
                               <option value="B">Option B</option>
@@ -377,7 +377,7 @@ const AdminCAQuizzes = () => {
                               value={q.solution}
                               onChange={(e) => handleQuestionChange(idx, "solution", e.target.value)}
                               rows={3}
-                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-blue-900 bg-slate-50/20"
+                              className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-[var(--color-neti-accent)] bg-slate-50/20"
                             />
                           </div>
                         </div>
@@ -416,7 +416,7 @@ const AdminCAQuizzes = () => {
         {activeTab === "list" && (
           <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden p-6 md:p-8">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-              <h3 className="text-xl font-playfair font-bold text-slate-900">Published CA Tests</h3>
+              <h3 className="text-xl font-lora font-bold text-slate-900">Published CA Tests</h3>
             </div>
 
             {filteredQuizzesToDisplay.length === 0 ? (
@@ -431,7 +431,7 @@ const AdminCAQuizzes = () => {
                       className="flex-1 cursor-pointer group"
                       onClick={() => navigate(`/admin/practice-tests/${quiz.id}/attempts`)}
                     >
-                      <h4 className="font-bold text-slate-800 text-base md:text-lg group-hover:text-blue-900 transition-colors">
+                      <h4 className="font-bold text-slate-800 text-base md:text-lg group-hover:text-[var(--color-neti-accent)] transition-colors">
                         {quiz.title}
                       </h4>
                       <div className="flex flex-wrap gap-4 text-xs font-semibold text-slate-400 mt-2">
@@ -439,7 +439,7 @@ const AdminCAQuizzes = () => {
                         <span>•</span>
                         <span>Published: {new Date(quiz.created_at).toLocaleDateString()}</span>
                         <span>•</span>
-                        <span className="text-blue-900 bg-blue-50 px-2 py-0.5 rounded-full text-[10px] font-bold">
+                        <span className="text-[var(--color-neti-accent)] bg-blue-50 px-2 py-0.5 rounded-full text-[10px] font-bold">
                           Click to view Student Attempts
                         </span>
                         {quiz.is_free_test && (

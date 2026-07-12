@@ -28,22 +28,22 @@ const MonthlyMagazineDetail = () => {
       <div className="max-w-5xl mx-auto px-6">
         {/* Breadcrumbs */}
         <nav className="flex items-center gap-2 text-sm text-slate-500 mb-8">
-          <Link to="/" className="hover:text-blue-900">Home</Link>
+          <Link to="/" className="hover:text-[var(--color-neti-accent)]">Home</Link>
           <span>/</span>
-          <Link to="/monthly-magazines" className="hover:text-blue-900">Monthly Magazines</Link>
+          <Link to="/monthly-magazines" className="hover:text-[var(--color-neti-accent)]">Monthly Magazines</Link>
           <span>/</span>
-          <span className="text-blue-900 font-medium">{magazine.month} {magazine.year}</span>
+          <span className="text-[var(--color-neti-accent)] font-medium">{magazine.month} {magazine.year}</span>
         </nav>
 
         {/* Hero Section */}
         <div className="mb-12">
-          <div className="inline-block px-3 py-1 bg-blue-50 text-blue-900 text-xs font-bold uppercase tracking-wider rounded-full mb-4">
+          <div className="inline-block px-3 py-1 bg-blue-50 text-[var(--color-neti-accent)] text-xs font-bold uppercase tracking-wider rounded-full mb-4">
             {magazine.month} {magazine.year} Edition
           </div>
-          <h1 className="text-4xl md:text-6xl font-playfair font-bold text-slate-900 mb-4">
+          <h1 className="text-4xl md:text-6xl font-lora font-bold text-slate-900 mb-4">
             {magazine.title}
           </h1>
-          <p className="text-2xl font-playfair italic text-blue-900/60 mb-6">
+          <p className="text-2xl font-lora italic text-[var(--color-neti-accent)]/60 mb-6">
             {magazine.tagline}
           </p>
           <p className="text-lg text-slate-600 leading-relaxed max-w-3xl">
@@ -57,7 +57,7 @@ const MonthlyMagazineDetail = () => {
             {/* PDF Viewer Section */}
             <div className="mb-12 bg-slate-50 rounded-3xl p-8 border border-slate-100">
               <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                <svg className="w-6 h-6 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-[var(--color-neti-accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 Digital Edition
@@ -75,7 +75,7 @@ const MonthlyMagazineDetail = () => {
                   href={magazine.pdfUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-900 text-white rounded-xl font-bold hover:bg-blue-800 transition-colors shadow-lg shadow-blue-900/20"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-neti-accent)] text-white rounded-xl font-bold hover:bg-[var(--color-neti-accent)] transition-colors shadow-lg shadow-[var(--color-neti-accent)]/20"
                 >
                   Open PDF in New Tab
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,7 +85,7 @@ const MonthlyMagazineDetail = () => {
                 <a 
                   href={magazine.pdfUrl} 
                   download={`${magazine.title} - ${magazine.month} ${magazine.year}.pdf`}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-900 border-2 border-blue-900 rounded-xl font-bold hover:bg-blue-50 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[var(--color-neti-accent)] border-2 border-[var(--color-neti-accent)] rounded-xl font-bold hover:bg-blue-50 transition-colors"
                 >
                   Download PDF
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +103,7 @@ const MonthlyMagazineDetail = () => {
                 {magazine.benefits.map((benefit, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <div className="mt-1 bg-blue-100 rounded-full p-1">
-                      <svg className="w-3 h-3 text-blue-900" fill="currentColor" viewBox="0 0 20 20">
+                      <svg className="w-3 h-3 text-[var(--color-neti-accent)]" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     </div>
@@ -131,7 +131,7 @@ const MonthlyMagazineDetail = () => {
               </div>
 
               {/* Highlights */}
-              <div className="bg-blue-900 rounded-2xl p-6 text-white shadow-xl shadow-blue-900/10">
+              <div className="bg-[var(--color-neti-accent)] rounded-2xl p-6 text-white shadow-xl shadow-[var(--color-neti-accent)]/10">
                 <h4 className="text-lg font-bold mb-4">{magazine.month} {magazine.year} Highlights:</h4>
                 <div className="space-y-3">
                   {magazine.highlights.map((item, index) => (

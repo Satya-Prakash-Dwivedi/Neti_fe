@@ -5,7 +5,7 @@ const Blogs = () => {
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
       <header className="mb-16">
-        <h1 className="text-4xl font-playfair font-bold text-slate-900 mb-4 text-center">Platform Announcements</h1>
+        <h1 className="text-4xl font-lora font-bold text-slate-900 mb-4 text-center">Platform Announcements</h1>
         <p className="text-lg text-slate-600 max-w-2xl mx-auto text-center">
           News, updates, and releases directly from the Neti Academy team.
         </p>
@@ -20,7 +20,7 @@ const Blogs = () => {
             
             <div className="p-6 flex flex-col flex-1">
                <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 bg-blue-50 text-blue-800 text-[10px] font-bold uppercase tracking-wider rounded-full">
+                  <span className="px-3 py-1 bg-blue-50 text-[var(--color-neti-accent)] text-[10px] font-bold uppercase tracking-wider rounded-full">
                     {post.category}
                   </span>
                   <span className="text-[10px] text-slate-400 font-medium">
@@ -29,7 +29,7 @@ const Blogs = () => {
                </div>
                
                <Link to={`/blogs/${post.id}`}>
-                 <h2 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-900 transition-colors">
+                 <h2 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-[var(--color-neti-accent)] transition-colors">
                    {post.title}
                  </h2>
                </Link>
@@ -38,7 +38,7 @@ const Blogs = () => {
                  {post.excerpt}
                </p>
                
-               <Link to={`/blogs/${post.id}`} className="text-sm font-bold text-blue-900 underline underline-offset-4 hover:text-blue-700 transition-colors self-start">
+               <Link to={`/blogs/${post.id}`} className="text-sm font-bold text-[var(--color-neti-accent)] underline underline-offset-4 hover:text-blue-700 transition-colors self-start">
                  Read Announcement
                </Link>
             </div>

@@ -35,7 +35,7 @@ const RevisionSeries = () => {
           
           <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
             <div className="max-w-3xl">
-              <h1 className="text-5xl md:text-6xl font-playfair font-bold text-white mb-8 leading-tight">
+              <h1 className="text-5xl md:text-6xl font-lora font-bold text-white mb-8 leading-tight">
                 Prelims <span className="text-blue-400 italic">Revision</span> Series
               </h1>
               <p className="text-slate-400 text-lg font-light leading-relaxed mb-10">
@@ -90,12 +90,12 @@ const RevisionSeries = () => {
               {/* Content */}
               <div className="p-10 flex flex-col flex-1">
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="text-[9px] font-black text-blue-900 uppercase tracking-[0.2em]">Module 0{revisionModules.indexOf(course) + 1}</span>
+                  <span className="text-[9px] font-black text-[var(--color-neti-accent)] uppercase tracking-[0.2em]">Module 0{revisionModules.indexOf(course) + 1}</span>
                   <span className="w-1 h-1 rounded-full bg-slate-200"></span>
                   <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">{course.duration}</span>
                 </div>
                 
-                <h2 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-blue-900 transition-colors font-playfair leading-snug">
+                <h2 className="text-2xl font-bold text-slate-900 mb-4 group-hover:text-[var(--color-neti-accent)] transition-colors font-lora leading-snug">
                   {course.title}
                 </h2>
                 
@@ -106,7 +106,7 @@ const RevisionSeries = () => {
                 <div className="flex items-center justify-between mt-auto pt-8 border-t border-slate-50">
                   <Link 
                     to={`/courses/${course.id}`}
-                    className="flex items-center gap-2 text-[10px] font-bold text-slate-900 uppercase tracking-[0.2em] group/link hover:text-blue-900 transition-colors"
+                    className="flex items-center gap-2 text-[10px] font-bold text-slate-900 uppercase tracking-[0.2em] group/link hover:text-[var(--color-neti-accent)] transition-colors"
                   >
                     Enter Module 
                     <span className="group-hover/link:translate-x-1 transition-transform">→</span>
@@ -123,7 +123,7 @@ const RevisionSeries = () => {
              <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-8 border border-slate-100">
                 <BookOpen size={32} className="text-slate-200" />
              </div>
-             <h3 className="text-2xl font-playfair font-bold text-slate-300">New modules are being prepared...</h3>
+             <h3 className="text-2xl font-lora font-bold text-slate-300">New modules are being prepared...</h3>
           </div>
         )}
       </div>
@@ -131,11 +131,11 @@ const RevisionSeries = () => {
       {/* Philosophy Section */}
       <div className="bg-[#F8FAFC] py-32">
          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-[11px] font-black text-blue-900 uppercase tracking-[0.4em] mb-12">The Neti Method</h2>
-            <p className="text-2xl font-playfair font-bold text-slate-800 leading-relaxed italic mb-8">
+            <h2 className="text-[11px] font-black text-[var(--color-neti-accent)] uppercase tracking-[0.4em] mb-12">The Neti Method</h2>
+            <p className="text-2xl font-lora font-bold text-slate-800 leading-relaxed italic mb-8">
               "It is not about how much you can read, but how much you can recall under pressure. Our revision modules are built for that moment."
             </p>
-            <div className="w-10 h-1 bg-blue-900/10 mx-auto"></div>
+            <div className="w-10 h-1 bg-[var(--color-neti-accent)]/10 mx-auto"></div>
          </div>
       </div>
     </div>

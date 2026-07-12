@@ -25,7 +25,7 @@ const CourseDetail = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <div className="animate-pulse flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-blue-900 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <div className="w-12 h-12 border-4 border-[var(--color-neti-accent)] border-t-transparent rounded-full animate-spin mb-4"></div>
           <p className="text-slate-500 font-bold tracking-widest uppercase text-xs">Loading Material...</p>
         </div>
       </div>
@@ -51,14 +51,14 @@ const CourseDetail = () => {
         <div className="max-w-4xl mx-auto px-6 py-16">
           <header className="mb-12">
             <div className="flex items-center gap-4 mb-6">
-              <span className="px-3 py-1 bg-blue-50 text-blue-800 text-[10px] font-bold uppercase tracking-widest rounded-full">
+              <span className="px-3 py-1 bg-blue-50 text-[var(--color-neti-accent)] text-[10px] font-bold uppercase tracking-widest rounded-full">
                 {course.category}
               </span>
               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
                 {course.duration} • {course.level}
               </span>
             </div>
-            <h1 className="text-5xl font-playfair font-bold text-slate-900 mb-8 leading-tight">
+            <h1 className="text-5xl font-lora font-bold text-slate-900 mb-8 leading-tight">
               {course.title}
             </h1>
             <div className="aspect-video w-full rounded-[2rem] overflow-hidden mb-12 shadow-2xl border border-slate-100">
@@ -78,12 +78,12 @@ const CourseDetail = () => {
                    };
 
                    if (para.startsWith('### ')) {
-                       return <h3 key={idx} className="text-2xl font-bold font-playfair text-slate-900 mt-12 mb-6 border-b border-slate-100 pb-2" dangerouslySetInnerHTML={parseInline(para.replace('### ', ''))} />
+                       return <h3 key={idx} className="text-2xl font-bold font-lora text-slate-900 mt-12 mb-6 border-b border-slate-100 pb-2" dangerouslySetInnerHTML={parseInline(para.replace('### ', ''))} />
                    }
                    
                    if (para.startsWith('- ') || /^\d+\. /.test(para)) {
                        return <p key={idx} className="ml-4 flex items-start gap-3">
-                          <span className="text-blue-900 font-bold">•</span>
+                          <span className="text-[var(--color-neti-accent)] font-bold">•</span>
                           <span dangerouslySetInnerHTML={parseInline(para.replace(/^- |^\d+\. /, ''))} />
                        </p>
                    }
@@ -101,7 +101,7 @@ const CourseDetail = () => {
                     <ShieldAlert size={24} />
                     <span className="text-xs font-bold tracking-[0.3em] uppercase">Secure Student Access</span>
                   </div>
-                  <h3 className="text-3xl font-bold text-white mb-6 font-playfair">Download Material</h3>
+                  <h3 className="text-3xl font-bold text-white mb-6 font-lora">Download Material</h3>
                   <p className="text-slate-300 mb-10 text-base max-w-xl leading-relaxed">
                     This premium PDF is prepared for offline revision. Text copying and editing have been restricted to maintain the integrity of our research.
                   </p>
@@ -122,7 +122,7 @@ const CourseDetail = () => {
           <div className="mt-20 pt-12 border-t border-slate-100 flex items-center justify-between">
              <Link 
                to="/courses"
-               className="text-sm font-bold text-slate-500 hover:text-blue-900 transition-colors flex items-center gap-2"
+               className="text-sm font-bold text-slate-500 hover:text-[var(--color-neti-accent)] transition-colors flex items-center gap-2"
              >
                <ArrowLeft size={18} />
                Back to Courses
@@ -132,7 +132,7 @@ const CourseDetail = () => {
                   navigator.clipboard.writeText(window.location.href);
                   alert('Link copied to clipboard!');
                 }}
-                className="text-sm font-bold text-blue-900 hover:text-blue-700 transition-colors flex items-center gap-2 group"
+                className="text-sm font-bold text-[var(--color-neti-accent)] hover:text-blue-700 transition-colors flex items-center gap-2 group"
              >
                 <Share2 size={18} className="group-hover:rotate-12 transition-transform" />
                 Share Resource
@@ -168,17 +168,17 @@ const CourseDetail = () => {
         <div className="p-8 lg:p-12 flex-1 overflow-y-auto">
           <button 
             onClick={() => window.history.back()}
-            className="group flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-blue-900 transition-colors mb-12 uppercase tracking-widest"
+            className="group flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-[var(--color-neti-accent)] transition-colors mb-12 uppercase tracking-widest"
           >
             <span className="group-hover:-translate-x-1 transition-transform">←</span> Go Back
           </button>
 
           <div className="space-y-8">
             <div>
-              <span className="inline-block px-3 py-1 bg-blue-50 text-blue-900 text-[10px] font-bold uppercase tracking-widest rounded-full mb-6">
+              <span className="inline-block px-3 py-1 bg-blue-50 text-[var(--color-neti-accent)] text-[10px] font-bold uppercase tracking-widest rounded-full mb-6">
                 {course.category}
               </span>
-              <h1 className="text-4xl font-playfair font-bold text-slate-900 leading-tight mb-4">
+              <h1 className="text-4xl font-lora font-bold text-slate-900 leading-tight mb-4">
                 {course.title}
               </h1>
               <div className="flex items-center gap-4 text-xs font-medium text-slate-400">
@@ -203,11 +203,11 @@ const CourseDetail = () => {
                     <p className="text-3xl font-bold text-slate-900">₹{course.price}</p>
                   </div>
                   <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100">
-                    <ShieldAlert className="text-blue-900" />
+                    <ShieldAlert className="text-[var(--color-neti-accent)]" />
                   </div>
                 </div>
 
-                <button className="w-full py-5 bg-blue-900 text-white font-bold rounded-2xl hover:bg-blue-800 transition-all shadow-xl shadow-blue-100 flex items-center justify-center gap-3 group">
+                <button className="w-full py-5 bg-[var(--color-neti-accent)] text-white font-bold rounded-2xl hover:bg-[var(--color-neti-accent)] transition-all shadow-xl shadow-blue-100 flex items-center justify-center gap-3 group">
                   Enroll Now
                   <FileDown className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -218,9 +218,9 @@ const CourseDetail = () => {
 
         <footer className="p-8 border-t border-slate-100 bg-slate-50/50">
           <div className="flex items-center justify-between opacity-50">
-            <span className="text-[10px] font-bold tracking-tighter text-blue-900">NETI ACADEMY</span>
+            <span className="text-[10px] font-bold tracking-tighter text-[var(--color-neti-accent)]">NETI ACADEMY</span>
             <div className="flex gap-4">
-               <div className="w-2 h-2 rounded-full bg-blue-900"></div>
+               <div className="w-2 h-2 rounded-full bg-[var(--color-neti-accent)]"></div>
                <div className="w-2 h-2 rounded-full bg-slate-300"></div>
             </div>
           </div>
