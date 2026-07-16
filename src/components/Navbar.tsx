@@ -20,6 +20,7 @@ const currentAffairsItems = [
 ];
 
 const dropdownItems = [
+  { name: "Philosophy", path: "/our-method" },
   { name: "Mind", path: "/mind" },
   { name: "Plan B", path: "/plan-b" },
   { name: "Announcements", path: "/blogs" },

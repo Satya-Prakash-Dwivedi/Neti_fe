@@ -53,6 +53,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
 import OurMethod from './pages/OurMethod';
+import ActiveRecall from './pages/ActiveRecall';
 
 // ScrollToTop component to reset scroll on route change
 function ScrollToTop() {
@@ -123,6 +124,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/our-method" element={<OurMethod />} />
+            <Route path="/active-recall" element={<ActiveRecall />} />
             <Route path="/study-materials" element={<StudyMaterials />} />
             <Route path="/study-materials/:id" element={<ProductDetail />} />
             {/* DO NOT DELETE: Temporarily commented out user-facing Current Affairs routes for future release */}
